@@ -1,0 +1,17 @@
+{
+    "name": "site",
+    "description": "site packager",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "meili",
+            "email": "meili@gmail.com"
+        }
+    ],    
+    "autoload": {
+        "psr-4": {
+            "Site\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

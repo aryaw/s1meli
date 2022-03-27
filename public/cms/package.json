@@ -1,0 +1,43 @@
+{
+  "name": "par1",
+  "version": "1.0.0",
+  "description": "cms assets minify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pariarsamade89@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "bootstrap-datepicker": "^1.9.0",
+    "bootstrap-daterangepicker": "^3.0.5",
+    "bootstrap-toggle": "^2.2.2",
+    "datatables.net": "^1.10.20",
+    "datatables.net-bs": "^1.10.20",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "file-saver": "^2.0.2",
+    "font-awesome": "^4.7.0",
+    "ionicons": "^2.0.1",
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
+    "moment": "^2.24.0",
+    "pace": "0.0.4",
+    "pace-js": "^1.0.2",
+    "parsleyjs": "^2.9.1",
+    "select2": "^4.0.12",
+    "spectrum-colorpicker": "^1.8.0",
+    "summernote": "^0.8.12",
+    "xlsx": "^0.15.5"
+  }
+}

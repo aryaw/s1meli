@@ -1,0 +1,25 @@
+{
+    "name": "cms/user",
+    "description": "CMS User Package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "meili",
+            "email": "meili@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Cms\\User\\": "src/"
+        }
+    },    
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cms\\User\\UserServiceProvider"
+            ]
+        }
+    }
+}

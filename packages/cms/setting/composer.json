@@ -1,0 +1,12 @@
+{
+    "name": "cms/setting",
+    "description": "setting package",
+    "authors": [
+        {
+            "name": "meili",
+            "email": "meili@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

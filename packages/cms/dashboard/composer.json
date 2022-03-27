@@ -1,0 +1,25 @@
+{
+    "name": "cms/dashboard",
+    "description": "CMS Dashboard Package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "meili",
+            "email": "meili@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Cms\\Dashboard\\": "src/"
+        }
+    },    
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cms\\Dashboard\\DashboardServiceProvider"
+            ]
+        }
+    }
+}
