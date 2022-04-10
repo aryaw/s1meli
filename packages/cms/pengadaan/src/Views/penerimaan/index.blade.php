@@ -4,13 +4,13 @@
 	<!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Pengadaan
+      Penerimaan
       <small>data</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{ route('cms.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li>Pengadaan</li>
-      <li class="active">Pengadaan</li>
+      <li>Penerimaan</li>
+      <li class="active">Penerimaan</li>
     </ol>
   </section>
 
@@ -24,7 +24,7 @@
             <h3 class="box-title"></h3>
             <div class="btn-group pull-right m-b-10">
             	<a class="btn btn-default" href="#" role="button" id="download"><i class="fa fa-download"></i></a>
-              <a class="btn btn-primary" href="{{ route('cms.pengadaan.create') }}" role="button"><i class="fa fa-plus"></i> Add New</a>   
+              <a class="btn btn-primary" href="{{ route('cms.penerimaan.create') }}" role="button"><i class="fa fa-plus"></i> Add New</a>   
             </div>
           </div>
           <!-- /.box-header -->
@@ -157,10 +157,10 @@
             { data:'approve_wakasek'},
             { data:'approve_kepsek'},
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
-              //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/detail/' + data.id +'" role="button">Detail</a>';
+              //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
-              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/edit/' + data.id +'" role="button">Edit</a>';
-              var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/pengadaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
+              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/edit/' + data.id +'" role="button">Edit</a>';
+              var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/penerimaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
               return editButton + deleteButton;
             }}
           ],
@@ -182,7 +182,7 @@
               withCredentials : true
             },
             crossDomain : true,
-            url : ADMIN_URL + '/pengadaan/list',
+            url : ADMIN_URL + '/penerimaan/list',
             type : 'POST',
             error: function( xhr, textStatus, error)
             {
@@ -223,7 +223,7 @@
         // download
         $("#download").click(function(){
           $.ajax({
-            url: ADMIN_URL + '/pengadaan/export',
+            url: ADMIN_URL + '/penerimaan/export',
             type: 'POST',
             data: { start_date:'', end_date:'' },
             dataType: 'json',
@@ -236,15 +236,15 @@
                 if(result.data){                    
                   var wb = XLSX.utils.book_new();
                   wb.Props = {
-                    Title: "Pengadaan",
+                    Title: "Penerimaan",
                     /* Subject: "Test",
                     Author: "Red Stapler",
                     CreatedDate: new Date(2017,12,19) */
                   };
                   
-                  wb.SheetNames.push("Pengadaan Sheet");                
+                  wb.SheetNames.push("Penerimaan Sheet");                
                   var ws = XLSX.utils.json_to_sheet(result.data);
-                  wb.Sheets["Pengadaan Sheet"] = ws;
+                  wb.Sheets["Penerimaan Sheet"] = ws;
                   var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
                   function s2ab(s) {    
                     var buf = new ArrayBuffer(s.length);
@@ -252,7 +252,7 @@
                     for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
                     return buf;
                   }
-                  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'pengadaan.xlsx');
+                  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'penerimaan.xlsx');
                 }else{
                     alert('empty data')
                 }

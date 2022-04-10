@@ -4,13 +4,13 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Create Laporan
+			Edit Laporan
 			<small></small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="{{ route('cms.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li>Pengadaan</li>
-			<li><a href="{{ route('cms.pengadaan.view') }}">Admin</a></li>			
+			<li>Penerimaan</li>
+			<li><a href="{{ route('cms.penerimaan.view') }}">Admin</a></li>			
 			<li class="active">Edit</li>
 		</ol>
 	</section>
@@ -27,14 +27,14 @@
           <!-- /.box-header -->
 					
 			<!-- form start -->
-			{!! Form::open(['route' => ['cms.pengadaan.update', 'id'=>$pengadaan->id], 'role'=>'form', 'autocomplete'=>'off']) !!}	
+			{!! Form::open(['route' => ['cms.penerimaan.update', 'id'=>$penerimaan->id], 'role'=>'form', 'autocomplete'=>'off']) !!}	
 				<div class="box-body">
 					<div class="form-group {{ ($errors->first('pemohon')) ? 'has-error' : '' }}">
 						<label for="fpemohon">Pemohon</label>
 						<select name="pemohon" class="form-control" id="fpemohon">
 							<option value="">-- Pilih Pemohon --</option>
 							@foreach($user as $pemohon)
-								<option value="{{ $pemohon->id }}" {{ ($pengadaan->user_id==$pemohon->id) ? 'selected' : '' }}>{{ $pemohon->full_name }}</option>
+								<option value="{{ $pemohon->id }}" {{ ($penerimaan->user_id==$pemohon->id) ? 'selected' : '' }}>{{ $pemohon->full_name }}</option>
 							@endforeach
 						</select>
 						@if($errors->has('pemohon'))										
@@ -42,9 +42,17 @@
 						@endif
 					</div>
 
+					<div class="form-group {{ ($errors->first('actor')) ? 'has-error' : '' }}">
+						<label for="factor">Penerima Barang</label>
+						<textarea class="form-control" placeholder="Penerima Barang" id="factor" name="actor">{{ $pemohon->actor }}</textarea>
+						@if($errors->has('actor'))										
+							<span class="help-block">{{ $errors->first('actor') }}</span>
+						@endif
+					</div>
+
 					<div class="form-group {{ ($errors->first('tgl_pengajuan')) ? 'has-error' : '' }}">
 						<label for="ftgl_pengajuan">Tanggal Pengajuan</label>
-						<input type="text" class="form-control datepicker" id="ftgl_pengajuan" name="tgl_pengajuan" value="{{ $pengadaan->pengajuan }}" required>
+						<input type="text" class="form-control datepicker" id="ftgl_pengajuan" name="tgl_pengajuan" value="{{ $penerimaan->pengajuan }}" required>
 						@if($errors->has('tgl_pengajuan'))										
 							<span class="help-block">{{ $errors->first('tgl_pengajuan') }}</span>
 						@endif
@@ -54,8 +62,8 @@
 						<label for="fstatus">Status</label>
 						<select name="status" class="form-control" id="fstatus">
 							<option value="">-- Select Status --</option>
-							<option value="0" {{ ($pengadaan->status=='0') ? 'selected' : '' }}>Inactive</option>
-							<option value="1" {{ ($pengadaan->status=='1') ? 'selected' : '' }}>Active</option>
+							<option value="0" {{ ($penerimaan->status=='0') ? 'selected' : '' }}>Inactive</option>
+							<option value="1" {{ ($penerimaan->status=='1') ? 'selected' : '' }}>Active</option>
 						</select>
 						@if($errors->has('status'))										
 							<span class="help-block">{{ $errors->first('status') }}</span>
@@ -67,8 +75,8 @@
 						@php
 							$item_key = 1;
 						@endphp
-						@if(isset($pengadaan->item_pengadaan))
-						@foreach($pengadaan->item_pengadaan as $key => $item)
+						@if(isset($penerimaan->item_pengadaan))
+						@foreach($penerimaan->item_pengadaan as $key => $item)
 						@php
 							$item_key = $item->id+1;
 						@endphp
@@ -76,28 +84,28 @@
 							<div class="form-group">
 								<label for="fnama_barang">Nama Barang</label>
 								<input type="hidden" class="form-control" id="fitem" name="item_data[]" value="{{ $item->id }}" required>
-								<input type="hidden" class="form-control" id="fitem" name="pengadaan[{{ $item_key }}][item]" value="{{ $item->id }}" required>
-								<input type="text" class="form-control" id="fnama_barang" name="pengadaan[{{ $item_key }}][nama_barang]" value="{{ $item->nama_barang }}" required>
+								<input type="hidden" class="form-control" id="fitem" name="penerimaan[{{ $item_key }}][item]" value="{{ $item->id }}" required>
+								<input type="text" class="form-control" id="fnama_barang" name="penerimaan[{{ $item_key }}][nama_barang]" value="{{ $item->nama_barang }}" required>
 							</div>
 
 							<div class="form-group">
 								<label for="fspesifikasi_barang">Spesifikasi Barang</label>
-								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" name="pengadaan[{{ $item_key }}][spesifikasi_barang]" >{{ $item->spesifikasi_barang }}</textarea>
+								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" name="penerimaan[{{ $item_key }}][spesifikasi_barang]" >{{ $item->spesifikasi_barang }}</textarea>
 							</div>
 
 							<div class="form-group">
 								<label for="furaian_barang">Uraian Barang</label>
-								<input type="text" class="form-control" id="furaian_barang" name="pengadaan[{{ $item_key }}][uraian_barang]" value="{{ $item->uraian_barang }}" >
+								<input type="text" class="form-control" id="furaian_barang" name="penerimaan[{{ $item_key }}][uraian_barang]" value="{{ $item->uraian_barang }}" >
 							</div>
 
 							<div class="form-group">
 								<label for="furaian_barang">Qty</label>
-								<input type="text" class="form-control" id="fqty" name="pengadaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" >
+								<input type="text" class="form-control" id="fqty" name="penerimaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" >
 							</div>
 
 							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>
-								<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan[{{ $item_key }}][keterangan]"  >{{ $item->keterangan }}</textarea>
+								<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="penerimaan[{{ $item_key }}][keterangan]"  >{{ $item->keterangan }}</textarea>
 							</div>
 
 							<div class="form-group">
@@ -151,24 +159,24 @@
 			_html = '<div class="box-body item-pengajuan" id="item-pengajuan'+_new_item_row+'">'+
 				'<div class="form-group">'+
 					'<label for="fnama_barang">Nama Barang</label>'+
-					'<input type="text" class="form-control" id="fnama_barang" name="pengadaan['+_new_item_row+'][nama_barang]" value="" required>'+
+					'<input type="text" class="form-control" id="fnama_barang" name="penerimaan['+_new_item_row+'][nama_barang]" value="" required>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+
-					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" value="" >'+
-					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" ></textarea>'+
+					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="penerimaan['+_new_item_row+'][spesifikasi_barang]" value="" >'+
+					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="penerimaan['+_new_item_row+'][spesifikasi_barang]" ></textarea>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Uraian Barang</label>'+
-					'<input type="text" class="form-control" id="furaian_barang" name="pengadaan['+_new_item_row+'][uraian_barang]" value="" >'+
+					'<input type="text" class="form-control" id="furaian_barang" name="penerimaan['+_new_item_row+'][uraian_barang]" value="" >'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Qty</label>'+
-					'<input type="text" class="form-control" id="fqty" name="pengadaan['+_new_item_row+'][qty]" value="" >'+
+					'<input type="text" class="form-control" id="fqty" name="penerimaan['+_new_item_row+'][qty]" value="" >'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fketerangan">Keterangan</label>'+
-					'<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan['+_new_item_row+'][keterangan]" ></textarea>'+
+					'<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="penerimaan['+_new_item_row+'][keterangan]" ></textarea>'+
 				'</div>'+
 				'<div class="form-group">'+
 				'<a href="javascript:void(0);" class="btn btn-danger remove-item" data-item="'+_new_item_row+'">Hapus Item</a>'+

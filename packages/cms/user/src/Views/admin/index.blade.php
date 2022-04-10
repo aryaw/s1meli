@@ -116,7 +116,7 @@
               return (json.old_start + meta.row + 1);
             }},	                
             { data:'email', orderable:false },
-            { data:'name', orderable:false },
+            { data:'full_name', orderable:false },
             { data:'last_login'},
             { data:'created_at'},
             { data:'updated_at'},

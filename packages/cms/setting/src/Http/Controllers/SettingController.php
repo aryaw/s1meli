@@ -68,7 +68,7 @@ class SettingController extends Controller
                 'type' => $post['type'],
                 'group' => $post['group'],
         	]);
-            $request->session()->flash('message', __('cms.create_success'));
+            $request->session()->flash('message', __('Data berhasil disimpan'));
             return redirect()->route('cms.setting.view');
         }
 	}
@@ -142,7 +142,7 @@ class SettingController extends Controller
                 $request->session()->flash('error', 'Cannot delete default app value');
             }else{
                 $setting->delete();
-                $request->session()->flash('message', __('cms.delete_success'));
+                $request->session()->flash('message', __('Data berhasil dihapus'));
             }
             
             return redirect()->route('cms.setting.view');

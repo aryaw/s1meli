@@ -16,6 +16,7 @@ class Pengadaan extends Migration
         Schema::create('pengadaan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
+            $table->text('actor')->nullable();
             $table->integer('jenis_pengajuan')->default(0);
             $table->integer('status')->default(0);
             $table->integer('approve_wakasek')->default(0);
@@ -33,6 +34,7 @@ class Pengadaan extends Migration
             $table->text('spesifikasi_barang');
             $table->text('uraian_barang');
             $table->text('keterangan');
+            $table->integer('qty')->nullable()->default(0);
             $table->integer('status')->default(0);
             $table->timestamps();
 

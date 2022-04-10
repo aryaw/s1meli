@@ -57,7 +57,10 @@ class UserModel extends CartalystUser
             ->select('users.*')
             ->join('role_users', 'role_users.user_id', 'users.id')
             ->join('roles', 'roles.id', 'role_users.role_id')
-            ->where('roles.slug', '=', 'administrator');
+            ->where('roles.slug', '=', 'administrator')
+            ->orWhere('roles.slug', '=', 'admin')
+            ->orWhere('roles.slug', '=', 'wakasek')
+            ->orWhere('roles.slug', '=', 'kepsek');
         return $query;
     }
 

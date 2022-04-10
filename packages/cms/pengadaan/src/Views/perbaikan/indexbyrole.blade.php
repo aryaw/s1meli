@@ -24,7 +24,7 @@
             <h3 class="box-title"></h3>
             <div class="btn-group pull-right m-b-10">
             	<a class="btn btn-default" href="#" role="button" id="download"><i class="fa fa-download"></i></a>
-              <a class="btn btn-primary" href="{{ route('cms.pengadaan.create') }}" role="button"><i class="fa fa-plus"></i> Add New</a>   
+              <a class="btn btn-primary" href="{{ route('cms.perbaikan.create') }}" role="button"><i class="fa fa-plus"></i> Add New</a>   
             </div>
           </div>
           <!-- /.box-header -->
@@ -157,11 +157,10 @@
             { data:'approve_wakasek'},
             { data:'approve_kepsek'},
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
-              //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/detail/' + data.id +'" role="button">Detail</a>';
+              //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/perbaikan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
-              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/edit/' + data.id +'" role="button">Edit</a>';
-              var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/pengadaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
-              return editButton + deleteButton;
+              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/perbaikan/editbyrole/' + data.id +'" role="button">Edit</a>';
+              return editButton;
             }}
           ],
           ajax : {
@@ -182,7 +181,7 @@
               withCredentials : true
             },
             crossDomain : true,
-            url : ADMIN_URL + '/pengadaan/list',
+            url : ADMIN_URL + '/perbaikan/list',
             type : 'POST',
             error: function( xhr, textStatus, error)
             {
@@ -223,7 +222,7 @@
         // download
         $("#download").click(function(){
           $.ajax({
-            url: ADMIN_URL + '/pengadaan/export',
+            url: ADMIN_URL + '/perbaikan/export',
             type: 'POST',
             data: { start_date:'', end_date:'' },
             dataType: 'json',
@@ -252,7 +251,7 @@
                     for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
                     return buf;
                   }
-                  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'pengadaan.xlsx');
+                  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'perbaikan.xlsx');
                 }else{
                     alert('empty data')
                 }

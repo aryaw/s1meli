@@ -13,7 +13,7 @@ class AdminTransformer extends TransformerAbstract
     	return [
             'id' => $user->id,
             'email' => $user->email,
-            'name' => $user->name,
+            'full_name' => $user->full_name,
             'last_login' => ($user->last_login) ? $user->last_login->format('d-m-Y H:i:s') : '-',
             'created_at' => $user->created_at->format('d-m-Y H:i:s'),
             'updated_at' => $user->updated_at->format('d-m-Y H:i:s'),

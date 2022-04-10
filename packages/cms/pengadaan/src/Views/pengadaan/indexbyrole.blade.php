@@ -159,9 +159,8 @@
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
-              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/edit/' + data.id +'" role="button">Edit</a>';
-              var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/pengadaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
-              return editButton + deleteButton;
+              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/editbyrole/' + data.id +'" role="button">Edit</a>';
+              return editButton;
             }}
           ],
           ajax : {

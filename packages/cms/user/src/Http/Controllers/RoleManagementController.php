@@ -15,7 +15,7 @@ class RoleManagementController extends Controller
 	{
 		$permissions = [];
 		$permissionConfig = config('app.permission');
-        $roles = RoleModel::whereIn('slug', ['administrator'])
+        $roles = RoleModel::whereIn('slug', ['administrator', 'admin', 'kepsek', 'wakasek'])
             ->get();
 		$gg = [];
 
@@ -93,7 +93,7 @@ class RoleManagementController extends Controller
         $role = $user->roles()->first();
         AdminHelper::setMenuSession($role);
         
-        $request->session()->flash('message', __('cms.create_success'));
+        $request->session()->flash('message', __('Data berhasil disimpan'));
         return redirect()->route('cms.rolemanagement.create');
 	}
 	

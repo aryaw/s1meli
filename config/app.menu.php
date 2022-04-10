@@ -9,17 +9,31 @@ return [
         'permission' => 'cms.dashboard',
         'path' => $prefix.'/dashboard' // active link indicator
     ],
-
 	[
-		'name' => 'Pengadaan',
+		'name' => 'Inventariss',
 		'fa' => 'fa-users',
-		'path' => $prefix.'/pengadaan',
+		'path' => $prefix.'/dashboard',
 		'subs' => [
 			[
 				'name' => 'Pengadaan',
 				'permission' => 'cms.pengadaan.view',
 				'path' => $prefix.'/pengadaan/list',				
-			],			
+			],
+			[
+				'name' => 'Penerimaan',
+				'permission' => 'cms.penerimaan.view',
+				'path' => $prefix.'/penerimaan/list',				
+			],
+			[
+				'name' => 'Perbaikan',
+				'permission' => 'cms.perbaikan.view',
+				'path' => $prefix.'/perbaikan/list',				
+			],
+			[
+				'name' => 'Laporan Kerusakan',
+				'permission' => 'cms.kerusakan.view',
+				'path' => $prefix.'/kerusakan/list',				
+			],
 		]
 	],
 

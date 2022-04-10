@@ -24,7 +24,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Maaf email & password tidak sesuai</p>
     
     {!! Form::open(['route' => 'cms.dologin', 'id'=>'form-login']) !!}
       
@@ -34,8 +34,10 @@
       </div>
 
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" class="form-control" placeholder="Password" required id="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <br>
+        <input type="checkbox"  onclick="showPasswd()"> Show Password
       </div>
       
       @if(session('message'))
@@ -63,5 +65,15 @@
 </div>
 <!-- /.login-box -->
 <script src="{{ asset('cms/dist/js/login.min.js') }}"></script>
+<script>
+  function showPasswd() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+</script>
 </body>
 </html>

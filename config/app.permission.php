@@ -164,6 +164,11 @@ return [
 			'parent' => 'pengadaan'
 		],
 		[
+			'name' => 'Update Pengadaan Status',
+			'code' => 'cms.pengadaan.editbyrole',
+			'parent' => 'pengadaan'
+		],
+		[
 			'name' => 'Store Pengadaan',
 			'code' => 'cms.pengadaan.store',
 			'parent' => 'pengadaan'
@@ -172,6 +177,117 @@ return [
 			'name' => 'Delete Pengadaan',
 			'code' => 'cms.pengadaan.delete',
 			'parent' => 'pengadaan'
+		],
+
+	// penerimaan
+	[
+		'name' => 'Penerimaan',
+		'code' => 'penerimaan',
+		'parent' => '0'
+	],
+		[
+			'name' => 'Create Penerimaan',
+			'code' => 'cms.penerimaan.create',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Penerimaan List',
+			'code' => 'cms.penerimaan.view',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Update Penerimaan',
+			'code' => 'cms.penerimaan.edit',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Update Penerimaan Status',
+			'code' => 'cms.penerimaan.editbyrole',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Store Penerimaan',
+			'code' => 'cms.penerimaan.store',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Delete Penerimaan',
+			'code' => 'cms.penerimaan.delete',
+			'parent' => 'penerimaan'
+		],
+	
+	// perbaikan
+	[
+		'name' => 'Perbaikan',
+		'code' => 'perbaikan',
+		'parent' => '0'
+	],
+		[
+			'name' => 'Create Perbaikan',
+			'code' => 'cms.perbaikan.create',
+			'parent' => 'perbaikan'
+		],
+		[
+			'name' => 'Perbaikan List',
+			'code' => 'cms.perbaikan.view',
+			'parent' => 'perbaikan'
+		],
+		[
+			'name' => 'Update Perbaikan',
+			'code' => 'cms.perbaikan.edit',
+			'parent' => 'perbaikan'
+		],
+		[
+			'name' => 'Update Perbaikan Status',
+			'code' => 'cms.perbaikan.editbyrole',
+			'parent' => 'perbaikan'
+		],
+		[
+			'name' => 'Store Perbaikan',
+			'code' => 'cms.perbaikan.store',
+			'parent' => 'perbaikan'
+		],
+		[
+			'name' => 'Delete Perbaikan',
+			'code' => 'cms.perbaikan.delete',
+			'parent' => 'perbaikan'
+		],
+
+	// kerusakan
+	[
+		'name' => 'Laporan Kerusakan',
+		'code' => 'kerusakan',
+		'parent' => '0'
+	],
+		[
+			'name' => 'Create Laporan Kerusakan',
+			'code' => 'cms.kerusakan.create',
+			'parent' => 'kerusakan'
+		],
+		[
+			'name' => 'Laporan Kerusakan List',
+			'code' => 'cms.kerusakan.view',
+			'parent' => 'kerusakan'
+		],
+		[
+			'name' => 'Update Laporan Kerusakan',
+			'code' => 'cms.kerusakan.edit',
+			'parent' => 'kerusakan'
+		],
+		[
+			'name' => 'Update Laporan Kerusakan Status',
+			'code' => 'cms.kerusakan.editbyrole',
+			'parent' => 'kerusakan'
+		],
+		[
+			'name' => 'Store Laporan Kerusakan',
+			'code' => 'cms.kerusakan.store',
+			'parent' => 'kerusakan'
+		],
+		[
+			'name' => 'Delete Laporan Kerusakan',
+			'code' => 'cms.kerusakan.delete',
+			'parent' => 'kerusakan'
 		],
 
 	// environment

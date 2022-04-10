@@ -10,8 +10,8 @@
 		<ol class="breadcrumb">
 			<li><a href="{{ route('cms.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li>Pengadaan</li>
-			<li><a href="{{ route('cms.pengadaan.view') }}">Admin</a></li>			
-			<li class="active">Create</li>
+			<li><a href="{{ route('cms.user.view') }}">Admin</a></li>			
+			<li class="active">Edit</li>
 		</ol>
 	</section>
 		
@@ -27,7 +27,7 @@
           <!-- /.box-header -->
 					
 					<!-- form start -->
-					{!! Form::open(['route' => 'cms.pengadaan.store', 'role'=>'form', 'autocomplete'=>'off']) !!}	
+					{!! Form::open(['route' => 'cms.kerusakan.store', 'role'=>'form', 'autocomplete'=>'off']) !!}	
 						<div class="box-body">
 							<div class="form-group {{ ($errors->first('pemohon')) ? 'has-error' : '' }}">
 								<label for="fpemohon">Pemohon</label>
@@ -37,8 +37,21 @@
 										<option value="{{ $pemohon->id }}" {{ (old('pemohon')==$pemohon->id) ? 'selected' : '' }}>{{ $pemohon->full_name }}</option>
 									@endforeach
 								</select>
-								@if($errors->has('pemohon'))										
-									<span class="help-block">{{ $errors->first('pemohon') }}</span>
+								@if($errors->has('jenis_pengajuan'))										
+									<span class="help-block">{{ $errors->first('jenis_pengajuan') }}</span>
+								@endif
+							</div>
+
+							<div class="form-group {{ ($errors->first('jenis_pengajuan')) ? 'has-error' : '' }}">
+								<label for="fjenis_pengajuan">Jenis Pengajuan</label>
+								<select name="jenis_pengajuan" class="form-control" id="fjenis_pengajuan">
+									<option value="">-- Select Jenis Pengajuan --</option>
+									<option value="1" {{ (old('jenis_pengajuan')=='1') ? 'selected' : '' }}>Pengadaan</option>
+									<option value="2" {{ (old('jenis_pengajuan')=='2') ? 'selected' : '' }}>Perbaikan</option>
+									<option value="3" {{ (old('jenis_pengajuan')=='3') ? 'selected' : '' }}>Pergantian</option>
+								</select>
+								@if($errors->has('jenis_pengajuan'))										
+									<span class="help-block">{{ $errors->first('jenis_pengajuan') }}</span>
 								@endif
 							</div>
 
@@ -67,27 +80,22 @@
 								<div class="box-body item-pengajuan" id="item-pengajuan1">
 									<div class="form-group">
 										<label for="fnama_barang">Nama Barang</label>
-										<input type="text" class="form-control" id="fnama_barang" name="pengadaan[1][nama_barang]" value="" required>
+										<input type="text" class="form-control" id="fnama_barang" name="kerusakan[1][nama_barang]" value="" required>
 									</div>
 
 									<div class="form-group">
 										<label for="fspesifikasi_barang">Spesifikasi Barang</label>
-										<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan[1][spesifikasi_barang]" required></textarea>
+										<input type="text" class="form-control" id="fspesifikasi_barang" name="kerusakan[1][spesifikasi_barang]" value="" required>
 									</div>
 
 									<div class="form-group">
 										<label for="furaian_barang">Uraian Barang</label>
-										<input type="text" class="form-control" id="furaian_barang" name="pengadaan[1][uraian_barang]" value="">
-									</div>
-									
-									<div class="form-group">
-										<label for="furaian_barang">Qty</label>
-										<input type="text" class="form-control" id="fqty" name="pengadaan[1][qty]" value="">
+										<input type="text" class="form-control" id="furaian_barang" name="kerusakan[1][uraian_barang]" value="" required>
 									</div>
 
 									<div class="form-group">
 										<label for="fketerangan">Keterangan</label>
-										<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan[1][keterangan]"></textarea>
+										<textarea class="form-control" placeholder="Keteranga" id="fketerangan" name="kerusakan[1][keterangan]" required></textarea>
 									</div>
 
 									<div class="form-group">
@@ -138,24 +146,19 @@
 		  	_html = '<div class="box-body item-pengajuan" id="item-pengajuan'+_new_item_row+'">'+
 				'<div class="form-group">'+
 					'<label for="fnama_barang">Nama Barang</label>'+
-					'<input type="text" class="form-control" id="fnama_barang" name="pengadaan['+_new_item_row+'][nama_barang]" value="" required>'+
+					'<input type="text" class="form-control" id="fnama_barang" name="kerusakan['+_new_item_row+'][nama_barang]" value="" required>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+
-					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" value="">'+
-					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]"></textarea>'+
+					'<input type="text" class="form-control" id="fspesifikasi_barang" name="kerusakan['+_new_item_row+'][spesifikasi_barang]" value="" required>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Uraian Barang</label>'+
-					'<input type="text" class="form-control" id="furaian_barang" name="pengadaan['+_new_item_row+'][uraian_barang]" value="">'+
-				'</div>'+
-				'<div class="form-group">'+
-					'<label for="furaian_barang">Qty</label>'+
-					'<input type="text" class="form-control" id="fqty" name="pengadaan['+_new_item_row+'][qty]" value="">'+
+					'<input type="text" class="form-control" id="furaian_barang" name="kerusakan['+_new_item_row+'][uraian_barang]" value="" required>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fketerangan">Keterangan</label>'+
-					'<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan['+_new_item_row+'][keterangan]"></textarea>'+
+					'<textarea class="form-control" placeholder="Keteranga" id="fketerangan" name="kerusakan['+_new_item_row+'][keterangan]" required></textarea>'+
 				'</div>'+
 				'<div class="form-group">'+
 				'<a href="javascript:void(0);" class="btn btn-danger remove-item" data-item="'+_new_item_row+'">Hapus Item</a>'+

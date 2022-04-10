@@ -12,7 +12,7 @@ $(document).ready(function(){
         event.preventDefault();
         var title = $(this).data('title');
         var redirect = $(this).attr('href');
-        var message = 'Delete ' + '"' + title + '" ?';
+        var message = 'Hapus ' + '"' + title + '" ?';
         if($(this).data('message')){
             message = $(this).data('message');
         }

@@ -8,10 +8,10 @@
         <li class="header">MAIN NAVIGATION</li>
         
         @php
-          function setActive($path)
-          {
-              return Request::is($path. '*' ) ? ' active' :  '';
-          }          
+        function setActive($path)
+        {
+         return Request::is($path. '*' ) ? ' active' :  '';
+        }
         @endphp
 
         @foreach($menus as $index=>$menu)

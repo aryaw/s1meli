@@ -9,8 +9,8 @@
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="{{ route('cms.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li>Pengadaan</li>
-			<li><a href="{{ route('cms.pengadaan.view') }}">Admin</a></li>			
+			<li>Penerimaan</li>
+			<li><a href="{{ route('cms.penerimaan.view') }}">Admin</a></li>			
 			<li class="active">Create</li>
 		</ol>
 	</section>
@@ -27,7 +27,7 @@
           <!-- /.box-header -->
 					
 					<!-- form start -->
-					{!! Form::open(['route' => 'cms.pengadaan.store', 'role'=>'form', 'autocomplete'=>'off']) !!}	
+					{!! Form::open(['route' => 'cms.penerimaan.store', 'role'=>'form', 'autocomplete'=>'off']) !!}	
 						<div class="box-body">
 							<div class="form-group {{ ($errors->first('pemohon')) ? 'has-error' : '' }}">
 								<label for="fpemohon">Pemohon</label>
@@ -39,6 +39,14 @@
 								</select>
 								@if($errors->has('pemohon'))										
 									<span class="help-block">{{ $errors->first('pemohon') }}</span>
+								@endif
+							</div>
+
+							<div class="form-group {{ ($errors->first('actor')) ? 'has-error' : '' }}">
+								<label for="factor">Penerima Barang</label>
+								<textarea class="form-control" placeholder="Penerima Barang" id="factor" name="actor" required></textarea>
+								@if($errors->has('actor'))										
+									<span class="help-block">{{ $errors->first('actor') }}</span>
 								@endif
 							</div>
 
@@ -67,27 +75,27 @@
 								<div class="box-body item-pengajuan" id="item-pengajuan1">
 									<div class="form-group">
 										<label for="fnama_barang">Nama Barang</label>
-										<input type="text" class="form-control" id="fnama_barang" name="pengadaan[1][nama_barang]" value="" required>
+										<input type="text" class="form-control" id="fnama_barang" name="penerimaan[1][nama_barang]" value="" required>
 									</div>
 
 									<div class="form-group">
 										<label for="fspesifikasi_barang">Spesifikasi Barang</label>
-										<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan[1][spesifikasi_barang]" required></textarea>
+										<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="penerimaan[1][spesifikasi_barang]" required></textarea>
 									</div>
 
 									<div class="form-group">
 										<label for="furaian_barang">Uraian Barang</label>
-										<input type="text" class="form-control" id="furaian_barang" name="pengadaan[1][uraian_barang]" value="">
+										<input type="text" class="form-control" id="furaian_barang" name="penerimaan[1][uraian_barang]" value="">
 									</div>
 									
 									<div class="form-group">
 										<label for="furaian_barang">Qty</label>
-										<input type="text" class="form-control" id="fqty" name="pengadaan[1][qty]" value="">
+										<input type="text" class="form-control" id="fqty" name="penerimaan[1][qty]" value="">
 									</div>
 
 									<div class="form-group">
 										<label for="fketerangan">Keterangan</label>
-										<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan[1][keterangan]"></textarea>
+										<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="penerimaan[1][keterangan]"></textarea>
 									</div>
 
 									<div class="form-group">
@@ -138,24 +146,24 @@
 		  	_html = '<div class="box-body item-pengajuan" id="item-pengajuan'+_new_item_row+'">'+
 				'<div class="form-group">'+
 					'<label for="fnama_barang">Nama Barang</label>'+
-					'<input type="text" class="form-control" id="fnama_barang" name="pengadaan['+_new_item_row+'][nama_barang]" value="" required>'+
+					'<input type="text" class="form-control" id="fnama_barang" name="penerimaan['+_new_item_row+'][nama_barang]" value="" required>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+
-					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" value="">'+
-					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]"></textarea>'+
+					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="penerimaan['+_new_item_row+'][spesifikasi_barang]" value="">'+
+					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="penerimaan['+_new_item_row+'][spesifikasi_barang]"></textarea>'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Uraian Barang</label>'+
-					'<input type="text" class="form-control" id="furaian_barang" name="pengadaan['+_new_item_row+'][uraian_barang]" value="">'+
+					'<input type="text" class="form-control" id="furaian_barang" name="penerimaan['+_new_item_row+'][uraian_barang]" value="">'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Qty</label>'+
-					'<input type="text" class="form-control" id="fqty" name="pengadaan['+_new_item_row+'][qty]" value="">'+
+					'<input type="text" class="form-control" id="fqty" name="penerimaan['+_new_item_row+'][qty]" value="">'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fketerangan">Keterangan</label>'+
-					'<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan['+_new_item_row+'][keterangan]"></textarea>'+
+					'<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="penerimaan['+_new_item_row+'][keterangan]"></textarea>'+
 				'</div>'+
 				'<div class="form-group">'+
 				'<a href="javascript:void(0);" class="btn btn-danger remove-item" data-item="'+_new_item_row+'">Hapus Item</a>'+

@@ -11,6 +11,7 @@ class PengadaanModel extends Model
     protected $table = 'pengadaan';    
     protected $fillable = [
     	'user_id',
+    	'actor',
         'status',        
         'permissions',
         'pengajuan',
@@ -38,4 +39,35 @@ class PengadaanModel extends Model
         return $query;
     }
 
+    public function scopeNormalPengadaanActive($query){
+        $query
+            ->select('pengadaan.*')
+            ->where('status', '=', '1')
+            ->join('users', 'users.id', 'pengadaan.user_id');
+        return $query;
+    }
+
+    public function scopeNormalPengadaanPending($query){
+        $query
+            ->select('pengadaan.*')
+            ->where('status', '=', '0')
+            ->join('users', 'users.id', 'pengadaan.user_id');
+        return $query;
+    }
+
+    public function scopeNormalPengadaanPendingWaka($query){
+        $query
+            ->select('pengadaan.*')
+            ->where('approve_wakasek', '=', '0')
+            ->join('users', 'users.id', 'pengadaan.user_id');
+        return $query;
+    }
+
+    public function scopeNormalPengadaanPendingKepsek($query){
+        $query
+            ->select('pengadaan.*')
+            ->where('approve_kepsek', '=', '0')
+            ->join('users', 'users.id', 'pengadaan.user_id');
+        return $query;
+    }
 }

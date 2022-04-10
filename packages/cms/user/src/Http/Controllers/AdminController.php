@@ -28,24 +28,29 @@ class AdminController extends Controller
 
 	public function create()
 	{
-        $roles = RoleModel::filterRole()->get();        
+        $roles = RoleModel::filterRoleUser()->get();        
 
 		return view('user::admin.create', ['roles'=>$roles]);
 	}
 
     public function edit($id, Request $request)
     {        
-        $user = UserModel::with('role')->find($id);        
+        $user = UserModel::with('role')->find($id);
+
+        $activation = 0;
+        if($user->activation && $user->activation->completed){
+            $activation = 1;
+        }
         if(!$user){
             abort(404);
         }
         
-        $roles = RoleModel::filterRole()->get();
+        $roles = RoleModel::filterRoleUser()->get();
 
-        return view('user::admin.edit', ['user'=>$user, 'roles'=>$roles]);
-    }    
+        return view('user::admin.edit', ['user'=>$user, 'roles'=>$roles, 'activation'=>$activation]);
+    }   
 
-    public function list(Request $request)
+    public function lists(Request $request)
     {
         $allGet = $request->all();
         $data = [];
@@ -100,14 +105,36 @@ class AdminController extends Controller
         );
     }
 
+    public function editpasswd($id, Request $request)
+    {        
+        $user = UserModel::with('role')->find($id);        
+        if(!$user){
+            abort(404);
+        }
+        
+        $roles = RoleModel::filterRoleUser()->get();
+
+        return view('user::user.editpasswd', ['user'=>$user, 'roles'=>$roles]);
+    }
+
     public function store(Request $request)
     {        
-        $post = $request->input();                    
-        
+        $post = $request->input();
+        // dd(isset($post['password']));
+
         $validate = Validator::make($post, [
             'email' => 'required|email|max:190|unique:users',
-            'name' => 'required|min:2|max:190',
-            'role' => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:5',            
+                'regex:/[a-z]/',     
+                'regex:/[A-Z]/',     
+                'regex:/[0-9]/',     
+                // 'regex:/[@$!%*#?&]/',
+                'required_with:confirm_password',
+                'same:confirm_password',
+            ]
         ]);
 
         if ($validate->fails()) {
@@ -122,35 +149,25 @@ class AdminController extends Controller
             if($role){
                 $credentials = [
                     'email' => $post['email'],
-                    'password' => time(),
-                    'name' => $post['name'],
+                    'password' => $post['password'], //time(),
+                    'full_name' => $post['name'],
+                    'address' => $post['address'],
+                    'gender' => $post['gender'],
+                    'phone' => $post['phone'],
                 ];
                 $user = Sentinel::register($credentials);                    
                 if($user){
                     $role->users()->attach($user);
-                    
-                    // sentinel user activation
-                    $activation = Activation::create($user);
 
-                    // Send Email
-                    $link = route('cms.admin.activate.form', ['code' => $activation->code]);
-                    $emailData = [
-                        'name' => $post['name'],
-                        'link' => $link,
-                    ];
-                    Mail::send('emails.activate', $emailData, function ($message) use ($user)
-                    {
-                        $message->from(config('mail.from.address'), config('mail.from.name'))
-                                ->subject('Activate Your Admin Account')
-                                ->to($user->email);
-                    });
-
-                    $fail = Mail::failures();
-                    if ($fail){
-                        $request->session()->flash('error', $fail[0]);
-                    }else{
-                        $request->session()->flash('message', __('cms.create_success'));
+                    if($post['status']==1) {
+                        $activation = Activation::exists($user);
+                        if($post['status']==1 && !$activation) {
+                            $activation = Activation::create($user);
+                            Activation::complete($user, $activation->code);
+                        }
                     }
+                    
+                    $request->session()->flash('message', __('Data berhasil disimpan'));
                 }
             }
             
@@ -185,8 +202,19 @@ class AdminController extends Controller
                     ->withInput($post);         
             } else {
                 $user->email = $post['email'];
-                $user->name = $post['name'];
+                $user->full_name = $post['name'];
+                $user->address = $post['address'];
+                $user->gender = $post['gender'];
+                $user->phone = $post['phone'];
                 $user->save();
+
+                $activation = Activation::exists($user);
+                if($post['status']==1 && !$activation) {
+                    $activation = Activation::create($user);
+                    Activation::complete($user, $activation->code);
+                } else if($post['status']!=1) {
+                    Activation::remove($user);
+                }
 
                 if(!isset($user->role->role_id)){
                     $role = Sentinel::findRoleById($post['role']);
@@ -206,6 +234,103 @@ class AdminController extends Controller
             }
         }        
     }
+
+    public function updatepasswd($id, Request $request)
+    {
+        $user = UserModel::with('role')->find($id);
+        if(!$user){
+            abort(404);
+        }else{
+            $post = $request->input();                    
+        
+            $validate = Validator::make($post, [
+                'password' => [
+                    'required',
+                    'string',
+                    'min:5',            
+                    'regex:/[a-z]/',     
+                    'regex:/[A-Z]/',     
+                    'regex:/[0-9]/',     
+                    // 'regex:/[@$!%*#?&]/',
+                    'required_with:confirm_password',
+                    'same:confirm_password',
+                ]
+            ]);
+
+            if ($validate->fails()) {
+                $errors = $validate->messages();
+                $post['error'] = $errors->all();
+
+                return redirect()->route('cms.admin.editpasswd', ['id'=>$id])
+                    ->withErrors($validate)
+                    ->withInput($post);         
+            } else {
+                $credentials = [
+                    'password' => $post['password'],
+                ];
+                $user = Sentinel::update($user, $credentials);
+
+                $request->session()->flash('message', __('cms.update_success'));
+                return redirect()->route('cms.admin.view');
+            }
+        }        
+    }
+	
+    public function list(Request $request)
+    {
+        $allGet = $request->all();
+        $data = [];
+        $countTable = 0;
+        $headerCode = 200;
+        $returnErrors = null;
+        
+        try{
+            $columnIndex = $allGet['order'][0]['column'];
+            $searchValue = $allGet['search']['value'];
+            $startDate = $allGet['startDate'];
+            $endDate = $allGet['endDate'];
+
+            $userModel = UserModel::query()->adminUser();
+            if($columnIndex == 0){
+                $userModel->orderBy('users.id' , $allGet['order'][0]['dir']);
+            }else{
+                $userModel->orderBy( 'users.'.$allGet['columns'][$columnIndex]['data'] , $allGet['order'][0]['dir']);
+            }
+            if($searchValue){
+                $userModel->where('users.name', 'like', "%{$searchValue}%");
+            }
+            if($startDate && $endDate){
+                $userModel->whereRaw('DATE(users.created_at) BETWEEN ? AND ?',[$startDate,$endDate]);
+            }
+            $countTable = $userModel->count();
+            $preData = $userModel
+                ->with(['activation'])
+                ->limit($allGet['length'])
+                ->offset($allGet['start'])
+                ->get();
+            $fractal = new Manager();
+            $resource = new Collection($preData, new AdminTransformer());
+            $dataT = $fractal->createData($resource)->toArray();
+            $data = $dataT['data'];
+
+        } catch(\Exception $e){
+            $returnErrors = [ ['field'=>'database', 'message'=>'Internal Server Error '.$e->getMessage()] ];
+            $headerCode = 500;
+        }
+
+        return response()->json(
+            [
+                'data' => $data,
+                'draw' => $allGet['draw'],
+                'recordsFiltered' => $countTable,
+                'recordsTotal' => $countTable,
+                'total_page' => ( (int) (20 / $allGet['length']) ),
+                'old_start' => ((int) $allGet['start']),
+                'errors' => $returnErrors,
+            ],
+            $headerCode
+        );
+    }
     
     public function delete($id, Request $request)
     {
@@ -215,13 +340,10 @@ class AdminController extends Controller
         }else{
             $user->delete();
 
-            $request->session()->flash('message', __('cms.delete_success'));
+            $request->session()->flash('message', __('Data berhasil dihapus'));
             return redirect()->route('cms.admin.view');
         }
     }
-
-
-
 
     public function login()
     {
@@ -243,9 +365,10 @@ class AdminController extends Controller
                 'email'    => $post['username'],
                 'password' => $post['password'],
             ];
+            $auth = Sentinel::authenticate($credentials);
             
             if($auth = Sentinel::authenticate($credentials)){                
-                if($auth->inRole('administrator')){
+                if($auth->inRole('administrator') || $auth->inRole('admin') || $auth->inRole('kepsek') || $auth->inRole('wakasek')) {
                     $role = $auth->roles()->first();
                     AdminHelper::setMenuSession($role);
                     return redirect()->route('cms.dashboard');
@@ -253,7 +376,7 @@ class AdminController extends Controller
                     Sentinel::logout();
                 }
             }
-            $message = __('cms.auth_failed');
+            $message = __('Maaf email & password tidak sesuai');
         }catch(\Cartalyst\Sentinel\Checkpoints\NotActivatedException $e){
             $message = $e->getMessage();
         }catch(\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e){

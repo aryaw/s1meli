@@ -119,7 +119,7 @@ class UserController extends Controller
                         }
                     }
                     
-                    $request->session()->flash('message', __('cms.create_success'));
+                    $request->session()->flash('message', __('Data berhasil disimpan'));
                 }
             }
             
@@ -302,7 +302,7 @@ class UserController extends Controller
             abort(404);
         }else{
             $user->delete();
-            $request->session()->flash('message', __('cms.delete_success'));
+            $request->session()->flash('message', __('Data berhasil dihapus'));
             return redirect()->route('cms.user.view');
         }
     }

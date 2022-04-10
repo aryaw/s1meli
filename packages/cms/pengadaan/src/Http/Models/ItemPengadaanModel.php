@@ -13,6 +13,7 @@ class ItemPengadaanModel extends Model
         'nama_barang',        
         'spesifikasi_barang',
         'uraian_barang',
+        'qty',
         'keterangan',
         'status',
     ];

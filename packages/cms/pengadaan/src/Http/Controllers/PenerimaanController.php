@@ -15,7 +15,7 @@ use DB;
 use Cms\User\Http\Models\UserModel;
 use Sentinel;
 
-class PengadaanController extends Controller
+class PenerimaanController extends Controller
 {		
 	
 
@@ -24,9 +24,9 @@ class PengadaanController extends Controller
 		$user = Sentinel::check();
         if($user) {
             if($user->inRole('kepsek') || $user->inRole('wakasek')) {
-                return view('pengadaan::pengadaan.indexbyrole');
+                return view('pengadaan::penerimaan.indexbyrole');
             } else {
-                return view('pengadaan::pengadaan.index');
+                return view('pengadaan::penerimaan.index');
             }
         }
 	}
@@ -45,7 +45,7 @@ class PengadaanController extends Controller
             $query->where('role_id', '>', 1);
         })->get();
         
-        return view('pengadaan::pengadaan.create', ['user' => $user]);
+        return view('pengadaan::penerimaan.create', ['user' => $user]);
 	}
 
     public function store(Request $request)
@@ -63,44 +63,45 @@ class PengadaanController extends Controller
             $errors = $validate->messages();
             $post['error'] = $errors->all();
 
-            return redirect()->route('cms.pengadaan.create')
+            return redirect()->route('cms.penerimaan.create')
                 ->withErrors($validate)
                 ->withInput($post);
         } else {
-            $pengadaan = new PengadaanModel;
-            $pengadaan->user_id = $post['pemohon'];
-            $pengadaan->jenis_pengajuan = 1;
-            $pengadaan->status = $post['status'];
-            $pengadaan->pengajuan = $post['tgl_pengajuan'];
-            $pengadaan->approve_wakasek = 0;
-            $pengadaan->approve_kepsek = 0;
-            $pengadaan->save();
-            $id_pengajuan = $pengadaan->id;
+            $penerimaan = new PengadaanModel;
+            $penerimaan->user_id = $post['pemohon'];
+            $penerimaan->actor = $post['actor'];
+            $penerimaan->jenis_pengajuan = 2;
+            $penerimaan->status = $post['status'];
+            $penerimaan->pengajuan = $post['tgl_pengajuan'];
+            $penerimaan->approve_wakasek = 1;
+            $penerimaan->approve_kepsek = 1;
+            $penerimaan->save();
+            $id_pengajuan = $penerimaan->id;
 
-            if(isset($post['pengadaan'])) {
-                foreach ($post['pengadaan'] as $key => $data_pengadaan) {
-                    $item_pengadaan = new ItemPengadaanModel;
-                    $item_pengadaan->pengadaan_id = $id_pengajuan;
-                    $item_pengadaan->nama_barang = (isset($data_pengadaan['nama_barang'])) ? ucwords($data_pengadaan['nama_barang']) : '';
-                    $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
-                    $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
-                    $item_pengadaan->qty = (isset($data_pengadaan['qty'])) ? $data_pengadaan['qty'] : 0;
-                    $item_pengadaan->keterangan = (isset($data_pengadaan['keterangan'])) ? $data_pengadaan['keterangan'] : '';
-                    $item_pengadaan->status = 1;
-                    $item_pengadaan->save();
+            if(isset($post['penerimaan'])) {
+                foreach ($post['penerimaan'] as $key => $data_penerimaan) {
+                    $item_penerimaan = new ItemPengadaanModel;
+                    $item_penerimaan->pengadaan_id = $id_pengajuan;
+                    $item_penerimaan->nama_barang = (isset($data_penerimaan['nama_barang'])) ? ucwords($data_penerimaan['nama_barang']) : '';
+                    $item_penerimaan->spesifikasi_barang = (isset($data_penerimaan['spesifikasi_barang'])) ? $data_penerimaan['spesifikasi_barang'] : '';
+                    $item_penerimaan->uraian_barang = (isset($data_penerimaan['uraian_barang'])) ? $data_penerimaan['uraian_barang'] : '';
+                    $item_penerimaan->qty = (isset($data_penerimaan['qty'])) ? $data_penerimaan['qty'] : 0;
+                    $item_penerimaan->keterangan = (isset($data_penerimaan['keterangan'])) ? $data_penerimaan['keterangan'] : '';
+                    $item_penerimaan->status = 2;
+                    $item_penerimaan->save();
                 }
             }
 
             $request->session()->flash('message', __('Data berhasil disimpan'));
             
-            return redirect()->route('cms.pengadaan.view');
+            return redirect()->route('cms.penerimaan.view');
         }
     }
 
     public function edit($id, Request $request)
     {        
-        $pengadaan = PengadaanModel::with('item_pengadaan')->find($id);
-        if(!$pengadaan){
+        $penerimaan = PengadaanModel::with('item_pengadaan')->find($id);
+        if(!$penerimaan){
             abort(404);
         }
 
@@ -108,7 +109,7 @@ class PengadaanController extends Controller
             $query->where('role_id', '>', 1);
         })->get();
 
-        return view('pengadaan::pengadaan.edit', ['pengadaan'=>$pengadaan, 'user'=>$user]);
+        return view('pengadaan::penerimaan.edit', ['penerimaan'=>$penerimaan, 'user'=>$user]);
     }
 
     public function editByRole($id, Request $request)
@@ -125,7 +126,7 @@ class PengadaanController extends Controller
                     $query->where('role_id', '>', 1);
                 })->get();
 
-                return view('pengadaan::pengadaan.editbyrole', ['pengadaan'=>$pengadaan, 'user'=>$user]);
+                return view('pengadaan::penerimaan.editbyrole', ['pengadaan'=>$pengadaan, 'user'=>$user]);
             }
         }
         abort(404);
@@ -146,55 +147,56 @@ class PengadaanController extends Controller
             $errors = $validate->messages();
             $post['error'] = $errors->all();
 
-            return redirect()->route('cms.pengadaan.create')
+            return redirect()->route('cms.penerimaan.create')
                 ->withErrors($validate)
                 ->withInput($post);
         } else {
-            $pengadaan = PengadaanModel::find($id);
-            $pengadaan->user_id = $post['pemohon'];
-            $pengadaan->jenis_pengajuan = $post['jenis_pengajuan'];
-            $pengadaan->status = $post['status'];
-            $pengadaan->pengajuan = $post['tgl_pengajuan'];
-            // $pengadaan->approve_wakasek = 0;
-            // $pengadaan->approve_kepsek = 0;
-            $pengadaan->save();
-            $id_pengajuan = (int)$pengadaan->id;
+            $penerimaan = PengadaanModel::find($id);
+            $penerimaan->user_id = $post['pemohon'];
+            $penerimaan->actor = $post['actor'];
+            $penerimaan->jenis_pengajuan = 2;
+            $penerimaan->status = $post['status'];
+            $penerimaan->pengajuan = $post['tgl_pengajuan'];
+            // $penerimaan->approve_wakasek = 0;
+            // $penerimaan->approve_kepsek = 0;
+            $penerimaan->save();
+            $id_pengajuan = (int)$penerimaan->id;
 
-            if(isset($post['pengadaan'])) {
+            if(isset($post['penerimaan'])) {
                 if(isset($post['item_data'])) {
                     ItemPengadaanModel::where('pengadaan_id', $id_pengajuan)->whereNotIn('id', $post['item_data'])->delete();
                 } else {
                     ItemPengadaanModel::where('pengadaan_id', $id_pengajuan)->delete();
                 }
 
-                foreach ($post['pengadaan'] as $key => $data_pengadaan) {
-                    if(isset($data_pengadaan['item'])) {
-                        $item_pengadaan = ItemPengadaanModel::find($data_pengadaan['item']);
-                        $item_pengadaan->pengadaan_id = $id_pengajuan;
-                        $item_pengadaan->nama_barang = (isset($data_pengadaan['nama_barang'])) ? ucwords($data_pengadaan['nama_barang']) : '';
-                        $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
-                        $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
-                        $item_pengadaan->qty = (isset($data_pengadaan['qty'])) ? $data_pengadaan['qty'] : '';
-                        $item_pengadaan->keterangan = (isset($data_pengadaan['keterangan'])) ? $data_pengadaan['keterangan'] : '';
-                        $item_pengadaan->status = 1;
-                        $item_pengadaan->save();
+                foreach ($post['penerimaan'] as $key => $data_penerimaan) {
+                    if(isset($data_penerimaan['item'])) {
+                        $item_penerimaan = ItemPengadaanModel::find($data_penerimaan['item']);
+                        $item_penerimaan->pengadaan_id = $id_pengajuan;
+                        $item_penerimaan->nama_barang = (isset($data_penerimaan['nama_barang'])) ? ucwords($data_penerimaan['nama_barang']) : '';
+                        $item_penerimaan->spesifikasi_barang = (isset($data_penerimaan['spesifikasi_barang'])) ? $data_penerimaan['spesifikasi_barang'] : '';
+                        $item_penerimaan->uraian_barang = (isset($data_penerimaan['uraian_barang'])) ? $data_penerimaan['uraian_barang'] : '';
+                        $item_penerimaan->qty = (isset($data_penerimaan['qty'])) ? $data_penerimaan['qty'] : '';
+                        $item_penerimaan->keterangan = (isset($data_penerimaan['keterangan'])) ? $data_penerimaan['keterangan'] : '';
+                        $item_penerimaan->status = 2;
+                        $item_penerimaan->save();
                     } else {
-                        $item_pengadaan = new ItemPengadaanModel;
-                        $item_pengadaan->pengadaan_id = $id_pengajuan;
-                        $item_pengadaan->nama_barang = (isset($data_pengadaan['nama_barang'])) ? ucwords($data_pengadaan['nama_barang']) : '';
-                        $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
-                        $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
-                        $item_pengadaan->qty = (isset($data_pengadaan['qty'])) ? $data_pengadaan['qty'] : '';
-                        $item_pengadaan->keterangan = (isset($data_pengadaan['keterangan'])) ? $data_pengadaan['keterangan'] : '';
-                        $item_pengadaan->status = 1;
-                        $item_pengadaan->save();
+                        $item_penerimaan = new ItemPengadaanModel;
+                        $item_penerimaan->pengadaan_id = $id_pengajuan;
+                        $item_penerimaan->nama_barang = (isset($data_penerimaan['nama_barang'])) ? ucwords($data_penerimaan['nama_barang']) : '';
+                        $item_penerimaan->spesifikasi_barang = (isset($data_penerimaan['spesifikasi_barang'])) ? $data_penerimaan['spesifikasi_barang'] : '';
+                        $item_penerimaan->uraian_barang = (isset($data_penerimaan['uraian_barang'])) ? $data_penerimaan['uraian_barang'] : '';
+                        $item_penerimaan->qty = (isset($data_penerimaan['qty'])) ? $data_penerimaan['qty'] : '';
+                        $item_penerimaan->keterangan = (isset($data_penerimaan['keterangan'])) ? $data_penerimaan['keterangan'] : '';
+                        $item_penerimaan->status = 2;
+                        $item_penerimaan->save();
                     }
                 }
             }
 
             $request->session()->flash('message', __('Data berhasil disimpan'));
             
-            return redirect()->route('cms.pengadaan.view');
+            return redirect()->route('cms.penerimaan.view');
         }
     }
 	
@@ -212,7 +214,7 @@ class PengadaanController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $pengadaanModel = PengadaanModel::query()->normalPengadaan()->where('jenis_pengajuan', 1);
+            $pengadaanModel = PengadaanModel::query()->normalPengadaan()->where('jenis_pengajuan', 2);
             if($columnIndex == 0){
                 $pengadaanModel->orderBy('pengadaan.id' , $allGet['order'][0]['dir']);
             }else{
@@ -261,7 +263,7 @@ class PengadaanController extends Controller
         if(!$pengadaan){
             abort(404);
         }
-		return view('pengadaan::pengadaan.detail',[
+		return view('pengadaan::penerimaan.detail',[
             'pengadaan' => $pengadaan,
         ]);
     }
@@ -273,7 +275,7 @@ class PengadaanController extends Controller
         }else{
             $pengadaan->delete();
             $request->session()->flash('message', __('Data berhasil dihapus'));
-            return redirect()->route('cms.pengadaan.view');
+            return redirect()->route('cms.penerimaan.view');
         }
     }
 

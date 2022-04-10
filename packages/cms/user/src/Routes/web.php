@@ -31,11 +31,14 @@ Route::group(['middleware' => ['web', 'app.cms'], 'namespace' => 'Cms\User\Http\
 	
 	// admin
 	Route::get('user/admin','AdminController@index')->name('cms.admin.view');
-	Route::get('user/admin/create','AdminController@create')->name('cms.admin.create');
-	Route::get('user/admin/edit/{id}','AdminController@edit')->name('cms.admin.edit')->where('id', '[0-9]+');
 	Route::post('user/admin/list','AdminController@list')->name('cms.admin.list');
-	Route::post('user/admin','AdminController@store')->name('cms.admin.store');
-	Route::put('user/admin/{id}','AdminController@update')->name('cms.admin.update')->where('id', '[0-9]+');
+	
+	Route::get('user/admin/create','AdminController@create')->name('cms.admin.create');
+	Route::post('user/admin/store/{id}','AdminController@store')->name('cms.admin.store');
+	
+	Route::get('user/admin/edit/{id}','AdminController@edit')->name('cms.admin.edit')->where('id', '[0-9]+');
+	Route::post('user/admin/update/{id}','AdminController@update')->name('cms.admin.update')->where('id', '[0-9]+');
+	
 	Route::get('user/admin/delete/{id}','AdminController@delete')->name('cms.admin.delete')->where('id', '[0-9]+');	
 
 	// user
