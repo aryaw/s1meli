@@ -70,6 +70,7 @@ class PengadaanController extends Controller
             $pengadaan = new PengadaanModel;
             $pengadaan->user_id = $post['pemohon'];
             $pengadaan->jenis_pengajuan = 1;
+            $pengadaan->nomor_laporan = $post['nomor_laporan'];
             $pengadaan->status = $post['status'];
             $pengadaan->pengajuan = $post['tgl_pengajuan'];
             $pengadaan->approve_wakasek = 0;
@@ -152,8 +153,9 @@ class PengadaanController extends Controller
         } else {
             $pengadaan = PengadaanModel::find($id);
             $pengadaan->user_id = $post['pemohon'];
-            $pengadaan->jenis_pengajuan = $post['jenis_pengajuan'];
+            $pengadaan->jenis_pengajuan = 1;
             $pengadaan->status = $post['status'];
+            $pengadaan->nomor_laporan = $post['nomor_laporan'];
             $pengadaan->pengajuan = $post['tgl_pengajuan'];
             // $pengadaan->approve_wakasek = 0;
             // $pengadaan->approve_kepsek = 0;

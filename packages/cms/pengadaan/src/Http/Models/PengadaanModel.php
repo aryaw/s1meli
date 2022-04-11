@@ -12,6 +12,7 @@ class PengadaanModel extends Model
     protected $fillable = [
     	'user_id',
     	'actor',
+        'nomor_laporan',
         'status',        
         'permissions',
         'pengajuan',

@@ -10,7 +10,7 @@ return [
         'path' => $prefix.'/dashboard' // active link indicator
     ],
 	[
-		'name' => 'Inventariss',
+		'name' => 'Inventaris',
 		'fa' => 'fa-users',
 		'path' => $prefix.'/dashboard',
 		'subs' => [

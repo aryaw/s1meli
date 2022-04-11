@@ -44,8 +44,10 @@ class PenerimaanController extends Controller
         $user = UserModel::with(['role'])->whereHas('role', function($query) {
             $query->where('role_id', '>', 1);
         })->get();
+
+        $no_laporan = PengadaanModel::get();
         
-        return view('pengadaan::penerimaan.create', ['user' => $user]);
+        return view('pengadaan::penerimaan.create', ['user' => $user, 'no_laporan' => $no_laporan]);
 	}
 
     public function store(Request $request)
@@ -109,7 +111,9 @@ class PenerimaanController extends Controller
             $query->where('role_id', '>', 1);
         })->get();
 
-        return view('pengadaan::penerimaan.edit', ['penerimaan'=>$penerimaan, 'user'=>$user]);
+        $no_laporan = PengadaanModel::get();
+
+        return view('pengadaan::penerimaan.edit', ['penerimaan'=>$penerimaan, 'user'=>$user, 'no_laporan' => $no_laporan]);
     }
 
     public function editByRole($id, Request $request)

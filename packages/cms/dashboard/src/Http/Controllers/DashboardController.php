@@ -33,7 +33,7 @@ class DashboardController extends Controller
 		$barangPenerimaan = ItemPengadaanModel::where('status', 2)->get();
 
 		// list barang perbaikan
-		$barangPerbaiakan = ItemPengadaanModel::where('status', 3)->get();
+		$barangPerbaikan = ItemPengadaanModel::where('status', 3)->get();
 		
 		// list barang kerusakan
 		$barangKerusakan = ItemPengadaanModel::where('status', 4)->get();
@@ -43,7 +43,7 @@ class DashboardController extends Controller
 			'pending_kepsek' => $pending_kepsek,
 			'barangPengadaan' => $barangPengadaan,
 			'barangPenerimaan' => $barangPenerimaan,
-			'barangPerbaiakan' => $barangPerbaiakan,
+			'barangPerbaikan' => $barangPerbaikan,
 			'barangKerusakan' => $barangKerusakan,
 		]);
 	}

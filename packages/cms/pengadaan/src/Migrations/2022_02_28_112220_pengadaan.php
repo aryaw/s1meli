@@ -17,6 +17,7 @@ class Pengadaan extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->text('actor')->nullable();
+            $table->text('nomor_laporan')->nullable();
             $table->integer('jenis_pengajuan')->default(0);
             $table->integer('status')->default(0);
             $table->integer('approve_wakasek')->default(0);

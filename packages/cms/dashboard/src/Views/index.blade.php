@@ -78,7 +78,49 @@
                   @foreach($barangPenerimaan as $penerimaan)
                   <li>
                     <span class="text">{{ $penerimaan->nama_barang }}</span>
-                    <small class="label label-info"><i class="fa fa-clock-o"></i> {{ $penerimaan->qty }}</small>
+                    <small class="label label-success"><i class="fa fa-clock-o"></i> {{ $penerimaan->qty }}</small>
+                  </li>
+                  @endforeach
+                @endif
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="row">
+        <section class="col-lg-6 connectedSortable">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Perbaikan Barang</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="todo-list">
+                @if(isset($barangKerusakan))
+                  @foreach($barangPerbaikan as $perbaiakn)
+                  <li>
+                    <span class="text">{{ $perbaiakn->nama_barang }}</span>
+                    <small class="label label-warning"><i class="fa fa-clock-o"></i> {{ $perbaiakn->qty }}</small>
+                  </li>
+                  @endforeach
+                @endif
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-6 connectedSortable">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Kerusakan Barang</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="todo-list">
+                @if(isset($barangKerusakan))
+                  @foreach($barangKerusakan as $kerusakan)
+                  <li>
+                    <span class="text">{{ $kerusakan->nama_barang }}</span>
+                    <small class="label label-warning"><i class="fa fa-clock-o"></i> {{ $kerusakan->qty }}</small>
                   </li>
                   @endforeach
                 @endif

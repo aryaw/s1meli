@@ -42,6 +42,19 @@
 								@endif
 							</div>
 
+							<div class="form-group {{ ($errors->first('nomor_laporan')) ? 'has-error' : '' }}">
+								<label for="fnomor_laporan">No. Laporan</label>
+								<select name="nomor_laporan" class="form-control" id="fnomor_laporan">
+									<option value="">-- Pilih Laporan --</option>
+									@foreach($no_laporan as $laporan)
+										<option value="{{ $laporan->nomor_laporan }}" {{ (old('nomor_laporan')==$laporan->nomor_laporan) ? 'selected' : '' }}>{{ $laporan->nomor_laporan }}</option>
+									@endforeach
+								</select>
+								@if($errors->has('nomor_laporan'))										
+									<span class="help-block">{{ $errors->first('nomor_laporan') }}</span>
+								@endif
+							</div>
+
 							<div class="form-group {{ ($errors->first('actor')) ? 'has-error' : '' }}">
 								<label for="factor">Penerima Barang</label>
 								<textarea class="form-control" placeholder="Penerima Barang" id="factor" name="actor" required></textarea>

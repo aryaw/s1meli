@@ -42,6 +42,14 @@
 						@endif
 					</div>
 
+					<div class="form-group {{ ($errors->first('nomor_laporan')) ? 'has-error' : '' }}">
+						<label for="fnomor_laporan">No. Laporan</label>
+						<textarea class="form-control" placeholder="No. Laporan" id="fnomor_laporan" name="nomor_laporan" required>{{ $pengadaan->nomor_laporan }}</textarea>
+						@if($errors->has('nomor_laporan'))										
+							<span class="help-block">{{ $errors->first('nomor_laporan') }}</span>
+						@endif
+					</div>
+
 					<div class="form-group {{ ($errors->first('tgl_pengajuan')) ? 'has-error' : '' }}">
 						<label for="ftgl_pengajuan">Tanggal Pengajuan</label>
 						<input type="text" class="form-control datepicker" id="ftgl_pengajuan" name="tgl_pengajuan" value="{{ $pengadaan->pengajuan }}" required>
@@ -83,11 +91,6 @@
 							<div class="form-group">
 								<label for="fspesifikasi_barang">Spesifikasi Barang</label>
 								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" name="pengadaan[{{ $item_key }}][spesifikasi_barang]" >{{ $item->spesifikasi_barang }}</textarea>
-							</div>
-
-							<div class="form-group">
-								<label for="furaian_barang">Uraian Barang</label>
-								<input type="text" class="form-control" id="furaian_barang" name="pengadaan[{{ $item_key }}][uraian_barang]" value="{{ $item->uraian_barang }}" >
 							</div>
 
 							<div class="form-group">
@@ -157,10 +160,6 @@
 					'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+
 					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" value="" >'+
 					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" ></textarea>'+
-				'</div>'+
-				'<div class="form-group">'+
-					'<label for="furaian_barang">Uraian Barang</label>'+
-					'<input type="text" class="form-control" id="furaian_barang" name="pengadaan['+_new_item_row+'][uraian_barang]" value="" >'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Qty</label>'+

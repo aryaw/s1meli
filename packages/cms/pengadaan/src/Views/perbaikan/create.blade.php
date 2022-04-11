@@ -76,7 +76,7 @@
 									</div>
 
 									<div class="form-group">
-										<label for="furaian_barang">Uraian Barang</label>
+										<label for="furaian_barang">Uraian Kerusakan</label>
 										<input type="text" class="form-control" id="furaian_barang" name="perbaikan[1][uraian_barang]" value="">
 									</div>
 									
@@ -146,7 +146,7 @@
 					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="perbaikan['+_new_item_row+'][spesifikasi_barang]"></textarea>'+
 				'</div>'+
 				'<div class="form-group">'+
-					'<label for="furaian_barang">Uraian Barang</label>'+
+					'<label for="furaian_barang">Uraian Kerusakan</label>'+
 					'<input type="text" class="form-control" id="furaian_barang" name="perbaikan['+_new_item_row+'][uraian_barang]" value="">'+
 				'</div>'+
 				'<div class="form-group">'+
