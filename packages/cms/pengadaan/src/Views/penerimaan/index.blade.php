@@ -60,23 +60,10 @@
                     <th>Status</th>
                     <th>Dibuat</th>
                     <th>Wakasek</th>
-                    <th>Kepsek</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>                
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>No</th>
-                    <th>Pemohon</th>
-                    <th>Status</th>
-                    <th>Dibuat</th>
-                    <th>Wakasek</th>
-                    <th>Kepsek</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
 
@@ -154,20 +141,20 @@
             { data:'full_name', orderable:false },
             { data:'status', orderable:false },
             { data:'pengajuan'},
-            { data:null, render:function(data, type, row, meta) {
-              if(data.approve_wakasek == 'Pending') {
-                return '<label class="label label-warning">Pending</label>';
-              } else if(data.approve_wakasek == 'Confirm') {
-                return '<label class="label label-success">Approved</label>';
-              }
-            }},
-            { data:null, render:function(data, type, row, meta) {
-              if(data.approve_kepsek == 'Pending') {
-                return '<label class="label label-warning">Pending</label>';
-              } else if(data.approve_kepsek == 'Confirm') {
-                return '<label class="label label-success">Approved</label>';
-              }
-            }},
+            // { data:null, render:function(data, type, row, meta) {
+            //   if(data.approve_wakasek == 'Pending') {
+            //     return '<label class="label label-warning">Pending</label>';
+            //   } else if(data.approve_wakasek == 'Confirm') {
+            //     return '<label class="label label-success">Approved</label>';
+            //   }
+            // }},
+            // { data:null, render:function(data, type, row, meta) {
+            //   if(data.approve_kepsek == 'Pending') {
+            //     return '<label class="label label-warning">Pending</label>';
+            //   } else if(data.approve_kepsek == 'Confirm') {
+            //     return '<label class="label label-success">Approved</label>';
+            //   }
+            // }},
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;

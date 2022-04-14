@@ -67,17 +67,6 @@
                 </thead>
                 <tbody>                
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>No</th>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Last Login</th>
-                    <th>Created At</th>
-                    <th>Modified At</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
             
@@ -121,8 +110,8 @@
             { data:'created_at'},
             { data:'updated_at'},
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
-              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/user/admin/edit/' + data.id +'" admin="button">Edit</a>';
-              var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/user/admin/delete/' + data.id +'" data-title="'+data.name+'" admin="button">Delete</a>';
+              var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/admin/edit/' + data.id +'" admin="button">Edit</a>';
+              var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/admin/delete/' + data.id +'" data-title="'+data.name+'" admin="button">Delete</a>';
               return editButton + deleteButton;
             }}
           ],
@@ -144,7 +133,7 @@
               withCredentials : true
             },
             crossDomain : true,
-            url : ADMIN_URL + '/user/admin/list',
+            url : ADMIN_URL + '/admin/list',
             type : 'POST',
             error: function( xhr, textStatus, error)
             {

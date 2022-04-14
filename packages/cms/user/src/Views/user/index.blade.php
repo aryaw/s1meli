@@ -76,20 +76,6 @@
                 </thead>
                 <tbody>                
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>No</th>
-                    <th>Email</th>
-                    <!-- <th>Name</th> -->
-                    <th>Full Name</th>
-                    <!-- <th>Last Name</th> -->
-                    <th>Status</th>
-                    <th>Last Login</th>
-                    <th>Created At</th>
-                    <th>Modified At</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
 

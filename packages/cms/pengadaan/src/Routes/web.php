@@ -10,8 +10,9 @@ Route::group(['middleware' => ['web', 'app.cms'], 'namespace' => 'Cms\Pengadaan\
 	Route::post('pengadaan/store','PengadaanController@store')->name('cms.pengadaan.store');
 	
 	Route::get('pengadaan/edit/{id}','PengadaanController@edit')->name('cms.pengadaan.edit')->where('id', '[0-9]+');
-	Route::get('pengadaan/editbyrole/{id}','PengadaanController@editByRole')->name('cms.pengadaan.editbyrole')->where('id', '[0-9]+');
+	Route::get('pengadaan/show/{id}','PengadaanController@show')->name('cms.pengadaan.show')->where('id', '[0-9]+');
 	Route::post('pengadaan/update/{id}','PengadaanController@update')->name('cms.pengadaan.update')->where('id', '[0-9]+');
+	Route::post('pengadaan/updatebyrole/{id}','PengadaanController@updateByRole')->name('cms.pengadaan.updatebyrole')->where('id', '[0-9]+');
 
 	// penerimaan
 	Route::get('penerimaan/list','PenerimaanController@index')->name('cms.penerimaan.view');
@@ -23,7 +24,7 @@ Route::group(['middleware' => ['web', 'app.cms'], 'namespace' => 'Cms\Pengadaan\
 	Route::post('penerimaan/store','PenerimaanController@store')->name('cms.penerimaan.store');
 	
 	Route::get('penerimaan/edit/{id}','PenerimaanController@edit')->name('cms.penerimaan.edit')->where('id', '[0-9]+');
-	Route::get('penerimaan/editbyrole/{id}','PenerimaanController@editByRole')->name('cms.penerimaan.editbyrole')->where('id', '[0-9]+');
+	Route::get('penerimaan/show/{id}','PenerimaanController@view')->name('cms.penerimaan.show')->where('id', '[0-9]+');
 	Route::post('penerimaan/update/{id}','PenerimaanController@update')->name('cms.penerimaan.update')->where('id', '[0-9]+');
 
 	// perbaikan

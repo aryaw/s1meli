@@ -16,6 +16,8 @@ class PengadaanModel extends Model
         'status',        
         'permissions',
         'pengajuan',
+        'tgl_penerimaan',
+        'nota',
         'approve_wakasek',
         'approve_kepsek',
     ];

@@ -57,7 +57,7 @@ class PenerimaanController extends Controller
 
         $validate = Validator::make($post, [
             'pemohon' => 'required',
-            'tgl_pengajuan' => 'required',
+            'tgl_penerimaan' => 'required',
             'status' => 'required',
         ]);
 
@@ -74,7 +74,7 @@ class PenerimaanController extends Controller
             $penerimaan->actor = $post['actor'];
             $penerimaan->jenis_pengajuan = 2;
             $penerimaan->status = $post['status'];
-            $penerimaan->pengajuan = $post['tgl_pengajuan'];
+            $penerimaan->pengajuan = $post['tgl_penerimaan'];
             $penerimaan->approve_wakasek = 1;
             $penerimaan->approve_kepsek = 1;
             $penerimaan->save();
@@ -116,21 +116,23 @@ class PenerimaanController extends Controller
         return view('pengadaan::penerimaan.edit', ['penerimaan'=>$penerimaan, 'user'=>$user, 'no_laporan' => $no_laporan]);
     }
 
-    public function editByRole($id, Request $request)
-    {        
+    public function view($id, Request $request)
+    {
         $user = Sentinel::check();
         if($user) {
-            if($user->inRole('kepsek') || $user->inRole('wakasek')) {
+            if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator')) {
                 $pengadaan = PengadaanModel::with('item_pengadaan')->find($id);
                 if(!$pengadaan){
                     abort(404);
                 }
 
                 $user = UserModel::with(['role'])->whereHas('role', function($query) {
-                    $query->where('role_id', '>', 1);
+                    $query->where('slug', '=', 'admin')
+                    ->orWhere('slug', '=', 'wakasek')
+                    ->orWhere('slug', '=', 'kepsek');
                 })->get();
 
-                return view('pengadaan::penerimaan.editbyrole', ['pengadaan'=>$pengadaan, 'user'=>$user]);
+                return view('pengadaan::penerimaan.view', ['pengadaan'=>$pengadaan, 'user'=>$user]);
             }
         }
         abort(404);
@@ -143,7 +145,7 @@ class PenerimaanController extends Controller
 
         $validate = Validator::make($post, [
             'pemohon' => 'required',
-            'tgl_pengajuan' => 'required',
+            'tgl_penerimaan' => 'required',
             'status' => 'required',
         ]);
 
@@ -160,7 +162,7 @@ class PenerimaanController extends Controller
             $penerimaan->actor = $post['actor'];
             $penerimaan->jenis_pengajuan = 2;
             $penerimaan->status = $post['status'];
-            $penerimaan->pengajuan = $post['tgl_pengajuan'];
+            $penerimaan->pengajuan = $post['tgl_penerimaan'];
             // $penerimaan->approve_wakasek = 0;
             // $penerimaan->approve_kepsek = 0;
             $penerimaan->save();

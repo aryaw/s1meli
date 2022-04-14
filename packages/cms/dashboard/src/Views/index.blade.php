@@ -58,7 +58,7 @@
                   @foreach($barangPengadaan as $pengadaan)
                   <li>
                     <span class="text">{{ $pengadaan->nama_barang }}</span>
-                    <small class="label label-primary"><i class="fa fa-clock-o"></i> {{ $pengadaan->qty }}</small>
+                    <small class="label label-primary"> {{ $pengadaan->qty }}</small>
                   </li>
                   @endforeach
                 @endif
@@ -78,7 +78,7 @@
                   @foreach($barangPenerimaan as $penerimaan)
                   <li>
                     <span class="text">{{ $penerimaan->nama_barang }}</span>
-                    <small class="label label-success"><i class="fa fa-clock-o"></i> {{ $penerimaan->qty }}</small>
+                    <small class="label label-success"> {{ $penerimaan->qty }}</small>
                   </li>
                   @endforeach
                 @endif
@@ -100,7 +100,7 @@
                   @foreach($barangPerbaikan as $perbaiakn)
                   <li>
                     <span class="text">{{ $perbaiakn->nama_barang }}</span>
-                    <small class="label label-warning"><i class="fa fa-clock-o"></i> {{ $perbaiakn->qty }}</small>
+                    <small class="label label-warning"> {{ $perbaiakn->qty }}</small>
                   </li>
                   @endforeach
                 @endif
@@ -120,7 +120,7 @@
                   @foreach($barangKerusakan as $kerusakan)
                   <li>
                     <span class="text">{{ $kerusakan->nama_barang }}</span>
-                    <small class="label label-warning"><i class="fa fa-clock-o"></i> {{ $kerusakan->qty }}</small>
+                    <small class="label label-warning"> {{ $kerusakan->qty }}</small>
                   </li>
                   @endforeach
                 @endif

@@ -64,6 +64,14 @@ class UserModel extends CartalystUser
         return $query;
     }
 
+    public function scopeAdminAll($query){
+        $query
+            ->select('users.*')
+            ->join('role_users', 'role_users.user_id', 'users.id')
+            ->join('roles', 'roles.id', 'role_users.role_id');
+        return $query;
+    }
+
     public function delete()
 	{        
         $result = ResultModel::where('user_id', $this->id)->first();

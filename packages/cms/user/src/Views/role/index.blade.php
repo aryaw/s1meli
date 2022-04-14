@@ -68,16 +68,6 @@
                   </thead>
                   <tbody>                
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>No</th>
-                      <th>Slug</th>
-                      <th>Name</th>										
-                      <th>Created At</th>
-                      <th>Modified At</th>
-                      <th>Action</th>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
               

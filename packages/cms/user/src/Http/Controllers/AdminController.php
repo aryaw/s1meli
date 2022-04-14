@@ -64,7 +64,7 @@ class AdminController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $userModel = UserModel::query()->adminUser();
+            $userModel = UserModel::query()->adminAll();
             if($columnIndex == 0){
                 $userModel->orderBy('id' , $allGet['order'][0]['dir']);
             }else{
@@ -290,7 +290,7 @@ class AdminController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $userModel = UserModel::query()->adminUser();
+            $userModel = UserModel::query()->adminAll();
             if($columnIndex == 0){
                 $userModel->orderBy('users.id' , $allGet['order'][0]['dir']);
             }else{

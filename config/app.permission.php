@@ -164,8 +164,8 @@ return [
 			'parent' => 'pengadaan'
 		],
 		[
-			'name' => 'Update Pengadaan Status',
-			'code' => 'cms.pengadaan.editbyrole',
+			'name' => 'View Pengadaan',
+			'code' => 'cms.pengadaan.show',
 			'parent' => 'pengadaan'
 		],
 		[

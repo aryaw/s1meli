@@ -66,17 +66,6 @@
                 </thead>
                 <tbody>                
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>No</th>
-                    <th>Pemohon</th>
-                    <th>Status</th>
-                    <th>Dibuat</th>
-                    <th>Wakasek</th>
-                    <th>Kepsek</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
 
@@ -171,9 +160,10 @@
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
+              var viewButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/show/' + data.id +'" role="button">View</a>';
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/edit/' + data.id +'" role="button">Edit</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/pengadaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
-              return editButton + deleteButton;
+              return viewButton + editButton + deleteButton;
             }}
           ],
           ajax : {

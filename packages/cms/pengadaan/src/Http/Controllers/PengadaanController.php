@@ -112,21 +112,25 @@ class PengadaanController extends Controller
         return view('pengadaan::pengadaan.edit', ['pengadaan'=>$pengadaan, 'user'=>$user]);
     }
 
-    public function editByRole($id, Request $request)
+    public function show($id, Request $request)
     {        
         $user = Sentinel::check();
         if($user) {
-            if($user->inRole('kepsek') || $user->inRole('wakasek')) {
-                $pengadaan = PengadaanModel::with('item_pengadaan')->find($id);
+            if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator')) {
+                $pengadaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
                 if(!$pengadaan){
                     abort(404);
                 }
+                
+                $btn = "admin";
+                if($user->inRole('kepsek')) {
+                    $btn = "wakasek";
+                }
 
-                $user = UserModel::with(['role'])->whereHas('role', function($query) {
-                    $query->where('role_id', '>', 1);
-                })->get();
-
-                return view('pengadaan::pengadaan.editbyrole', ['pengadaan'=>$pengadaan, 'user'=>$user]);
+                if($user->inRole('wakasek')) {
+                    $btn = "kepsek";
+                }
+                return view('pengadaan::pengadaan.view', ['pengadaan'=>$pengadaan, 'btn'=>$btn]);
             }
         }
         abort(404);
@@ -192,6 +196,40 @@ class PengadaanController extends Controller
                         $item_pengadaan->save();
                     }
                 }
+            }
+
+            $request->session()->flash('message', __('Data berhasil disimpan'));
+            
+            return redirect()->route('cms.pengadaan.view');
+        }
+    }
+
+    public function updateByRole(Request $request)
+    {        
+        $post = $request->input();
+        $id = (int)$request->route('id');
+
+        $validate = Validator::make($post, [
+            'approval' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            $errors = $validate->messages();
+            $post['error'] = $errors->all();
+
+            return redirect()->route('cms.pengadaan.list')
+                ->withErrors($validate)
+                ->withInput($post);
+        } else {
+            $pengadaan = PengadaanModel::find($id);
+            $user = Sentinel::check();
+            if($user) {
+                if($user->inRole('kepsek')) {
+                    $pengadaan->approve_kepsek = 1;
+                } else if($user->inRole('wakasek')) {
+                    $pengadaan->approve_wakasek = 1;
+                }
+                $pengadaan->save();
             }
 
             $request->session()->flash('message', __('Data berhasil disimpan'));

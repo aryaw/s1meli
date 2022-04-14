@@ -63,11 +63,11 @@
 								@endif
 							</div>
 
-							<div class="form-group {{ ($errors->first('tgl_pengajuan')) ? 'has-error' : '' }}">
-								<label for="ftgl_pengajuan">Tanggal Pengajuan</label>
-								<input type="text" class="form-control datepicker" id="ftgl_pengajuan" name="tgl_pengajuan" value="{{ old('tgl_pengajuan') }}" required>
-								@if($errors->has('tgl_pengajuan'))										
-									<span class="help-block">{{ $errors->first('tgl_pengajuan') }}</span>
+							<div class="form-group {{ ($errors->first('tgl_penerimaan')) ? 'has-error' : '' }}">
+								<label for="ftgl_penerimaan">Tanggal Penerimaan</label>
+								<input type="text" class="form-control datepicker" id="ftgl_penerimaan" name="tgl_penerimaan" value="{{ old('tgl_penerimaan') }}" required>
+								@if($errors->has('tgl_penerimaan'))										
+									<span class="help-block">{{ $errors->first('tgl_penerimaan') }}</span>
 								@endif
 							</div>
 

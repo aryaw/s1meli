@@ -66,17 +66,6 @@
                 </thead>
                 <tbody>                
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>No</th>
-                    <th>Pemohon</th>
-                    <th>Status</th>
-                    <th>Dibuat</th>
-                    <th>Wakasek</th>
-                    <th>Kepsek</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
 

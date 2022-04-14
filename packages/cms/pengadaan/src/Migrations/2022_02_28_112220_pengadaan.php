@@ -22,7 +22,9 @@ class Pengadaan extends Migration
             $table->integer('status')->default(0);
             $table->integer('approve_wakasek')->default(0);
             $table->integer('approve_kepsek')->default(0);
-            $table->date('pengajuan');
+            $table->date('pengajuan')->nullable();
+            $table->date('tgl_penerimaan')->nullable();
+            $table->text('nota')->nullable();
             $table->timestamps();
 
             $table->engine = 'InnoDB';
