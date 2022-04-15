@@ -57,11 +57,11 @@ return [
 				'permission' => 'cms.rolemanagement.create',
 				'path' => $prefix.'/user/rmanagement',
 			],
-			// [
-			// 	'name' => 'User',
-			// 	'permission' => 'cms.user.view',
-			// 	'path' => $prefix.'/user/list',				
-			// ],			
+			[
+				'name' => 'User',
+				'permission' => 'cms.user.view',
+				'path' => $prefix.'/user/list',				
+			],			
 		]
 	],
 
