@@ -27,7 +27,7 @@
           <!-- /.box-header -->
 					
 					<!-- form start -->
-					{!! Form::open(['route' => 'cms.penerimaan.store', 'role'=>'form', 'autocomplete'=>'off']) !!}	
+					{!! Form::open(['route' => 'cms.penerimaan.store', 'role'=>'form', 'autocomplete'=>'off', 'enctype'=>'multipart/form-data']) !!}	
 						<div class="box-body">
 							<div class="form-group {{ ($errors->first('pemohon')) ? 'has-error' : '' }}">
 								<label for="fpemohon">Pemohon</label>
@@ -46,8 +46,10 @@
 								<label for="fnomor_laporan">No. Laporan</label>
 								<select name="nomor_laporan" class="form-control" id="fnomor_laporan">
 									<option value="">-- Pilih Laporan --</option>
-									@foreach($no_laporan as $laporan)
-										<option value="{{ $laporan->nomor_laporan }}" {{ (old('nomor_laporan')==$laporan->nomor_laporan) ? 'selected' : '' }}>{{ $laporan->nomor_laporan }}</option>
+									@foreach($no_laporan as $nmer)\
+										@if($nmer->nomor_laporan)
+										<option value="{{ $nmer->nomor_laporan }}" {{ (old('nomor_laporan')==$nmer->nomor_laporan) ? 'selected' : '' }}>{{ $nmer->nomor_laporan }}</option>
+										@endif
 									@endforeach
 								</select>
 								@if($errors->has('nomor_laporan'))										
@@ -71,6 +73,14 @@
 								@endif
 							</div>
 
+							<div class="form-group {{ ($errors->first('nota')) ? 'has-error' : '' }}">
+								<label for="fnota">Nota</label>
+								<input type="file" class="form-control" id="fnota" name="nota" value="{{ old('nota') }}" >
+								@if($errors->has('nota'))										
+									<span class="help-block">{{ $errors->first('nota') }}</span>
+								@endif
+							</div>
+
 							<div class="form-group {{ ($errors->first('status')) ? 'has-error' : '' }}">
 								<label for="fstatus">Status</label>
 								<select name="status" class="form-control" id="fstatus">
@@ -88,12 +98,12 @@
 								<div class="box-body item-pengajuan" id="item-pengajuan1">
 									<div class="form-group">
 										<label for="fnama_barang">Nama Barang</label>
-										<input type="text" class="form-control" id="fnama_barang" name="penerimaan[1][nama_barang]" value="" required>
+										<input type="text" class="form-control" id="fnama_barang" name="penerimaan[1][nama_barang]" value="">
 									</div>
 
 									<div class="form-group">
 										<label for="fspesifikasi_barang">Spesifikasi Barang</label>
-										<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="penerimaan[1][spesifikasi_barang]" required></textarea>
+										<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="penerimaan[1][spesifikasi_barang]"></textarea>
 									</div>
 
 									<div class="form-group">
@@ -159,7 +169,7 @@
 		  	_html = '<div class="box-body item-pengajuan" id="item-pengajuan'+_new_item_row+'">'+
 				'<div class="form-group">'+
 					'<label for="fnama_barang">Nama Barang</label>'+
-					'<input type="text" class="form-control" id="fnama_barang" name="penerimaan['+_new_item_row+'][nama_barang]" value="" required>'+
+					'<input type="text" class="form-control" id="fnama_barang" name="penerimaan['+_new_item_row+'][nama_barang]" value="">'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+

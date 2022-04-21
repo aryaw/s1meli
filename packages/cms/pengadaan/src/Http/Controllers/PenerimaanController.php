@@ -17,7 +17,7 @@ use Sentinel;
 
 class PenerimaanController extends Controller
 {		
-	
+    private $uploadDir = 'nota/penerimaan';
 
 	public function index()
 	{
@@ -52,13 +52,14 @@ class PenerimaanController extends Controller
 
     public function store(Request $request)
     {        
-        $post = $request->input();
+        $post = $request->all();
         // dd($post);
 
         $validate = Validator::make($post, [
             'pemohon' => 'required',
             'tgl_penerimaan' => 'required',
             'status' => 'required',
+            'nota' => 'required|max:3020|mimetypes:'.config('app.constants.image_mime'),
         ]);
 
         if ($validate->fails()) {
@@ -69,12 +70,19 @@ class PenerimaanController extends Controller
                 ->withErrors($validate)
                 ->withInput($post);
         } else {
+            $nota = '';
+            $sub = strtotime(date('Y-m'));
+            if($request->file('nota') && $request->file('nota')->isValid()) {
+                $nota = $request->file('nota')->store("{$this->uploadDir}/{$sub}");
+            }
+
             $penerimaan = new PengadaanModel;
             $penerimaan->user_id = $post['pemohon'];
             $penerimaan->actor = $post['actor'];
             $penerimaan->jenis_pengajuan = 2;
             $penerimaan->status = $post['status'];
             $penerimaan->pengajuan = $post['tgl_penerimaan'];
+            $penerimaan->nota = $nota;
             $penerimaan->approve_wakasek = 1;
             $penerimaan->approve_kepsek = 1;
             $penerimaan->save();

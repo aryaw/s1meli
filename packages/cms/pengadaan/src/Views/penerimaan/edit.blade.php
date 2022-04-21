@@ -47,7 +47,9 @@
 						<select name="nomor_laporan" class="form-control" id="fnomor_laporan">
 							<option value="">-- Pilih Pemohon --</option>
 							@foreach($no_laporan as $laporan)
+								@if($nmer->nomor_laporan)
 								<option value="{{ $laporan->nomor_laporan }}" {{ ($penerimaan->user_id==$laporan->nomor_laporan) ? 'selected' : '' }}>{{ $laporan->nomor_laporan }}</option>
+								@endif
 							@endforeach
 						</select>
 					</div>
@@ -65,6 +67,14 @@
 						<input type="text" class="form-control datepicker" id="ftgl_penerimaan" name="tgl_penerimaan" value="{{ $penerimaan->tgl_penerimaan }}" required>
 						@if($errors->has('tgl_penerimaan'))										
 							<span class="help-block">{{ $errors->first('tgl_penerimaan') }}</span>
+						@endif
+					</div>
+
+					<div class="form-group {{ ($errors->first('nota')) ? 'has-error' : '' }}">
+						<label for="fnota">Nota</label>
+						<input type="file" class="form-control" id="fnota" name="nota" value="{{ old('nota') }}" >
+						@if($errors->has('nota'))										
+							<span class="help-block">{{ $errors->first('nota') }}</span>
 						@endif
 					</div>
 

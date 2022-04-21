@@ -122,6 +122,7 @@
 @section('script')
 	@parent
 		<script>
+      var _roles = '{!! $roles !!}';
       $(document).ready(function(){		  	
         
         var settings = {
@@ -163,7 +164,11 @@
               var viewButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/show/' + data.id +'" role="button">View</a>';
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/pengadaan/edit/' + data.id +'" role="button">Edit</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/pengadaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
-              return viewButton + editButton + deleteButton;
+              if(_roles == 'wakasek' || _roles == 'kepsek') {
+                return viewButton;
+              } else {
+                return viewButton + editButton + deleteButton;                
+              }
             }}
           ],
           ajax : {

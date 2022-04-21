@@ -23,11 +23,13 @@ class PengadaanController extends Controller
 	{
 		$user = Sentinel::check();
         if($user) {
-            if($user->inRole('kepsek') || $user->inRole('wakasek')) {
-                return view('pengadaan::pengadaan.indexbyrole');
-            } else {
-                return view('pengadaan::pengadaan.index');
-            }
+            $roles = $user->roles()->first()->slug;
+            // if($user->inRole('kepsek') || $user->inRole('wakasek')) {
+            //     return view('pengadaan::pengadaan.indexbyrole');
+            // } else {
+            //     return view('pengadaan::pengadaan.index');
+            // }
+            return view('pengadaan::pengadaan.index', ['roles' => $roles]);
         }
 	}
 
@@ -124,11 +126,11 @@ class PengadaanController extends Controller
                 
                 $btn = "admin";
                 if($user->inRole('kepsek')) {
-                    $btn = "wakasek";
+                    $btn = "kepsek";
                 }
 
                 if($user->inRole('wakasek')) {
-                    $btn = "kepsek";
+                    $btn = "wakasek";
                 }
                 return view('pengadaan::pengadaan.view', ['pengadaan'=>$pengadaan, 'btn'=>$btn]);
             }

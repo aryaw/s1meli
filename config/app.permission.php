@@ -174,6 +174,11 @@ return [
 			'parent' => 'pengadaan'
 		],
 		[
+			'name' => 'Store Pengadaan Detail',
+			'code' => 'cms.pengadaan.updatebyrole',
+			'parent' => 'pengadaan'
+		],
+		[
 			'name' => 'Delete Pengadaan',
 			'code' => 'cms.pengadaan.delete',
 			'parent' => 'pengadaan'

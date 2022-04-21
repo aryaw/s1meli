@@ -72,20 +72,4 @@ class UserModel extends CartalystUser
         return $query;
     }
 
-    public function delete()
-	{        
-        $result = ResultModel::where('user_id', $this->id)->first();
-        if($result){
-            $suggestion = SuggestionModel::find($result->suggestion_id);
-            if($suggestion){
-                $suggestion->status = 'available';
-                $suggestion->hold_time = NULL;
-                $suggestion->used_time = NULL;
-                $suggestion->save();
-            }
-        }
-        
-	    parent::delete();
-	}
-
 }
