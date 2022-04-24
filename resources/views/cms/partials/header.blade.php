@@ -1,7 +1,7 @@
 <header class="main-header">
   <!-- Logo -->
   <a href="{{ route('cms.dashboard') }}" class="logo">
-    <span class="logo-lg"></span>
+    <span class="logo-lg">Sarana Prasarana</span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
