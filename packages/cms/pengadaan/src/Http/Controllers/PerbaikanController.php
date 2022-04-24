@@ -23,11 +23,8 @@ class PerbaikanController extends Controller
 	{
 		$user = Sentinel::check();
         if($user) {
-            if($user->inRole('kepsek') || $user->inRole('wakasek')) {
-                return view('pengadaan::perbaikan.indexbyrole');
-            } else {
-                return view('pengadaan::perbaikan.index');
-            }
+            $roles = $user->roles()->first()->slug;
+            return view('pengadaan::perbaikan.index', ['roles' => $roles]);
         }
 	}
 

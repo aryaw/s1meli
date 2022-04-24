@@ -20,9 +20,8 @@ class AppCmsAuthorization
     public function handle($request, Closure $next)
     {
         $user = Sentinel::check();
-        // if($user && $user->inRole('administrator') || $user && $user->inRole('admin') || $user && $user->inRole('kepsek') || $user && $user->inRole('wakasek')) {
         if($user) {
-            if($user->inRole('administrator') || $user->inRole('admin') || $user->inRole('kepsek') || $user->inRole('wakasek')) {
+            if($user->inRole('administrator') || $user->inRole('admin') || $user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('bendahara')) {
                 $route = $request->route()->getAction();            
                 if ( (isset($route['as'])) )
                 {

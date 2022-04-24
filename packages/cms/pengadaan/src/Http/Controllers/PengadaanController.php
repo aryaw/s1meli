@@ -24,11 +24,6 @@ class PengadaanController extends Controller
 		$user = Sentinel::check();
         if($user) {
             $roles = $user->roles()->first()->slug;
-            // if($user->inRole('kepsek') || $user->inRole('wakasek')) {
-            //     return view('pengadaan::pengadaan.indexbyrole');
-            // } else {
-            //     return view('pengadaan::pengadaan.index');
-            // }
             return view('pengadaan::pengadaan.index', ['roles' => $roles]);
         }
 	}

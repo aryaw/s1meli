@@ -368,11 +368,12 @@ class AdminController extends Controller
             $auth = Sentinel::authenticate($credentials);
             
             if($auth = Sentinel::authenticate($credentials)){                
-                if($auth->inRole('administrator') || $auth->inRole('admin') || $auth->inRole('kepsek') || $auth->inRole('wakasek')) {
+                if($auth->inRole('administrator') || $auth->inRole('admin') || $auth->inRole('kepsek') || $auth->inRole('wakasek') || $auth->inRole('bendahara')) {
                     $role = $auth->roles()->first();
                     AdminHelper::setMenuSession($role);
                     return redirect()->route('cms.dashboard');
                 }else{
+                    $message = __('Maaf akses anda ditolak');
                     Sentinel::logout();
                 }
             }

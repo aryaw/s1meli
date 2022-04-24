@@ -60,6 +60,8 @@
                     <th>Status</th>
                     <th>Dibuat</th>
                     <th>Wakasek</th>
+                    <th>Kepsek</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>                
@@ -120,6 +122,7 @@
 @section('script')
 	@parent
 		<script>
+      var _roles = '{!! $roles !!}';
       $(document).ready(function(){		  	
         
         var settings = {
@@ -141,26 +144,34 @@
             { data:'full_name', orderable:false },
             { data:'status', orderable:false },
             { data:'pengajuan'},
-            // { data:null, render:function(data, type, row, meta) {
-            //   if(data.approve_wakasek == 'Pending') {
-            //     return '<label class="label label-warning">Pending</label>';
-            //   } else if(data.approve_wakasek == 'Confirm') {
-            //     return '<label class="label label-success">Approved</label>';
-            //   }
-            // }},
-            // { data:null, render:function(data, type, row, meta) {
-            //   if(data.approve_kepsek == 'Pending') {
-            //     return '<label class="label label-warning">Pending</label>';
-            //   } else if(data.approve_kepsek == 'Confirm') {
-            //     return '<label class="label label-success">Approved</label>';
-            //   }
-            // }},
+            { data:null, render:function(data, type, row, meta) {
+              if(data.approve_wakasek == 'Pending') {
+                return '<label class="label label-warning">Pending</label>';
+              } else if(data.approve_wakasek == 'Confirm') {
+                return '<label class="label label-success">Approved</label>';
+              }
+            }},
+            { data:null, render:function(data, type, row, meta) {
+              if(data.approve_kepsek == 'Pending') {
+                return '<label class="label label-warning">Pending</label>';
+              } else if(data.approve_kepsek == 'Confirm') {
+                return '<label class="label label-success">Approved</label>';
+              }
+            }},
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
+              var viewButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/show/' + data.id +'" role="button">View</a>';
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/edit/' + data.id +'" role="button">Edit</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/penerimaan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
-              return editButton + deleteButton;
+              var nullButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/penerimaan/edit-nota/' + data.id +'" role="button">Edit Nota</a>';
+              if(_roles == 'wakasek' || _roles == 'kepsek') {
+                return viewButton;
+              } else if(_roles == 'bendahara') {
+                return nullButton;
+              } else {
+                return viewButton + editButton + deleteButton;                
+              }
             }}
           ],
           ajax : {

@@ -15,7 +15,7 @@ class RoleManagementController extends Controller
 	{
 		$permissions = [];
 		$permissionConfig = config('app.permission');
-        $roles = RoleModel::whereIn('slug', ['administrator', 'admin', 'kepsek', 'wakasek'])
+        $roles = RoleModel::whereNotIn('slug', ['user'])
             ->get();
 		$gg = [];
 

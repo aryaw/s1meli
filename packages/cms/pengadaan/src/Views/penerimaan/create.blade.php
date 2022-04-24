@@ -46,7 +46,7 @@
 								<label for="fnomor_laporan">No. Laporan</label>
 								<select name="nomor_laporan" class="form-control" id="fnomor_laporan">
 									<option value="">-- Pilih Laporan --</option>
-									@foreach($no_laporan as $nmer)\
+									@foreach($no_laporan as $nmer)
 										@if($nmer->nomor_laporan)
 										<option value="{{ $nmer->nomor_laporan }}" {{ (old('nomor_laporan')==$nmer->nomor_laporan) ? 'selected' : '' }}>{{ $nmer->nomor_laporan }}</option>
 										@endif

@@ -110,7 +110,7 @@ return [
 			'parent' => 'user'
 		],
 		// [
-		// 	'name' => 'Store user',
+		// 	'name' => 'Simpan user',
 		// 	'code' => 'cms.user.edit',
 		// 	'parent' => 'user'
 		// ],
@@ -164,17 +164,17 @@ return [
 			'parent' => 'pengadaan'
 		],
 		[
-			'name' => 'View Pengadaan',
+			'name' => 'Approval Pengadaan',
 			'code' => 'cms.pengadaan.show',
 			'parent' => 'pengadaan'
 		],
 		[
-			'name' => 'Store Pengadaan',
+			'name' => 'Simpan Pengadaan',
 			'code' => 'cms.pengadaan.store',
 			'parent' => 'pengadaan'
 		],
 		[
-			'name' => 'Store Pengadaan Detail',
+			'name' => 'Simpan Pengadaan Detail',
 			'code' => 'cms.pengadaan.updatebyrole',
 			'parent' => 'pengadaan'
 		],
@@ -206,18 +206,34 @@ return [
 			'parent' => 'penerimaan'
 		],
 		[
-			'name' => 'Update Penerimaan Status',
-			'code' => 'cms.penerimaan.editbyrole',
+			'name' => 'Approval Penerimaan',
+			'code' => 'cms.penerimaan.show',
 			'parent' => 'penerimaan'
 		],
 		[
-			'name' => 'Store Penerimaan',
+			'name' => 'Simpan Penerimaan',
 			'code' => 'cms.penerimaan.store',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Simpan Penerimaan Detail',
+			'code' => 'cms.penerimaan.updatebyrole',
 			'parent' => 'penerimaan'
 		],
 		[
 			'name' => 'Delete Penerimaan',
 			'code' => 'cms.penerimaan.delete',
+			'parent' => 'penerimaan'
+		],
+
+		[
+			'name' => 'Update Nota Penerimaan',
+			'code' => 'cms.penerimaan.editnota',
+			'parent' => 'penerimaan'
+		],
+		[
+			'name' => 'Simpan Nota Penerimaan',
+			'code' => 'cms.penerimaan.updatenota',
 			'parent' => 'penerimaan'
 		],
 	
@@ -243,13 +259,18 @@ return [
 			'parent' => 'perbaikan'
 		],
 		[
-			'name' => 'Update Perbaikan Status',
-			'code' => 'cms.perbaikan.editbyrole',
+			'name' => 'Approval Perbaikan',
+			'code' => 'cms.perbaikan.show',
 			'parent' => 'perbaikan'
 		],
 		[
-			'name' => 'Store Perbaikan',
+			'name' => 'Simpan Perbaikan',
 			'code' => 'cms.perbaikan.store',
+			'parent' => 'perbaikan'
+		],
+		[
+			'name' => 'Simpan Perbaikan Detail',
+			'code' => 'cms.perbaikan.updatebyrole',
 			'parent' => 'perbaikan'
 		],
 		[
@@ -280,13 +301,18 @@ return [
 			'parent' => 'kerusakan'
 		],
 		[
-			'name' => 'Update Laporan Kerusakan Status',
-			'code' => 'cms.kerusakan.editbyrole',
+			'name' => 'Approval Laporan Kerusakan',
+			'code' => 'cms.kerusakan.show',
 			'parent' => 'kerusakan'
 		],
 		[
-			'name' => 'Store Laporan Kerusakan',
+			'name' => 'Simpan Laporan Kerusakan',
 			'code' => 'cms.kerusakan.store',
+			'parent' => 'kerusakan'
+		],
+		[
+			'name' => 'Simpan Laporan Kerusakan Detail',
+			'code' => 'cms.kerusakan.updatebyrole',
 			'parent' => 'kerusakan'
 		],
 		[

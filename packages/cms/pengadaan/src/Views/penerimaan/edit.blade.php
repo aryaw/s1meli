@@ -46,9 +46,9 @@
 						<label for="fnomor_laporan">No. Laporan</label>
 						<select name="nomor_laporan" class="form-control" id="fnomor_laporan">
 							<option value="">-- Pilih Pemohon --</option>
-							@foreach($no_laporan as $laporan)
+							@foreach($no_laporan as $nmer)
 								@if($nmer->nomor_laporan)
-								<option value="{{ $laporan->nomor_laporan }}" {{ ($penerimaan->user_id==$laporan->nomor_laporan) ? 'selected' : '' }}>{{ $laporan->nomor_laporan }}</option>
+								<option value="{{ $nmer->nomor_laporan }}" {{ ($penerimaan->nomor_laporan==$nmer->nomor_laporan) ? 'selected' : '' }}>{{ $nmer->nomor_laporan }}</option>
 								@endif
 							@endforeach
 						</select>
@@ -56,7 +56,7 @@
 
 					<div class="form-group {{ ($errors->first('actor')) ? 'has-error' : '' }}">
 						<label for="factor">Penerima Barang</label>
-						<textarea class="form-control" placeholder="Penerima Barang" id="factor" name="actor">{{ $pemohon->actor }}</textarea>
+						<textarea class="form-control" placeholder="Penerima Barang" id="factor" name="actor">{{ $penerimaan->actor }}</textarea>
 						@if($errors->has('actor'))										
 							<span class="help-block">{{ $errors->first('actor') }}</span>
 						@endif

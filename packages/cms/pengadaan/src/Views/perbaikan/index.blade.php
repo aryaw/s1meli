@@ -122,6 +122,7 @@
 @section('script')
 	@parent
 		<script>
+      var _roles = '{!! $roles !!}';
       $(document).ready(function(){		  	
         
         var settings = {
@@ -162,7 +163,14 @@
               //return detailButton;
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/perbaikan/edit/' + data.id +'" role="button">Edit</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/perbaikan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
-              return editButton + deleteButton;
+              var nullButton = '';
+              if(_roles == 'wakasek' || _roles == 'kepsek') {
+                return viewButton;
+              } else if(_roles == 'bendahara') {
+                return nullButton;
+              } else {
+                return viewButton + editButton + deleteButton;                
+              }
             }}
           ],
           ajax : {

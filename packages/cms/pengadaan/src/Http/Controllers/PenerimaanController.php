@@ -17,17 +17,14 @@ use Sentinel;
 
 class PenerimaanController extends Controller
 {		
-    private $uploadDir = 'nota/penerimaan';
+    private $uploadDir = 'public/nota/penerimaan';
 
 	public function index()
 	{
 		$user = Sentinel::check();
         if($user) {
-            if($user->inRole('kepsek') || $user->inRole('wakasek')) {
-                return view('pengadaan::penerimaan.indexbyrole');
-            } else {
-                return view('pengadaan::penerimaan.index');
-            }
+            $roles = $user->roles()->first()->slug;
+            return view('pengadaan::penerimaan.index', ['roles' => $roles]);
         }
 	}
 
@@ -124,23 +121,25 @@ class PenerimaanController extends Controller
         return view('pengadaan::penerimaan.edit', ['penerimaan'=>$penerimaan, 'user'=>$user, 'no_laporan' => $no_laporan]);
     }
 
-    public function view($id, Request $request)
-    {
+    public function show($id, Request $request)
+    {        
         $user = Sentinel::check();
         if($user) {
-            if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator')) {
-                $pengadaan = PengadaanModel::with('item_pengadaan')->find($id);
-                if(!$pengadaan){
+            if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator') || $user->inRole('bendahara')) {
+                $penerimaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                if(!$penerimaan){
                     abort(404);
                 }
+                
+                $btn = "admin";
+                if($user->inRole('kepsek')) {
+                    $btn = "kepsek";
+                }
 
-                $user = UserModel::with(['role'])->whereHas('role', function($query) {
-                    $query->where('slug', '=', 'admin')
-                    ->orWhere('slug', '=', 'wakasek')
-                    ->orWhere('slug', '=', 'kepsek');
-                })->get();
-
-                return view('pengadaan::penerimaan.view', ['pengadaan'=>$pengadaan, 'user'=>$user]);
+                if($user->inRole('wakasek')) {
+                    $btn = "wakasek";
+                }
+                return view('pengadaan::penerimaan.view', ['penerimaan'=>$penerimaan, 'btn'=>$btn]);
             }
         }
         abort(404);
@@ -210,6 +209,84 @@ class PenerimaanController extends Controller
 
             $request->session()->flash('message', __('Data berhasil disimpan'));
             
+            return redirect()->route('cms.penerimaan.view');
+        }
+    }
+
+    public function updateByRole(Request $request)
+    {        
+        $post = $request->input();
+        $id = (int)$request->route('id');
+
+        $validate = Validator::make($post, [
+            'approval' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            $errors = $validate->messages();
+            $post['error'] = $errors->all();
+
+            return redirect()->route('cms.penerimaan.list')
+                ->withErrors($validate)
+                ->withInput($post);
+        } else {
+            $penerimaan = PengadaanModel::find($id);
+            $user = Sentinel::check();
+            if($user) {
+                if($user->inRole('kepsek')) {
+                    $penerimaan->approve_kepsek = 1;
+                } else if($user->inRole('wakasek')) {
+                    $penerimaan->approve_wakasek = 1;
+                }
+                $penerimaan->save();
+            }
+
+            $request->session()->flash('message', __('Data berhasil disimpan'));
+            
+            return redirect()->route('cms.penerimaan.view');
+        }
+    }
+
+    public function editNota($id, Request $request)
+    {        
+        $penerimaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+        
+        if(!$penerimaan){
+            abort(404);
+        }
+
+        return view('pengadaan::penerimaan.editnota', ['penerimaan'=>$penerimaan]);
+    }
+
+    public function updateNota(Request $request)
+    {        
+        $post = $request->input();
+        $id = (int)$request->route('id');
+
+        $penerimaan = PengadaanModel::find($id);
+
+        $validate = Validator::make($post, [
+            'nota' => 'max:3020|mimetypes:'.config('app.constants.image_mime'),
+        ]);
+
+        if ($validate->fails()) {
+            $errors = $validate->messages();
+            $post['error'] = $errors->all();
+
+            return redirect()->route('cms.penerimaan.editnota', ['id'=>$id])
+                ->withErrors($validate)
+                ->withInput($post);
+        } else {
+            $nota = '';
+            $sub = strtotime(date('Y-m'));
+            if($request->file('nota') && $request->file('nota')->isValid()) {
+                $nota = $request->file('nota')->store("{$this->uploadDir}/{$sub}");
+            }
+
+            $penerimaan->nota = $nota;
+            $penerimaan->save();
+
+            $request->session()->flash('message', __('Data berhasil disimpan'));            
             return redirect()->route('cms.penerimaan.view');
         }
     }
