@@ -58,10 +58,12 @@
 						@if($errors->has('nota'))										
 							<span class="help-block">{{ $errors->first('nota') }}</span>
 						@endif
-                        @if(in_array(Storage::mimeType($penerimaan->nota), ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/jpg', 'image/tiff']))
-                            <img src="{{ Storage::url($penerimaan->nota) }}" width="400px" height="auto" style="margin-top: 20px;"/>
-                        @elseif(in_array(Storage::mimeType($penerimaan->nota), ['application/pdf']))
-                            <a href="{{ Storage::url($penerimaan->nota) }}" target="_blank"/>
+						$penerimaan->nota
+							@if(in_array(Storage::mimeType($penerimaan->nota), ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/jpg', 'image/tiff']))
+								<img src="{{ Storage::url($penerimaan->nota) }}" width="400px" height="auto" style="margin-top: 20px;"/>
+							@elseif(in_array(Storage::mimeType($penerimaan->nota), ['application/pdf']))
+								<a href="{{ Storage::url($penerimaan->nota) }}" target="_blank"/>
+							@endif
 						@endif
 
 					</div>

@@ -227,6 +227,13 @@ class PengadaanController extends Controller
                     $pengadaan->approve_wakasek = 1;
                 }
                 $pengadaan->save();
+                
+                // after save
+                $approval_pengadaan = PengadaanModel::find($id);
+                if($approval_pengadaan->approve_kepsek == 1 && $approval_pengadaan->approve_wakasek == 1) {
+                    $approval_pengadaan->jenis_pengajuan = 2;
+                    $approval_pengadaan->save();
+                }
             }
 
             $request->session()->flash('message', __('Data berhasil disimpan'));

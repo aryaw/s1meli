@@ -55,10 +55,12 @@
 					<div class="form-group {{ ($errors->first('nota')) ? 'has-error' : '' }}">
 						<label for="fnota">Nota</label>
 						<br>
-                        @if(in_array(Storage::mimeType($penerimaan->nota), ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/jpg', 'image/tiff']))
-                            <img src="{{ Storage::url($penerimaan->nota) }}" width="400px" height="auto" style="margin-top: 20px;"/>
-                        @elseif(in_array(Storage::mimeType($penerimaan->nota), ['application/pdf']))
-                            <a href="{{ Storage::url($penerimaan->nota) }}" target="_blank"/>
+						@if($penerimaan->nota)
+							@if(in_array(Storage::mimeType($penerimaan->nota), ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/jpg', 'image/tiff']))
+								<img src="{{ Storage::url($penerimaan->nota) }}" width="400px" height="auto" style="margin-top: 20px;"/>
+							@elseif(in_array(Storage::mimeType($penerimaan->nota), ['application/pdf']))
+								<a href="{{ Storage::url($penerimaan->nota) }}" target="_blank"/>
+							@endif
 						@endif
 
 					</div>
