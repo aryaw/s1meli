@@ -158,6 +158,7 @@ class AdminController extends Controller
                     'password' => ($post['role']==2) ? time() : $post['password'],
                     'full_name' => $post['name'],
                     'address' => $post['address'],
+                    'jabatan' => $post['jabatan'],
                     'gender' => $post['gender'],
                     'phone' => $post['phone'],
                 ];
@@ -210,6 +211,7 @@ class AdminController extends Controller
                 $user->email = $post['email'];
                 $user->full_name = $post['name'];
                 $user->address = $post['address'];
+                $user->jabatan = $post['jabatan'];
                 $user->gender = $post['gender'];
                 $user->phone = $post['phone'];
                 $user->save();

@@ -74,6 +74,14 @@
 								@endif
 							</div>
 
+							<div class="form-group {{ ($errors->first('jabatan')) ? 'has-error' : '' }}">
+								<label for="fjabatan">Name</label>
+								<input type="text" class="form-control" id="fjabatan" name="jabatan" value="{{ old('jabatan') }}" required>
+								@if($errors->has('jabatan'))										
+									<span class="help-block">{{ $errors->first('jabatan') }}</span>
+								@endif
+							</div>
+
 							<div class="form-group {{ ($errors->first('status')) ? 'has-error' : '' }}">
 								<label for="fstatus">Status</label>
 								<select name="status" class="form-control" id="fstatus">
