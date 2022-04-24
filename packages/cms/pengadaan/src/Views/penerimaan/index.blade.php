@@ -59,6 +59,7 @@
                     <th>Pemohon</th>
                     <th>Status</th>
                     <th>Dibuat</th>
+                    <th>Nota</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -142,6 +143,13 @@
             { data:'full_name', orderable:false },
             { data:'status', orderable:false },
             { data:'pengajuan'},
+            { data:null, render:function(data, type, row, meta) {
+              if(data.nota == null) {
+                return '<label class="label label-warning">Pending</label>';
+              } else {
+                return '<a href="'+ ADMIN_URL + '/penerimaan/show/' + data.id +'" role="button"><label class="label label-success">Confirm</label></a>';
+              }
+            }},
             // { data:null, render:function(data, type, row, meta) {
             //   if(data.approve_wakasek == 'Pending') {
             //     return '<label class="label label-warning">Pending</label>';

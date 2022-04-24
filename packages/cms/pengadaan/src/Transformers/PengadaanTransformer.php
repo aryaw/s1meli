@@ -32,6 +32,7 @@ class PengadaanTransformer extends TransformerAbstract
         return [
             'id' => $pengadaan->id,
             'user_id' => $pengadaan->user_id,
+            'nota' => $pengadaan->nota,
             'status' => $status,
             'pengajuan' => $pengadaan->pengajuan,
             'full_name' => $full_name,
