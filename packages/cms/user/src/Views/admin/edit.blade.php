@@ -79,7 +79,7 @@
 							</div>
 
 							<div class="form-group {{ ($errors->first('jabatan')) ? 'has-error' : '' }}">
-								<label for="fjabatan">Name</label>
+								<label for="fjabatan">Jabatan</label>
 								<input type="text" class="form-control" id="fjabatan" name="jabatan" value="{{ (old('jabatan')) ? old('jabatan') : $user->jabatan }}" required>
 								@if($errors->has('jabatan'))										
 									<span class="help-block">{{ $errors->first('jabatan') }}</span>
