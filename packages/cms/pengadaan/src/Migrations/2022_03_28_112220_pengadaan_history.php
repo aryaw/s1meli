@@ -16,6 +16,7 @@ class PengadaanHistory extends Migration
         Schema::create('pengadaan_history', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('pengadaam_id')->unsigned();
+            $table->integer('jenis_pengajuan')->default(0);
             $table->integer('approve_wakasek')->default(0);
             $table->integer('approve_kepsek')->default(0);
             $table->date('tgl_approve_wakasek')->nullable();
