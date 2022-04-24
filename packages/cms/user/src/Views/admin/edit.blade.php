@@ -41,7 +41,7 @@
 
 							<div class="form-group {{ ($errors->first('name')) ? 'has-error' : '' }}">
 								<label for="fname">Name</label>
-								<input type="text" class="form-control" id="fname" name="name" value="{{ (old('full_name')) ? old('full_name') : $user->email }}" required>
+								<input type="text" class="form-control" id="fname" name="name" value="{{ (old('full_name')) ? old('full_name') : $user->full_name }}" required>
 								@if($errors->has('name'))										
 									<span class="help-block">{{ $errors->first('name') }}</span>
 								@endif
@@ -75,6 +75,14 @@
 								<input type="text" class="form-control" id="fphone" name="phone" value="{{ (old('phone')) ? old('phone') : $user->phone }}" required>
 								@if($errors->has('phone'))										
 									<span class="help-block">{{ $errors->first('phone') }}</span>
+								@endif
+							</div>
+
+							<div class="form-group {{ ($errors->first('jabatan')) ? 'has-error' : '' }}">
+								<label for="fjabatan">Name</label>
+								<input type="text" class="form-control" id="fjabatan" name="jabatan" value="{{ (old('jabatan')) ? old('jabatan') : $user->jabatan }}" required>
+								@if($errors->has('jabatan'))										
+									<span class="help-block">{{ $errors->first('jabatan') }}</span>
 								@endif
 							</div>
 
