@@ -29,6 +29,18 @@
 					<!-- form start -->
 					{!! Form::open(['route' => 'cms.admin.store', 'role'=>'form', 'autocomplete'=>'off']) !!}	
 						<div class="box-body">
+							<div class="form-group {{ ($errors->first('role')) ? 'has-error' : '' }}">
+								<label for="frole">Role</label>
+								<select name="role" class="form-control" id="frole">
+									<option value="">-- Select Role --</option>
+									@foreach($roles as $role)
+										<option value="{{ $role->id }}" {{ (old('role')==$role->id) ? 'selected' : '' }}>{{ $role->name }}</option>
+									@endforeach
+								</select>
+								@if($errors->has('role'))										
+									<span class="help-block">{{ $errors->first('role') }}</span>
+								@endif
+							</div>
 							
 							<div class="form-group {{ ($errors->first('email')) ? 'has-error' : '' }}">
 								<label for="femail">Email</label>
@@ -86,7 +98,7 @@
 								@endif
 							</div>
 
-							<div class="form-group {{ ($errors->first('password')) ? 'has-error' : '' }}">
+							<div class="form-group {{ ($errors->first('password')) ? 'has-error' : '' }}" id="fgruppassword">
 								<label for="fpassword">Password</label>
 								<input type="password" class="form-control" id="fpassword" name="password" value="" >
 								@if($errors->has('password'))										
@@ -94,24 +106,11 @@
 								@endif
 							</div>
 
-							<div class="form-group {{ ($errors->first('confirm_password')) ? 'has-error' : '' }}">
+							<div class="form-group {{ ($errors->first('confirm_password')) ? 'has-error' : '' }}" id="fgrupcpassword">
 								<label for="fcpassword">Confirm Password</label>
 								<input type="password" class="form-control" id="fcpassword" name="confirm_password" value="" >
 								@if($errors->has('password'))										
 									<span class="help-block">{{ $errors->first('confirm_password') }}</span>
-								@endif
-							</div>
-
-							<div class="form-group {{ ($errors->first('role')) ? 'has-error' : '' }}">
-								<label for="frole">Role</label>
-								<select name="role" class="form-control" id="frole">
-									<option value="">-- Select Role --</option>
-									@foreach($roles as $role)
-										<option value="{{ $role->id }}" {{ (old('role')==$role->id) ? 'selected' : '' }}>{{ $role->name }}</option>
-									@endforeach
-								</select>
-								@if($errors->has('role'))										
-									<span class="help-block">{{ $errors->first('role') }}</span>
 								@endif
 							</div>
 
@@ -133,4 +132,22 @@
   </section>
 
 		
+@endsection
+
+@section('script')
+  @parent  
+  <script>
+    $(document).ready(function(){
+      	$('body').on('change', '#frole', function(evt) {
+			_role = $('#frole option:selected').val();
+			if(_role == '2') {
+				$('#fgruppassword').hide();
+				$('#fgrupcpassword').hide();
+			} else {
+				$('#fgruppassword').show();
+				$('#fgrupcpassword').show();
+			}
+	  	});
+    });
+  </script>
 @endsection

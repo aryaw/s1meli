@@ -43,19 +43,19 @@ return [
 		'path' => $prefix.'/user',
 		'subs' => [
 			[
-				'name' => 'Role',								
+				'name' => 'User Role',								
 				'permission' => 'cms.role.view',
 				'path' => $prefix.'/user/role',
 			],
 			[
-				'name' => 'Admin',				
-				'permission' => 'cms.admin.view',
-				'path' => $prefix.'/user/admin',				
-			],
-			[
-				'name' => 'Role Management',								
+				'name' => 'Role Permission',								
 				'permission' => 'cms.rolemanagement.create',
 				'path' => $prefix.'/user/rmanagement',
+			],
+			[
+				'name' => 'User List',				
+				'permission' => 'cms.admin.view',
+				'path' => $prefix.'/user/admin',				
 			],
 			// [
 			// 	'name' => 'User',

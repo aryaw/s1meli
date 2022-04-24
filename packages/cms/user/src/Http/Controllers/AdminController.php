@@ -122,20 +122,26 @@ class AdminController extends Controller
         $post = $request->input();
         // dd(isset($post['password']));
 
-        $validate = Validator::make($post, [
-            'email' => 'required|email|max:190|unique:users',
-            'password' => [
-                'required',
-                'string',
-                'min:5',            
-                'regex:/[a-z]/',     
-                'regex:/[A-Z]/',     
-                'regex:/[0-9]/',     
-                // 'regex:/[@$!%*#?&]/',
-                'required_with:confirm_password',
-                'same:confirm_password',
-            ]
-        ]);
+        if($post['role']==2) {
+            $validate = Validator::make($post, [
+                'email' => 'required|email|max:190|unique:users',
+            ]);
+        } else {
+            $validate = Validator::make($post, [
+                'email' => 'required|email|max:190|unique:users',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:5',            
+                    'regex:/[a-z]/',     
+                    'regex:/[A-Z]/',     
+                    'regex:/[0-9]/',     
+                    // 'regex:/[@$!%*#?&]/',
+                    'required_with:confirm_password',
+                    'same:confirm_password',
+                ]
+            ]);
+        }        
 
         if ($validate->fails()) {
             $errors = $validate->messages();
@@ -149,7 +155,7 @@ class AdminController extends Controller
             if($role){
                 $credentials = [
                     'email' => $post['email'],
-                    'password' => $post['password'], //time(),
+                    'password' => ($post['role']==2) ? time() : $post['password'],
                     'full_name' => $post['name'],
                     'address' => $post['address'],
                     'gender' => $post['gender'],

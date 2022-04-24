@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Edit Laporan
+			Edit Nota Laporan
 			<small></small>
 		</h1>
 		<ol class="breadcrumb">

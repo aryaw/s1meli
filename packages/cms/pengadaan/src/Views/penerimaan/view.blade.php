@@ -4,7 +4,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			Create Laporan
+			Approval Laporan
 			<small></small>
 		</h1>
 		<ol class="breadcrumb">
@@ -28,29 +28,44 @@
 					
 			<!-- form start -->
 			{!! Form::open(['route' => ['cms.penerimaan.updatebyrole', 'id'=>$penerimaan->id], 'role'=>'form', 'autocomplete'=>'off']) !!}	
-				<div class="box-body">
+			<div class="box-body">
 					<div class="form-group {{ ($errors->first('pemohon')) ? 'has-error' : '' }}">
 						<label for="fpemohon">Pemohon</label>
-						<input type="text" class="form-control" id="fnama_barang" name="" value="{{ $penerimaan->user->full_name }}" readonly>
+						<input type="text" class="form-control" id="ftgl_penerimaan" name="tgl_penerimaan" value="{{ $penerimaan->user->full_name }}" readonly>
+						@if($errors->has('pemohon'))										
+							<span class="help-block">{{ $errors->first('pemohon') }}</span>
+						@endif
 					</div>
 
 					<div class="form-group {{ ($errors->first('nomor_laporan')) ? 'has-error' : '' }}">
 						<label for="fnomor_laporan">No. Laporan</label>
-						<textarea class="form-control" placeholder="No. Laporan" id="fnomor_laporan" name="" readonly>{{ $penerimaan->nomor_laporan }}</textarea>
+						<input type="text" class="form-control" id="fnomor_laporan" name="nomor_laporan" value="{{ $penerimaan->nomor_laporan }}" readonly>
 					</div>
 
-					<div class="form-group {{ ($errors->first('tgl_pengajuan')) ? 'has-error' : '' }}">
-						<label for="ftgl_pengajuan">Tanggal Pengajuan</label>
-						<input type="text" class="form-control datepicker" id="ftgl_pengajuan" name="" value="{{ $penerimaan->pengajuan }}" readonly>
+					<div class="form-group {{ ($errors->first('actor')) ? 'has-error' : '' }}">
+						<label for="factor">Penerima Barang</label>
+						<input type="text" class="form-control" id="factor" name="actor" value="{{ $penerimaan->actor }}" readonly>
+					</div>
+
+					<div class="form-group {{ ($errors->first('tgl_penerimaan')) ? 'has-error' : '' }}">
+						<label for="ftgl_penerimaan">Tanggal Penerimaan</label>
+						<input type="text" class="form-control" id="ftgl_penerimaan" name="tgl_penerimaan" value="{{ $penerimaan->tgl_penerimaan }}" readonly>
+					</div>
+
+					<div class="form-group {{ ($errors->first('nota')) ? 'has-error' : '' }}">
+						<label for="fnota">Nota</label>
+						<br>
+                        @if(in_array(Storage::mimeType($penerimaan->nota), ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/jpg', 'image/tiff']))
+                            <img src="{{ Storage::url($penerimaan->nota) }}" width="400px" height="auto" style="margin-top: 20px;"/>
+                        @elseif(in_array(Storage::mimeType($penerimaan->nota), ['application/pdf']))
+                            <a href="{{ Storage::url($penerimaan->nota) }}" target="_blank"/>
+						@endif
+
 					</div>
 
 					<div class="form-group {{ ($errors->first('status')) ? 'has-error' : '' }}">
 						<label for="fstatus">Status</label>
-						<select class="form-control" id="fstatus" readonly>
-							<option value="">-- Select Status --</option>
-							<option value="0" {{ ($penerimaan->status=='0') ? 'selected' : '' }}>Inactive</option>
-							<option value="1" {{ ($penerimaan->status=='1') ? 'selected' : '' }}>Active</option>
-						</select>
+                        <input type="text" class="form-control" id="fstatus" name="status" value="{{ ($penerimaan->status=='0') ? 'Inactive' : 'Active' }}" readonly>                        
 					</div>
 					<hr>
 					<div class="wrap-item-pengajuan">
@@ -58,32 +73,37 @@
 						@php
 							$item_key = 1;
 						@endphp
-						@if(isset($penerimaan->item_penerimaan))
-						@foreach($penerimaan->item_penerimaan as $key => $item)
+						@if(isset($penerimaan->item_pengadaan))
+						@foreach($penerimaan->item_pengadaan as $key => $item)
 						@php
 							$item_key = $item->id+1;
 						@endphp
 						<div class="box-body item-pengajuan" id="item-pengajuan{{ $item_key }}">
 							<div class="form-group">
 								<label for="fnama_barang">Nama Barang</label>
-								<input type="hidden" class="form-control" id="fitem" readonly>
-								<input type="hidden" class="form-control" id="fitem" value="{{ $item->id }}" readonly>
-								<input type="text" class="form-control" id="fnama_barang" value="{{ $item->nama_barang }}" readonly>
+								<input type="hidden" class="form-control" id="fitem" name="item_data[]" value="{{ $item->id }}" >
+								<input type="hidden" class="form-control" id="fitem" name="penerimaan[{{ $item_key }}][item]" value="{{ $item->id }}" >
+								<input type="text" class="form-control" id="fnama_barang" name="penerimaan[{{ $item_key }}][nama_barang]" value="{{ $item->nama_barang }}" readonly>
 							</div>
 
 							<div class="form-group">
 								<label for="fspesifikasi_barang">Spesifikasi Barang</label>
-								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" readonly>{{ $item->spesifikasi_barang }}</textarea>
+								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" name="penerimaan[{{ $item_key }}][spesifikasi_barang]" readonly>{{ $item->spesifikasi_barang }}</textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="furaian_barang">Uraian Barang</label>
+								<input type="text" class="form-control" id="furaian_barang" name="penerimaan[{{ $item_key }}][uraian_barang]" value="{{ $item->uraian_barang }}" readonly>
 							</div>
 
 							<div class="form-group">
 								<label for="furaian_barang">Qty</label>
-								<input type="text" class="form-control" id="fqty" value="{{ $item->qty }}" readonly>
+								<input type="text" class="form-control" id="fqty" name="penerimaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" readonly>
 							</div>
 
 							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>
-								<textarea class="form-control" placeholder="Keterangan" id="fketerangan" readonly>{{ $item->keterangan }}</textarea>
+								<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="penerimaan[{{ $item_key }}][keterangan]"  readonly>{{ $item->keterangan }}</textarea>
 							</div>
 						</div>
 						@endforeach
@@ -91,15 +111,16 @@
 					</div>
 
 				</div>
-				<!-- /.box-body -->																		
-				@if($btn == 'kepsek')
+				<!-- /.box-body -->		
+			
+				@if($btn == 'kepsek' && $penerimaan->approve_kepsek=='0')
 				<input type="hidden" class="form-control" id="fapproval-kepsek" name="approval" value="1">
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary">Approve Kepala Sekolah</button>
 				</div>
 				@endif
 
-				@if($btn == 'wakasek')
+				@if($btn == 'wakasek' && $penerimaan->approve_wakasek=='0')
 				<input type="hidden" class="form-control" id="fapproval-wakasek" name="approval" value="1">
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary">Approve Wakil Kepala Sekolah</button>
