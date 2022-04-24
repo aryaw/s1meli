@@ -20,6 +20,7 @@ class AddCustomFieldUsers extends Migration
             $table->text('address')->nullable();
             $table->date('dob')->nullable();            
             $table->string('photo')->nullable();
+            $table->text('jabatan')->nullable(); 
         });
     }
 
@@ -38,6 +39,7 @@ class AddCustomFieldUsers extends Migration
                 'address',
                 'dob',
                 'photo',
+                'jabatan',
             ]);
         });
     }
