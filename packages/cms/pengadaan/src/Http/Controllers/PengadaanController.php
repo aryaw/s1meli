@@ -233,21 +233,26 @@ class PengadaanController extends Controller
                 ->withErrors($validate)
                 ->withInput($post);
         } else {
-            $pengadaan = PengadaanModel::find($id);
+            // $pengadaan = PengadaanModel::find($id);
+            $pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 1)->where('pengadaan_id', $id)->first();
             $user = Sentinel::check();
             if($user) {
                 if($user->inRole('kepsek')) {
-                    $pengadaan->approve_kepsek = 1;
+                    $pengadaan_history->approve_kepsek = 1;
                 } else if($user->inRole('wakasek')) {
-                    $pengadaan->approve_wakasek = 1;
+                    $pengadaan_history->approve_wakasek = 1;
                 }
-                $pengadaan->save();
+                $pengadaan_history->save();
                 
-                // after save
-                $approval_pengadaan = PengadaanModel::find($id);
-                if($approval_pengadaan->approve_kepsek == 1 && $approval_pengadaan->approve_wakasek == 1) {
-                    $approval_pengadaan->jenis_pengajuan = 2;
-                    $approval_pengadaan->save();
+                // after save, crene new milestone
+                $approval_pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 1)->where('pengadaan_id', $id)->first();
+                if($approval_pengadaan_history->approve_kepsek == 1 && $approval_pengadaan_history->approve_wakasek == 1) {
+                    $ne_pengadaan_history = new PengadaanHistoryModel;
+                    $ne_pengadaan_history->pengadaan_id = $id;
+                    $ne_pengadaan_history->jenis_pengajuan = 2;
+                    $ne_pengadaan_history->approve_wakasek = 1;
+                    $ne_pengadaan_history->approve_kepsek = 1;
+                    $ne_pengadaan_history->save();
                 }
             }
 
