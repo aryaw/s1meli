@@ -9,6 +9,7 @@ use Validator;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Cms\Pengadaan\Http\Models\PengadaanModel;
+use Cms\Pengadaan\Http\Models\PengadaanHistoryModel;
 use Cms\Pengadaan\Http\Models\ItemPengadaanModel;
 use Cms\Pengadaan\Transformers\PengadaanTransformer;
 use DB;
@@ -76,14 +77,21 @@ class PenerimaanController extends Controller
             $penerimaan = new PengadaanModel;
             $penerimaan->user_id = $post['pemohon'];
             $penerimaan->actor = $post['actor'];
-            $penerimaan->jenis_pengajuan = 2;
+            // $penerimaan->jenis_pengajuan = 2;
             $penerimaan->status = $post['status'];
             $penerimaan->pengajuan = $post['tgl_penerimaan'];
             $penerimaan->nota = $nota;
-            $penerimaan->approve_wakasek = 1;
-            $penerimaan->approve_kepsek = 1;
+            // $penerimaan->approve_wakasek = 1;
+            // $penerimaan->approve_kepsek = 1;
             $penerimaan->save();
             $id_pengajuan = $penerimaan->id;
+
+            $penerimaan_history = new PengadaanHistoryModel;
+            $penerimaan_history->pengadaan_id = $id_pengajuan;
+            $penerimaan_history->jenis_pengajuan = 2;
+            $penerimaan_history->approve_wakasek = 0;
+            $penerimaan_history->approve_kepsek = 0;
+            $penerimaan_history->save();
 
             if(isset($post['penerimaan'])) {
                 foreach ($post['penerimaan'] as $key => $data_penerimaan) {
@@ -167,13 +175,20 @@ class PenerimaanController extends Controller
             $penerimaan = PengadaanModel::find($id);
             $penerimaan->user_id = $post['pemohon'];
             $penerimaan->actor = $post['actor'];
-            $penerimaan->jenis_pengajuan = 2;
+            // $penerimaan->jenis_pengajuan = 2;
             $penerimaan->status = $post['status'];
             $penerimaan->pengajuan = $post['tgl_penerimaan'];
             // $penerimaan->approve_wakasek = 0;
             // $penerimaan->approve_kepsek = 0;
             $penerimaan->save();
             $id_pengajuan = (int)$penerimaan->id;
+
+            $penerimaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 2)->where('pengadaan_id', $id_pengajuan)->first();
+            $penerimaan_history->approve_wakasek = 0;
+            $penerimaan_history->approve_kepsek = 0;
+            $penerimaan_history->tgl_approve_wakasek = null;
+            $penerimaan_history->tgl_approve_kepsek = null;
+            $penerimaan_history->save();
 
             if(isset($post['penerimaan'])) {
                 if(isset($post['item_data'])) {
@@ -305,7 +320,9 @@ class PenerimaanController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $pengadaanModel = PengadaanModel::query()->normalPengadaan()->where('jenis_pengajuan', 2);
+            $pengadaanModel = PengadaanModel::query()->with(['related_history'])->whereHas('history', function($query) {
+                $query->where('jenis_pengajuan', '=', 2);
+            })->normalPengadaan();
             if($columnIndex == 0){
                 $pengadaanModel->orderBy('pengadaan.id' , $allGet['order'][0]['dir']);
             }else{

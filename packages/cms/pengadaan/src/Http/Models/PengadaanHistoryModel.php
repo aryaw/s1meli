@@ -8,10 +8,10 @@ class PengadaanHistoryModel extends Model
 {    
     
     
-    protected $table = 'pengadaan';    
+    protected $table = 'pengadaan_history';    
     protected $fillable = [
     	'pengadaan_id',
-        'pengajuan',
+        'jenis_pengajuan',
         'tgl_approve_wakasek',
         'tgl_approve_kepsek',
         'approve_wakasek',

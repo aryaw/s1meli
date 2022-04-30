@@ -9,6 +9,7 @@ use Validator;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Cms\Pengadaan\Http\Models\PengadaanModel;
+use Cms\Pengadaan\Http\Models\PengadaanHistoryModel;
 use Cms\Pengadaan\Http\Models\ItemPengadaanModel;
 use Cms\Pengadaan\Transformers\PengadaanTransformer;
 use DB;
@@ -66,13 +67,20 @@ class PerbaikanController extends Controller
         } else {
             $perbaikan = new PengadaanModel;
             $perbaikan->user_id = $post['pemohon'];
-            $perbaikan->jenis_pengajuan = 3;
+            // $perbaikan->jenis_pengajuan = 3;
             $perbaikan->status = $post['status'];
             $perbaikan->pengajuan = $post['tgl_pengajuan'];
-            $perbaikan->approve_wakasek = 0;
-            $perbaikan->approve_kepsek = 0;
+            // $perbaikan->approve_wakasek = 0;
+            // $perbaikan->approve_kepsek = 0;
             $perbaikan->save();
             $id_pengajuan = $perbaikan->id;
+
+            $perbaikan_history = new PengadaanHistoryModel;
+            $perbaikan_history->pengadaan_id = $id_pengajuan;
+            $perbaikan_history->jenis_pengajuan = 3;
+            $perbaikan_history->approve_wakasek = 0;
+            $perbaikan_history->approve_kepsek = 0;
+            $perbaikan_history->save();
 
             if(isset($post['perbaikan'])) {
                 foreach ($post['perbaikan'] as $key => $data_perbaikan) {
@@ -147,15 +155,22 @@ class PerbaikanController extends Controller
                 ->withErrors($validate)
                 ->withInput($post);
         } else {
-            $perbaiakan = PengadaanModel::find($id);
-            $perbaiakan->user_id = $post['pemohon'];
-            $perbaiakan->jenis_pengajuan = 3;
-            $perbaiakan->status = $post['status'];
-            $perbaiakan->pengajuan = $post['tgl_pengajuan'];
-            // $perbaiakan->approve_wakasek = 0;
-            // $perbaiakan->approve_kepsek = 0;
-            $perbaiakan->save();
-            $id_pengajuan = (int)$perbaiakan->id;
+            $perbaikan = PengadaanModel::find($id);
+            $perbaikan->user_id = $post['pemohon'];
+            // $perbaikan->jenis_pengajuan = 3;
+            $perbaikan->status = $post['status'];
+            $perbaikan->pengajuan = $post['tgl_pengajuan'];
+            // $perbaikan->approve_wakasek = 0;
+            // $perbaikan->approve_kepsek = 0;
+            $perbaikan->save();
+            $id_pengajuan = (int)$perbaikan->id;
+
+            $perbaikan_history = PengadaanHistoryModel::where('jenis_pengajuan', 3)->where('pengadaan_id', $id_pengajuan)->first();
+            $perbaikan_history->approve_wakasek = 0;
+            $perbaikan_history->approve_kepsek = 0;
+            $perbaikan_history->tgl_approve_wakasek = null;
+            $perbaikan_history->tgl_approve_kepsek = null;
+            $perbaikan_history->save();
 
             if(isset($post['perbaiakan'])) {
                 if(isset($post['item_data'])) {
@@ -209,7 +224,9 @@ class PerbaikanController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $pengadaanModel = PengadaanModel::query()->normalPengadaan()->where('jenis_pengajuan', 3);
+            $pengadaanModel = PengadaanModel::query()->with(['related_history'])->whereHas('history', function($query) {
+                $query->where('jenis_pengajuan', '=', 3);
+            })->normalPengadaan();
             if($columnIndex == 0){
                 $pengadaanModel->orderBy('pengadaan.id' , $allGet['order'][0]['dir']);
             }else{

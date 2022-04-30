@@ -31,6 +31,14 @@ class PengadaanModel extends Model
         return $this->hasMany('Cms\Pengadaan\Http\Models\ItemPengadaanModel', 'pengadaan_id', 'id');
     }
 
+    public function history(){
+        return $this->hasMany('Cms\Pengadaan\Http\Models\PengadaanHistoryModel', 'pengadaan_id', 'id');
+    }
+
+    public function related_history(){
+        return $this->hasOne('Cms\Pengadaan\Http\Models\PengadaanHistoryModel', 'pengadaan_id', 'id');
+    }
+
     public function user(){
         return $this->hasOne('Cms\User\Http\Models\UserModel', 'id', 'user_id');
     }

@@ -9,6 +9,7 @@ use Validator;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Cms\Pengadaan\Http\Models\PengadaanModel;
+use Cms\Pengadaan\Http\Models\PengadaanHistoryModel;
 use Cms\Pengadaan\Http\Models\ItemPengadaanModel;
 use Cms\Pengadaan\Transformers\PengadaanTransformer;
 use DB;
@@ -73,6 +74,13 @@ class KerusakanController extends Controller
             $kerusakan->approve_kepsek = 0;
             $kerusakan->save();
             $id_pengajuan = $kerusakan->id;
+
+            $kerusakan_history = new PengadaanHistoryModel;
+            $kerusakan_history->pengadaan_id = $id_pengajuan;
+            $kerusakan_history->jenis_pengajuan = 4;
+            $kerusakan_history->approve_wakasek = 0;
+            $kerusakan_history->approve_kepsek = 0;
+            $kerusakan_history->save();
 
             if(isset($post['kerusakan'])) {
                 foreach ($post['kerusakan'] as $key => $data_kerusakan) {
@@ -149,13 +157,20 @@ class KerusakanController extends Controller
         } else {
             $kerusakan = PengadaanModel::find($id);
             $kerusakan->user_id = $post['pemohon'];
-            $kerusakan->jenis_pengajuan = 4;
+            // $kerusakan->jenis_pengajuan = 4;
             $kerusakan->status = $post['status'];
             $kerusakan->pengajuan = $post['tgl_pengajuan'];
             // $kerusakan->approve_wakasek = 0;
             // $kerusakan->approve_kepsek = 0;
             $kerusakan->save();
             $id_pengajuan = (int)$kerusakan->id;
+
+            $kerusakan_history = PengadaanHistoryModel::where('jenis_pengajuan', 4)->where('pengadaan_id', $id_pengajuan)->first();
+            $kerusakan_history->approve_wakasek = 0;
+            $kerusakan_history->approve_kepsek = 0;
+            $kerusakan_history->tgl_approve_wakasek = null;
+            $kerusakan_history->tgl_approve_kepsek = null;
+            $kerusakan_history->save();
 
             if(isset($post['kerusakan'])) {
                 if(isset($post['item_data'])) {
@@ -209,7 +224,9 @@ class KerusakanController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $pengadaanModel = PengadaanModel::query()->normalPengadaan()->where('jenis_pengajuan', 4);
+            $pengadaanModel = PengadaanModel::query()->with(['related_history'])->whereHas('history', function($query) {
+                $query->where('jenis_pengajuan', '=', 4);
+            })->normalPengadaan();
             if($columnIndex == 0){
                 $pengadaanModel->orderBy('pengadaan.id' , $allGet['order'][0]['dir']);
             }else{

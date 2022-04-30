@@ -20,12 +20,12 @@ class PengadaanTransformer extends TransformerAbstract
         }
 
         $approve_wakasek = 'Pending';
-        if($pengadaan->approve_wakasek && $pengadaan->approve_wakasek == 1){
+        if($pengadaan->related_history->approve_wakasek && $pengadaan->related_history->approve_wakasek == 1){
             $approve_wakasek = 'Confirm';
         }
 
         $approve_kepsek = 'Pending';
-        if($pengadaan->approve_kepsek && $pengadaan->approve_kepsek == 1){
+        if($pengadaan->related_history->approve_kepsek && $pengadaan->related_history->approve_kepsek == 1){
             $approve_kepsek = 'Confirm';
         }
         

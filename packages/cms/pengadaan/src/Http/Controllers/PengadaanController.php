@@ -9,6 +9,7 @@ use Validator;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Cms\Pengadaan\Http\Models\PengadaanModel;
+use Cms\Pengadaan\Http\Models\PengadaanHistoryModel;
 use Cms\Pengadaan\Http\Models\ItemPengadaanModel;
 use Cms\Pengadaan\Transformers\PengadaanTransformer;
 use DB;
@@ -66,14 +67,21 @@ class PengadaanController extends Controller
         } else {
             $pengadaan = new PengadaanModel;
             $pengadaan->user_id = $post['pemohon'];
-            $pengadaan->jenis_pengajuan = 1;
+            // $pengadaan->jenis_pengajuan = 1;
             $pengadaan->nomor_laporan = $post['nomor_laporan'];
             $pengadaan->status = $post['status'];
             $pengadaan->pengajuan = $post['tgl_pengajuan'];
-            $pengadaan->approve_wakasek = 0;
-            $pengadaan->approve_kepsek = 0;
+            // $pengadaan->approve_wakasek = 0;
+            // $pengadaan->approve_kepsek = 0;
             $pengadaan->save();
             $id_pengajuan = $pengadaan->id;
+
+            $pengadaan_history = new PengadaanHistoryModel;
+            $pengadaan_history->pengadaan_id = $id_pengajuan;
+            $pengadaan_history->jenis_pengajuan = 1;
+            $pengadaan_history->approve_wakasek = 0;
+            $pengadaan_history->approve_kepsek = 0;
+            $pengadaan_history->save();
 
             if(isset($post['pengadaan'])) {
                 foreach ($post['pengadaan'] as $key => $data_pengadaan) {
@@ -154,7 +162,7 @@ class PengadaanController extends Controller
         } else {
             $pengadaan = PengadaanModel::find($id);
             $pengadaan->user_id = $post['pemohon'];
-            $pengadaan->jenis_pengajuan = 1;
+            // $pengadaan->jenis_pengajuan = 1;
             $pengadaan->status = $post['status'];
             $pengadaan->nomor_laporan = $post['nomor_laporan'];
             $pengadaan->pengajuan = $post['tgl_pengajuan'];
@@ -162,6 +170,13 @@ class PengadaanController extends Controller
             // $pengadaan->approve_kepsek = 0;
             $pengadaan->save();
             $id_pengajuan = (int)$pengadaan->id;
+
+            $pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 1)->where('pengadaan_id', $id_pengajuan)->first();
+            $pengadaan_history->approve_wakasek = 0;
+            $pengadaan_history->approve_kepsek = 0;
+            $pengadaan_history->tgl_approve_wakasek = null;
+            $pengadaan_history->tgl_approve_kepsek = null;
+            $pengadaan_history->save();
 
             if(isset($post['pengadaan'])) {
                 if(isset($post['item_data'])) {
@@ -256,7 +271,9 @@ class PengadaanController extends Controller
             $startDate = $allGet['startDate'];
             $endDate = $allGet['endDate'];
 
-            $pengadaanModel = PengadaanModel::query()->normalPengadaan()->where('jenis_pengajuan', 1);
+            $pengadaanModel = PengadaanModel::query()->with(['related_history'])->whereHas('history', function($query) {
+                $query->where('jenis_pengajuan', '=', 1);
+            })->normalPengadaan();
             if($columnIndex == 0){
                 $pengadaanModel->orderBy('pengadaan.id' , $allGet['order'][0]['dir']);
             }else{

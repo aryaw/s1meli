@@ -18,10 +18,10 @@ class Pengadaan extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->text('actor')->nullable();
             $table->text('nomor_laporan')->nullable();
-            $table->integer('jenis_pengajuan')->default(0);
+            $table->integer('jenis_pengajuan')->nullable()->default(0);
             $table->integer('status')->default(0);
-            $table->integer('approve_wakasek')->default(0);
-            $table->integer('approve_kepsek')->default(0);
+            $table->integer('approve_wakasek')->nullable()->default(0);
+            $table->integer('approve_kepsek')->nullable()->default(0);
             $table->date('pengajuan')->nullable();
             $table->date('tgl_penerimaan')->nullable();
             $table->text('nota')->nullable();
