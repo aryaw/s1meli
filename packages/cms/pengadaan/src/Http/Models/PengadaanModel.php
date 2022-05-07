@@ -69,16 +69,18 @@ class PengadaanModel extends Model
     public function scopeNormalPengadaanPendingWaka($query){
         $query
             ->select('pengadaan.*')
-            ->where('approve_wakasek', '=', '0')
-            ->join('users', 'users.id', 'pengadaan.user_id');
+            ->where('pengadaan_history.approve_wakasek', '=', '0')
+            ->join('users', 'users.id', 'pengadaan.user_id')
+            ->join('pengadaan_history', 'pengadaan_history.pengadaan_id', 'pengadaan.id');
         return $query;
     }
 
     public function scopeNormalPengadaanPendingKepsek($query){
         $query
-            ->select('pengadaan.*')
-            ->where('approve_kepsek', '=', '0')
-            ->join('users', 'users.id', 'pengadaan.user_id');
+        ->select('pengadaan.*')
+        ->where('pengadaan_history.approve_kepsek', '=', '0')
+        ->join('users', 'users.id', 'pengadaan.user_id')
+        ->join('pengadaan_history', 'pengadaan_history.pengadaan_id', 'pengadaan.id');
         return $query;
     }
 }
