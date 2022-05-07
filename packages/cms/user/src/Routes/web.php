@@ -38,6 +38,8 @@ Route::group(['middleware' => ['web', 'app.cms'], 'namespace' => 'Cms\User\Http\
 	
 	Route::get('admin/edit/{id}','AdminController@edit')->name('cms.admin.edit')->where('id', '[0-9]+');
 	Route::post('admin/update/{id}','AdminController@update')->name('cms.admin.update')->where('id', '[0-9]+');
+	Route::get('admin/editpasswd/{id}','AdminController@editpasswd')->name('cms.admin.editpasswd')->where('id', '[0-9]+');
+	Route::post('admin/updatepasswd/{id}','AdminController@updatepasswd')->name('cms.admin.updatepasswd');
 	
 	Route::get('admin/delete/{id}','AdminController@delete')->name('cms.admin.delete')->where('id', '[0-9]+');	
 

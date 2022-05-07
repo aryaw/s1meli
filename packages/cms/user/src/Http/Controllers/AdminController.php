@@ -114,7 +114,7 @@ class AdminController extends Controller
         
         $roles = RoleModel::filterRoleUser()->get();
 
-        return view('user::user.editpasswd', ['user'=>$user, 'roles'=>$roles]);
+        return view('user::admin.editpasswd', ['user'=>$user, 'roles'=>$roles]);
     }
 
     public function store(Request $request)
@@ -162,7 +162,7 @@ class AdminController extends Controller
                     'gender' => $post['gender'],
                     'phone' => $post['phone'],
                 ];
-                $user = Sentinel::register($credentials);                    
+                $user = Sentinel::register($credentials);
                 if($user){
                     $role->users()->attach($user);
 

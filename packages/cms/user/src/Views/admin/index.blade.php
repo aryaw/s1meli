@@ -111,8 +111,9 @@
             { data:'updated_at'},
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/admin/edit/' + data.id +'" admin="button">Edit</a>';
+              var editPasswdButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/admin/editpasswd/' + data.id +'" admin="button">Edit Password</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/admin/delete/' + data.id +'" data-title="'+data.name+'" admin="button">Delete</a>';
-              return editButton + deleteButton;
+              return editButton + editPasswdButton + deleteButton;
             }}
           ],
           ajax : {

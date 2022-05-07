@@ -18,7 +18,6 @@ class UserModel extends CartalystUser
         'last_login',
         'first_name',
         'last_name',
-
         'full_name',
         'address',
         'phone',
@@ -67,6 +66,7 @@ class UserModel extends CartalystUser
     public function scopeAdminAll($query){
         $query
             ->select('users.*')
+            ->where('roles.slug', '<>', 'administrator')
             ->join('role_users', 'role_users.user_id', 'users.id')
             ->join('roles', 'roles.id', 'role_users.role_id');
         return $query;

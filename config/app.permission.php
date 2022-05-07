@@ -26,6 +26,16 @@ return [
 			'code' => 'cms.admin.delete',
 			'parent' => 'admin'
 		],
+		[
+			'name' => 'Update Admin password',
+			'code' => 'cms.admin.editpasswd',
+			'parent' => 'admin'
+		],
+		[
+			'name' => 'Update Admin password data',
+			'code' => 'cms.admin.updatepasswd',
+			'parent' => 'admin'
+		],
 
 	// role
 	[
