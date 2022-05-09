@@ -178,6 +178,7 @@ class PenerimaanController extends Controller
             // $penerimaan->jenis_pengajuan = 2;
             $penerimaan->status = $post['status'];
             $penerimaan->pengajuan = $post['tgl_penerimaan'];
+            $penerimaan->tgl_penerimaan = $post['tgl_penerimaan_barang'];
             // $penerimaan->approve_wakasek = 0;
             // $penerimaan->approve_kepsek = 0;
             $penerimaan->save();

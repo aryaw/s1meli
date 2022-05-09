@@ -48,6 +48,11 @@
 					</div>
 
 					<div class="form-group {{ ($errors->first('tgl_penerimaan')) ? 'has-error' : '' }}">
+						<label for="ftgl_penerimaan">Tanggal Pengajuan</label>
+						<input type="text" class="form-control" id="ftgl_penerimaan" name="tgl_penerimaan" value="{{ $penerimaan->pengajuan }}" readonly>
+					</div>
+
+					<div class="form-group {{ ($errors->first('tgl_penerimaan')) ? 'has-error' : '' }}">
 						<label for="ftgl_penerimaan">Tanggal Penerimaan</label>
 						<input type="text" class="form-control" id="ftgl_penerimaan" name="tgl_penerimaan" value="{{ $penerimaan->tgl_penerimaan }}" readonly>
 					</div>
