@@ -162,6 +162,7 @@ class AdminController extends Controller
                     'gender' => $post['gender'],
                     'phone' => $post['phone'],
                 ];
+                
                 $user = Sentinel::register($credentials);
                 if($user){
                     $role->users()->attach($user);

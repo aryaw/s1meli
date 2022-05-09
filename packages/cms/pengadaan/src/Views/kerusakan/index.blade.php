@@ -41,13 +41,13 @@
                 entries
               </div>
               <div class="col-sm-2">
-                <input type='text' id='startDate' placeholder='start date' class="form-control datepicker">
+                <input type='text' id='startDate' placeholder='Tgl mulai pengajuan' class="form-control datepicker">
               </div>
               <div class="col-sm-2">
-                <input type='text' id='endDate' placeholder='end date' class="form-control datepicker">
+                <input type='text' id='endDate' placeholder='Tgl terakhir pengajuan' class="form-control datepicker">
               </div>
               <div class="col-sm-2">
-                <input type='text' id='searchFilter' placeholder='search name' class="form-control" autocomplete="off">
+                <input type='text' id='searchFilter' placeholder='No. Laporan' class="form-control" autocomplete="off">
               </div>                
             </div>
             

@@ -284,11 +284,11 @@ class PengadaanController extends Controller
             }else{
                 $pengadaanModel->orderBy( 'pengadaan.'.$allGet['columns'][$columnIndex]['data'] , $allGet['order'][0]['dir']);
             }
-            // if($searchValue){
-            //     $pengadaanModel->where('pengadaan.name', 'like', "%{$searchValue}%");
-            // }
+            if($searchValue){
+                $pengadaanModel->where('pengadaan.nomor_laporan', 'like', "%{$searchValue}%");
+            }
             if($startDate && $endDate){
-                $pengadaanModel->whereRaw('DATE(pengadaan.created_at) BETWEEN ? AND ?',[$startDate,$endDate]);
+                $pengadaanModel->whereRaw('DATE(pengadaan.pengajuan) BETWEEN ? AND ?',[$startDate,$endDate]);
             }
             $countTable = $pengadaanModel->count();
             $preData = $pengadaanModel

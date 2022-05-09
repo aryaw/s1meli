@@ -24,6 +24,7 @@ class UserModel extends CartalystUser
         'dob',
         'gender',
         'photo',
+        'jabatan',
     ];
 
     protected $dates = [
