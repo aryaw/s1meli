@@ -58,8 +58,10 @@
                     <th>No</th>
                     <th>No Laporan</th>
                     <th>Pemohon</th>
-                    <th>Status</th>
                     <th>Dibuat</th>
+                    <th>Penerima</th>
+                    <th>Diterima</th>
+                    <th>Status</th>
                     <th>Nota</th>
                     <th>Action</th>
                   </tr>
@@ -143,8 +145,10 @@
             }},
             { data:'nomor_laporan', orderable:false },
             { data:'full_name', orderable:false },
-            { data:'status', orderable:false },
             { data:'pengajuan'},
+            { data:'actor'},
+            { data:'tgl_penerimaan'},
+            { data:'status', orderable:false },
             { data:null, render:function(data, type, row, meta) {
               if(data.nota == null) {
                 return '<label class="label label-warning">Pending</label>';

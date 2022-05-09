@@ -19,8 +19,9 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+  <h4>Sistem Informasi Manajemen Sarana Prasarana</h4>
   <div class="login-logo">
-    <a href="javascript:void(0)"><b>Admin</b></a>
+    <a href="javascript:void(0)"><b>SMP PGRI 2 Denpasar</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
