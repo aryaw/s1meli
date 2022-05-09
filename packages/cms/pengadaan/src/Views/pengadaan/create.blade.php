@@ -44,7 +44,7 @@
 
 							<div class="form-group {{ ($errors->first('nomor_laporan')) ? 'has-error' : '' }}">
 								<label for="fnomor_laporan">No. Laporan</label>
-								<textarea class="form-control" placeholder="No. Laporan" id="fspesifikasi_barang" name="nomor_laporan" required>{{ old('nomor_laporan') }}</textarea>
+								<textarea class="form-control" placeholder="No. Laporan" id="fnomor_laporan" name="nomor_laporan" required>{{ old('nomor_laporan') }}</textarea>
 								@if($errors->has('nomor_laporan'))										
 									<span class="help-block">{{ $errors->first('nomor_laporan') }}</span>
 								@endif

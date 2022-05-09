@@ -163,6 +163,7 @@
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/perbaikan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
+              var viewButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/perbaikan/show/' + data.id +'" role="button">View</a>';
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/perbaikan/edit/' + data.id +'" role="button">Edit</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/perbaikan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
               var nullButton = '';

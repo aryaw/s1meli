@@ -268,6 +268,76 @@ class PerbaikanController extends Controller
         );
     }
 
+    public function show($id, Request $request)
+    {        
+        $user = Sentinel::check();
+        if($user) {
+            if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator') || $user->inRole('bendahara')) {
+                $perbaikan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                if(!$perbaikan){
+                    abort(404);
+                }
+                
+                $btn = "admin";
+                if($user->inRole('kepsek')) {
+                    $btn = "kepsek";
+                }
+
+                if($user->inRole('wakasek')) {
+                    $btn = "wakasek";
+                }
+                return view('pengadaan::perbaikan.view', ['perbaikan'=>$perbaikan, 'btn'=>$btn]);
+            }
+        }
+        abort(404);
+    }
+
+    public function updateByRole(Request $request)
+    {        
+        $post = $request->input();
+        $id = (int)$request->route('id');
+
+        $validate = Validator::make($post, [
+            'approval' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            $errors = $validate->messages();
+            $post['error'] = $errors->all();
+
+            return redirect()->route('cms.perbaikan.list')
+                ->withErrors($validate)
+                ->withInput($post);
+        } else {
+            // $pengadaan = PengadaanModel::find($id);
+            $pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 3)->where('pengadaan_id', $id)->first();
+            $user = Sentinel::check();
+            if($user) {
+                if($user->inRole('kepsek')) {
+                    $pengadaan_history->approve_kepsek = 1;
+                } else if($user->inRole('wakasek')) {
+                    $pengadaan_history->approve_wakasek = 1;
+                }
+                $pengadaan_history->save();
+                
+                // after save, crene new milestone
+                $approval_pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 3)->where('pengadaan_id', $id)->first();
+                if($approval_pengadaan_history->approve_kepsek == 1 && $approval_pengadaan_history->approve_wakasek == 1) {
+                    $ne_pengadaan_history = new PengadaanHistoryModel;
+                    $ne_pengadaan_history->pengadaan_id = $id;
+                    $ne_pengadaan_history->jenis_pengajuan = 2;
+                    $ne_pengadaan_history->approve_wakasek = 1;
+                    $ne_pengadaan_history->approve_kepsek = 1;
+                    $ne_pengadaan_history->save();
+                }
+            }
+
+            $request->session()->flash('message', __('Data berhasil disimpan'));
+            
+            return redirect()->route('cms.perbaikan.view');
+        }
+    }
+
     public function detail($id)
 	{
         $pengadaan = PengadaanModel::where('id',$id)            
