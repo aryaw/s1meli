@@ -69,6 +69,7 @@ class PerbaikanController extends Controller
             $perbaikan->user_id = $post['pemohon'];
             // $perbaikan->jenis_pengajuan = 3;
             $perbaikan->status = $post['status'];
+            $perbaikan->nomor_laporan = $post['nomor_laporan'];
             $perbaikan->pengajuan = $post['tgl_pengajuan'];
             // $perbaikan->approve_wakasek = 0;
             // $perbaikan->approve_kepsek = 0;
@@ -160,6 +161,7 @@ class PerbaikanController extends Controller
             $perbaikan->user_id = $post['pemohon'];
             // $perbaikan->jenis_pengajuan = 3;
             $perbaikan->status = $post['status'];
+            $perbaikan->nomor_laporan = $post['nomor_laporan'];
             $perbaikan->pengajuan = $post['tgl_pengajuan'];
             // $perbaikan->approve_wakasek = 0;
             // $perbaikan->approve_kepsek = 0;
@@ -173,7 +175,7 @@ class PerbaikanController extends Controller
             $perbaikan_history->tgl_approve_kepsek = null;
             $perbaikan_history->save();
 
-            if(isset($post['perbaiakan'])) {
+            if(isset($post['perbaikan'])) {
                 if(isset($post['item_data'])) {
                     ItemPengadaanModel::where('pengadaan_id', $id_pengajuan)->whereNotIn('id', $post['item_data'])->delete();
                 } else {
@@ -181,6 +183,7 @@ class PerbaikanController extends Controller
                 }
 
                 foreach ($post['perbaikan'] as $key => $data_perbaikan) {
+                    var_dump($data_perbaikan['satuan']);
                     if(isset($data_perbaikan['item'])) {
                         $item_perbaikan = ItemPengadaanModel::find($data_perbaikan['item']);
                         $item_perbaikan->pengadaan_id = $id_pengajuan;
