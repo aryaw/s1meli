@@ -90,6 +90,7 @@ class PerbaikanController extends Controller
                     $item_perbaikan->spesifikasi_barang = (isset($data_perbaikan['spesifikasi_barang'])) ? $data_perbaikan['spesifikasi_barang'] : '';
                     $item_perbaikan->uraian_barang = (isset($data_perbaikan['uraian_barang'])) ? $data_perbaikan['uraian_barang'] : '';
                     $item_perbaikan->qty = (isset($data_perbaikan['qty'])) ? $data_perbaikan['qty'] : 0;
+                    $item_perbaikan->satuan = (isset($data_perbaikan['satuan'])) ? $data_perbaikan['satuan'] : 0;
                     $item_perbaikan->keterangan = (isset($data_perbaikan['keterangan'])) ? $data_perbaikan['keterangan'] : '';
                     $item_perbaikan->status = 3;
                     $item_perbaikan->save();
@@ -187,6 +188,7 @@ class PerbaikanController extends Controller
                         $item_perbaikan->spesifikasi_barang = (isset($data_perbaikan['spesifikasi_barang'])) ? $data_perbaikan['spesifikasi_barang'] : '';
                         $item_perbaikan->uraian_barang = (isset($data_perbaikan['uraian_barang'])) ? $data_perbaikan['uraian_barang'] : '';
                         $item_perbaikan->qty = (isset($data_perbaikan['qty'])) ? $data_perbaikan['qty'] : '';
+                        $item_perbaikan->satuan = (isset($data_perbaikan['satuan'])) ? $data_perbaikan['satuan'] : '';
                         $item_perbaikan->keterangan = (isset($data_perbaikan['keterangan'])) ? $data_perbaikan['keterangan'] : '';
                         $item_perbaikan->status = 3;
                         $item_perbaikan->save();
@@ -197,6 +199,7 @@ class PerbaikanController extends Controller
                         $item_perbaikan->spesifikasi_barang = (isset($data_perbaikan['spesifikasi_barang'])) ? $data_perbaikan['spesifikasi_barang'] : '';
                         $item_perbaikan->uraian_barang = (isset($data_perbaikan['uraian_barang'])) ? $data_perbaikan['uraian_barang'] : '';
                         $item_perbaikan->qty = (isset($data_perbaikan['qty'])) ? $data_perbaikan['qty'] : '';
+                        $item_perbaikan->satuan = (isset($data_perbaikan['satuan'])) ? $data_perbaikan['satuan'] : '';
                         $item_perbaikan->keterangan = (isset($data_perbaikan['keterangan'])) ? $data_perbaikan['keterangan'] : '';
                         $item_perbaikan->status = 3;
                         $item_perbaikan->save();

@@ -38,6 +38,7 @@ class Pengadaan extends Migration
             $table->text('uraian_barang');
             $table->text('keterangan');
             $table->integer('qty')->nullable()->default(0);
+            $table->text('satuan')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
 

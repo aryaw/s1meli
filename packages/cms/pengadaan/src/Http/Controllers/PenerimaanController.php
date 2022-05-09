@@ -101,6 +101,7 @@ class PenerimaanController extends Controller
                     $item_penerimaan->spesifikasi_barang = (isset($data_penerimaan['spesifikasi_barang'])) ? $data_penerimaan['spesifikasi_barang'] : '';
                     $item_penerimaan->uraian_barang = (isset($data_penerimaan['uraian_barang'])) ? $data_penerimaan['uraian_barang'] : '';
                     $item_penerimaan->qty = (isset($data_penerimaan['qty'])) ? $data_penerimaan['qty'] : 0;
+                    $item_penerimaan->satuan = (isset($data_penerimaan['satuan'])) ? $data_penerimaan['satuan'] : 0;
                     $item_penerimaan->keterangan = (isset($data_penerimaan['keterangan'])) ? $data_penerimaan['keterangan'] : '';
                     $item_penerimaan->status = 2;
                     $item_penerimaan->save();
@@ -206,6 +207,7 @@ class PenerimaanController extends Controller
                         $item_penerimaan->spesifikasi_barang = (isset($data_penerimaan['spesifikasi_barang'])) ? $data_penerimaan['spesifikasi_barang'] : '';
                         $item_penerimaan->uraian_barang = (isset($data_penerimaan['uraian_barang'])) ? $data_penerimaan['uraian_barang'] : '';
                         $item_penerimaan->qty = (isset($data_penerimaan['qty'])) ? $data_penerimaan['qty'] : '';
+                        $item_penerimaan->satuan = (isset($data_penerimaan['satuan'])) ? $data_penerimaan['satuan'] : '';
                         $item_penerimaan->keterangan = (isset($data_penerimaan['keterangan'])) ? $data_penerimaan['keterangan'] : '';
                         $item_penerimaan->status = 2;
                         $item_penerimaan->save();
@@ -216,6 +218,7 @@ class PenerimaanController extends Controller
                         $item_penerimaan->spesifikasi_barang = (isset($data_penerimaan['spesifikasi_barang'])) ? $data_penerimaan['spesifikasi_barang'] : '';
                         $item_penerimaan->uraian_barang = (isset($data_penerimaan['uraian_barang'])) ? $data_penerimaan['uraian_barang'] : '';
                         $item_penerimaan->qty = (isset($data_penerimaan['qty'])) ? $data_penerimaan['qty'] : '';
+                        $item_penerimaan->satuan = (isset($data_penerimaan['satuan'])) ? $data_penerimaan['satuan'] : '';
                         $item_penerimaan->keterangan = (isset($data_penerimaan['keterangan'])) ? $data_penerimaan['keterangan'] : '';
                         $item_penerimaan->status = 2;
                         $item_penerimaan->save();

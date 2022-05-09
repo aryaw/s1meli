@@ -117,6 +117,11 @@
 									</div>
 
 									<div class="form-group">
+										<label for="furaian_barang">Satuan</label>
+										<input type="text" class="form-control" id="fsatuan" name="penerimaan[1][satuan]" value="">
+									</div>
+
+									<div class="form-group">
 										<label for="fketerangan">Keterangan</label>
 										<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="penerimaan[1][keterangan]"></textarea>
 									</div>

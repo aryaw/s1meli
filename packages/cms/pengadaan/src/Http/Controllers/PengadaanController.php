@@ -91,6 +91,7 @@ class PengadaanController extends Controller
                     $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
                     $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
                     $item_pengadaan->qty = (isset($data_pengadaan['qty'])) ? $data_pengadaan['qty'] : 0;
+                    $item_pengadaan->satuan = (isset($data_pengadaan['satuan'])) ? $data_pengadaan['satuan'] : 0;
                     $item_pengadaan->keterangan = (isset($data_pengadaan['keterangan'])) ? $data_pengadaan['keterangan'] : '';
                     $item_pengadaan->status = 1;
                     $item_pengadaan->save();
@@ -193,6 +194,7 @@ class PengadaanController extends Controller
                         $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
                         $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
                         $item_pengadaan->qty = (isset($data_pengadaan['qty'])) ? $data_pengadaan['qty'] : '';
+                        $item_pengadaan->satuan = (isset($data_pengadaan['satuan'])) ? $data_pengadaan['satuan'] : '';
                         $item_pengadaan->keterangan = (isset($data_pengadaan['keterangan'])) ? $data_pengadaan['keterangan'] : '';
                         $item_pengadaan->status = 1;
                         $item_pengadaan->save();
@@ -203,6 +205,7 @@ class PengadaanController extends Controller
                         $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
                         $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
                         $item_pengadaan->qty = (isset($data_pengadaan['qty'])) ? $data_pengadaan['qty'] : '';
+                        $item_pengadaan->satuan = (isset($data_pengadaan['satuan'])) ? $data_pengadaan['satuan'] : '';
                         $item_pengadaan->keterangan = (isset($data_pengadaan['keterangan'])) ? $data_pengadaan['keterangan'] : '';
                         $item_pengadaan->status = 1;
                         $item_pengadaan->save();

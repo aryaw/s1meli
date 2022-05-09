@@ -99,6 +99,11 @@
 							</div>
 
 							<div class="form-group">
+								<label for="furaian_barang">Satuan</label>
+								<input type="text" class="form-control" id="fsatuan" name="pengadaan[{{ $item_key }}][satuan]" value="{{ $item->satuan }}" >
+							</div>
+
+							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>
 								<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan[{{ $item_key }}][keterangan]"  >{{ $item->keterangan }}</textarea>
 							</div>
@@ -164,6 +169,10 @@
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Qty</label>'+
 					'<input type="text" class="form-control" id="fqty" name="pengadaan['+_new_item_row+'][qty]" value="" >'+
+				'</div>'+
+				'<div class="form-group">'+
+					'<label for="furaian_barang">Satuan</label>'+
+					'<input type="text" class="form-control" id="fsatuan" name="pengadaan['+_new_item_row+'][satuan]" value="" >'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fketerangan">Keterangan</label>'+

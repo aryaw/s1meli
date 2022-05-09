@@ -94,6 +94,11 @@
 									</div>
 
 									<div class="form-group">
+										<label for="furaian_barang">Satuan</label>
+										<input type="text" class="form-control" id="fsatuan" name="perbaikan[1][satuan]" value="">
+									</div>
+
+									<div class="form-group">
 										<label for="fketerangan">Keterangan</label>
 										<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="perbaikan[1][keterangan]"></textarea>
 									</div>
@@ -160,6 +165,10 @@
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Qty</label>'+
 					'<input type="text" class="form-control" id="fqty" name="perbaikan['+_new_item_row+'][qty]" value="">'+
+				'</div>'+
+				'<div class="form-group">'+
+					'<label for="furaian_barang">Satuan</label>'+
+					'<input type="text" class="form-control" id="fsatuan" name="perbaikan['+_new_item_row+'][satuan]" value="">'+
 				'</div>'+
 				'<div class="form-group">'+
 					'<label for="fketerangan">Keterangan</label>'+
