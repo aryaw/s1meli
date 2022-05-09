@@ -36,6 +36,7 @@ class PengadaanTransformer extends TransformerAbstract
             'status' => $status,
             'pengajuan' => $pengadaan->pengajuan,
             'full_name' => $full_name,
+            'nomor_laporan' => $pengadaan->nomor_laporan,
             'approve_wakasek' => $approve_wakasek,
             'approve_kepsek' => $approve_kepsek,
         ];

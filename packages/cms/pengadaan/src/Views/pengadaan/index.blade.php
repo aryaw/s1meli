@@ -56,6 +56,7 @@
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>No Laporan</th>
                     <th>Pemohon</th>
                     <th>Status</th>
                     <th>Dibuat</th>
@@ -141,6 +142,7 @@
               var json = meta.settings.json;
               return (json.old_start + meta.row + 1);
             }},	                
+            { data:'nomor_laporan', orderable:false },
             { data:'full_name', orderable:false },
             { data:'status', orderable:false },
             { data:'pengajuan'},

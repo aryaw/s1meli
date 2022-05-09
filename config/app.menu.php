@@ -65,22 +65,22 @@ return [
 		]
 	],
 
-	[
-        'name' => 'Settings',
-        'fa' => 'fa-cogs',        
-        'path' => $prefix.'/setting',		
-		'subs' => [
-			[
-				'name' => 'Setting',
-				'permission' => 'cms.setting.view',
-				'path' => $prefix.'/setting/list',
-			],
-			[
-				'name' => 'Environment',
-				'permission' => 'cms.environment.view',
-				'path' => $prefix.'/setting/environment',
-			],
-		]
-	],
+	// [
+    //     'name' => 'Settings',
+    //     'fa' => 'fa-cogs',        
+    //     'path' => $prefix.'/setting',		
+	// 	'subs' => [
+	// 		[
+	// 			'name' => 'Setting',
+	// 			'permission' => 'cms.setting.view',
+	// 			'path' => $prefix.'/setting/list',
+	// 		],
+	// 		[
+	// 			'name' => 'Environment',
+	// 			'permission' => 'cms.environment.view',
+	// 			'path' => $prefix.'/setting/environment',
+	// 		],
+	// 	]
+	// ],
 
 ];
