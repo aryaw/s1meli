@@ -341,6 +341,7 @@ class PengadaanController extends Controller
             $pengadaan_item->each(function($item){
                 $item->delete();
             });
+            
             $pengadaan->delete();
             
             $request->session()->flash('message', __('Data berhasil dihapus'));

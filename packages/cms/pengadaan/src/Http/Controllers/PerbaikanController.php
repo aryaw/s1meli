@@ -355,7 +355,13 @@ class PerbaikanController extends Controller
         if(!$pengadaan){
             abort(404);
         }else{
+            $pengadaan_item = ItemPengadaanModel::where('pengadaan_id', $id)->get();
+            $pengadaan_item->each(function($item){
+                $item->delete();
+            });
+
             $pengadaan->delete();
+            
             $request->session()->flash('message', __('Data berhasil dihapus'));
             return redirect()->route('cms.perbaikan.view');
         }
