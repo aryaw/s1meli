@@ -123,7 +123,10 @@ class PengadaanController extends Controller
         $user = Sentinel::check();
         if($user) {
             if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator')) {
-                $pengadaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                // $pengadaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                $pengadaan = PengadaanModel::query()->with(['related_history','item_pengadaan', 'user'])->whereHas('history', function($query) {
+                    $query->where('jenis_pengajuan', '=', 1);
+                })->find($id);
                 if(!$pengadaan){
                     abort(404);
                 }

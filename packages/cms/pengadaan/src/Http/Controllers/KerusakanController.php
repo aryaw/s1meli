@@ -278,7 +278,10 @@ class KerusakanController extends Controller
         $user = Sentinel::check();
         if($user) {
             if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator') || $user->inRole('bendahara')) {
-                $kerusakan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                // $kerusakan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                $kerusakan = PengadaanModel::query()->with(['related_history','item_pengadaan', 'user'])->whereHas('history', function($query) {
+                    $query->where('jenis_pengajuan', '=', 3);
+                })->find($id);
                 if(!$kerusakan){
                     abort(404);
                 }

@@ -135,7 +135,10 @@ class PenerimaanController extends Controller
         $user = Sentinel::check();
         if($user) {
             if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator') || $user->inRole('bendahara')) {
-                $penerimaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                // $penerimaan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                $penerimaan = PengadaanModel::query()->with(['related_history','item_pengadaan', 'user'])->whereHas('history', function($query) {
+                    $query->where('jenis_pengajuan', '=', 2);
+                })->find($id);
                 if(!$penerimaan){
                     abort(404);
                 }

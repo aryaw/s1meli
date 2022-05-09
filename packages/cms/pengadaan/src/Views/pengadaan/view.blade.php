@@ -97,14 +97,14 @@
 
 				</div>
 				<!-- /.box-body -->																		
-				@if($btn == 'kepsek' && $pengadaan->approve_kepsek=='0')
+				@if($btn == 'kepsek' && $pengadaan->related_history->approve_kepsek=='0')
 				<input type="hidden" class="form-control" id="fapproval-kepsek" name="approval" value="1">
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary">Approve Kepala Sekolah</button>
 				</div>
 				@endif
 
-				@if($btn == 'wakasek' && $pengadaan->approve_wakasek=='0')
+				@if($btn == 'wakasek' && $pengadaan->related_history->approve_wakasek=='0')
 				<input type="hidden" class="form-control" id="fapproval-wakasek" name="approval" value="1">
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary">Approve Wakil Kepala Sekolah</button>
