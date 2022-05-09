@@ -82,6 +82,11 @@
 							</div>
 
 							<div class="form-group">
+								<label for="furaian_barang">Satuan</label>
+								<input type="text" class="form-control" id="fsatuan" value="{{ $item->satuan }}" readonly>
+							</div>
+
+							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>
 								<textarea class="form-control" placeholder="Keterangan" id="fketerangan" readonly>{{ $item->keterangan }}</textarea>
 							</div>
