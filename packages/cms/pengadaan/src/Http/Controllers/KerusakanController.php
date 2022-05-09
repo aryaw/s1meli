@@ -67,11 +67,12 @@ class KerusakanController extends Controller
         } else {
             $kerusakan = new PengadaanModel;
             $kerusakan->user_id = $post['pemohon'];
-            $kerusakan->jenis_pengajuan = 4;
+            // $kerusakan->jenis_pengajuan = 4;
             $kerusakan->status = $post['status'];
+            $kerusakan->nomor_laporan = $post['nomor_laporan'];
             $kerusakan->pengajuan = $post['tgl_pengajuan'];
-            $kerusakan->approve_wakasek = 0;
-            $kerusakan->approve_kepsek = 0;
+            // $kerusakan->approve_wakasek = 0;
+            // $kerusakan->approve_kepsek = 0;
             $kerusakan->save();
             $id_pengajuan = $kerusakan->id;
 
@@ -160,6 +161,7 @@ class KerusakanController extends Controller
             $kerusakan->user_id = $post['pemohon'];
             // $kerusakan->jenis_pengajuan = 4;
             $kerusakan->status = $post['status'];
+            $kerusakan->nomor_laporan = $post['nomor_laporan'];
             $kerusakan->pengajuan = $post['tgl_pengajuan'];
             // $kerusakan->approve_wakasek = 0;
             // $kerusakan->approve_kepsek = 0;
@@ -269,6 +271,76 @@ class KerusakanController extends Controller
             ],
             $headerCode
         );
+    }
+
+    public function show($id, Request $request)
+    {        
+        $user = Sentinel::check();
+        if($user) {
+            if($user->inRole('kepsek') || $user->inRole('wakasek') || $user->inRole('administrator') || $user->inRole('bendahara')) {
+                $kerusakan = PengadaanModel::with(['item_pengadaan', 'user'])->find($id);
+                if(!$kerusakan){
+                    abort(404);
+                }
+                
+                $btn = "admin";
+                if($user->inRole('kepsek')) {
+                    $btn = "kepsek";
+                }
+
+                if($user->inRole('wakasek')) {
+                    $btn = "wakasek";
+                }
+                return view('pengadaan::kerusakan.view', ['kerusakan'=>$kerusakan, 'btn'=>$btn]);
+            }
+        }
+        abort(404);
+    }
+
+    public function updateByRole(Request $request)
+    {        
+        $post = $request->input();
+        $id = (int)$request->route('id');
+
+        $validate = Validator::make($post, [
+            'approval' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            $errors = $validate->messages();
+            $post['error'] = $errors->all();
+
+            return redirect()->route('cms.kerusakan.list')
+                ->withErrors($validate)
+                ->withInput($post);
+        } else {
+            // $pengadaan = PengadaanModel::find($id);
+            $pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 4)->where('pengadaan_id', $id)->first();
+            $user = Sentinel::check();
+            if($user) {
+                if($user->inRole('kepsek')) {
+                    $pengadaan_history->approve_kepsek = 1;
+                } else if($user->inRole('wakasek')) {
+                    $pengadaan_history->approve_wakasek = 1;
+                }
+                $pengadaan_history->save();
+                
+                // after save, crene new milestone
+                $approval_pengadaan_history = PengadaanHistoryModel::where('jenis_pengajuan', 4)->where('pengadaan_id', $id)->first();
+                if($approval_pengadaan_history->approve_kepsek == 1 && $approval_pengadaan_history->approve_wakasek == 1) {
+                    $ne_pengadaan_history = new PengadaanHistoryModel;
+                    $ne_pengadaan_history->pengadaan_id = $id;
+                    $ne_pengadaan_history->jenis_pengajuan = 4;
+                    $ne_pengadaan_history->approve_wakasek = 1;
+                    $ne_pengadaan_history->approve_kepsek = 1;
+                    $ne_pengadaan_history->save();
+                }
+            }
+
+            $request->session()->flash('message', __('Data berhasil disimpan'));
+            
+            return redirect()->route('cms.kerusakan.view');
+        }
     }
 
     public function detail($id)

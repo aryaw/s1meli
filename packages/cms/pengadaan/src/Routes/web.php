@@ -59,6 +59,9 @@ Route::group(['middleware' => ['web', 'app.cms'], 'namespace' => 'Cms\Pengadaan\
 	Route::get('kerusakan/edit/{id}','KerusakanController@edit')->name('cms.kerusakan.edit')->where('id', '[0-9]+');
 	Route::get('kerusakan/editbyrole/{id}','KerusakanController@editByRole')->name('cms.kerusakan.editbyrole')->where('id', '[0-9]+');
 	Route::post('kerusakan/update/{id}','KerusakanController@update')->name('cms.kerusakan.update')->where('id', '[0-9]+');
+
+	Route::get('kerusakan/show/{id}','KerusakanController@show')->name('cms.kerusakan.show')->where('id', '[0-9]+');
+	Route::post('kerusakan/updatebyrole/{id}','KerusakanController@updateByRole')->name('cms.kerusakan.updatebyrole')->where('id', '[0-9]+');
 });
 
 

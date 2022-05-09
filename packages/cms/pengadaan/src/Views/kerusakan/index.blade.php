@@ -163,6 +163,7 @@
             { data:null, orderable: false, render:function(data, type, row, meta){	               		
               //var detailButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/kerusakan/detail/' + data.id +'" role="button">Detail</a>';
               //return detailButton;
+              var viewButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/kerusakan/show/' + data.id +'" role="button">View</a>';
               var editButton = '<a class="btn btn-primary btn-space" href="'+ ADMIN_URL + '/kerusakan/edit/' + data.id +'" role="button">Edit</a>';
               var deleteButton = '<a class="btn btn-danger deleteDialog" href="'+ ADMIN_URL + '/kerusakan/list/delete/' + data.id +'" data-title="Laporan" role="button">Delete</a>';
               var nullButton = '';

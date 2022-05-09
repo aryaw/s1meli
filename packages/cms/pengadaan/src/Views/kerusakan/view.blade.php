@@ -58,8 +58,8 @@
 						@php
 							$item_key = 1;
 						@endphp
-						@if(isset($kerusakan->item_kerusakan))
-						@foreach($kerusakan->item_kerusakan as $key => $item)
+						@if(isset($kerusakan->item_pengadaan))
+						@foreach($kerusakan->item_pengadaan as $key => $item)
 						@php
 							$item_key = $item->id+1;
 						@endphp

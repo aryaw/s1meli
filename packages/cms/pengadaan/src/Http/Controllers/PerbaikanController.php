@@ -331,7 +331,7 @@ class PerbaikanController extends Controller
                 if($approval_pengadaan_history->approve_kepsek == 1 && $approval_pengadaan_history->approve_wakasek == 1) {
                     $ne_pengadaan_history = new PengadaanHistoryModel;
                     $ne_pengadaan_history->pengadaan_id = $id;
-                    $ne_pengadaan_history->jenis_pengajuan = 2;
+                    $ne_pengadaan_history->jenis_pengajuan = 3;
                     $ne_pengadaan_history->approve_wakasek = 1;
                     $ne_pengadaan_history->approve_kepsek = 1;
                     $ne_pengadaan_history->save();
