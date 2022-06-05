@@ -10,7 +10,13 @@ return [
         'path' => $prefix.'/dashboard' // active link indicator
     ],
 	[
-		'name' => 'Inventaris',
+        'name' => 'Barang',
+        'fa' => 'fa-tachometer',        
+        'permission' => 'cms.barang',
+        'path' => $prefix.'/barang'
+    ],
+	[
+		'name' => 'Laporan',
 		'fa' => 'fa-users',
 		'path' => $prefix.'/dashboard',
 		'subs' => [

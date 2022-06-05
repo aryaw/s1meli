@@ -152,6 +152,48 @@ return [
 			'parent' => 'setting'
 		],
 	
+	// barang
+	[
+		'name' => 'Barang',
+		'code' => 'barang',
+		'parent' => '0'
+	],
+		[
+			'name' => 'Create Barang',
+			'code' => 'cms.barang.create',
+			'parent' => 'barang'
+		],
+		[
+			'name' => 'Barang List',
+			'code' => 'cms.barang.view',
+			'parent' => 'barang'
+		],
+		[
+			'name' => 'Update Barang',
+			'code' => 'cms.barang.edit',
+			'parent' => 'barang'
+		],
+		[
+			'name' => 'Approval Barang',
+			'code' => 'cms.barang.show',
+			'parent' => 'barang'
+		],
+		[
+			'name' => 'Simpan Barang',
+			'code' => 'cms.barang.store',
+			'parent' => 'barang'
+		],
+		[
+			'name' => 'Simpan Barang Detail',
+			'code' => 'cms.barang.updatebyrole',
+			'parent' => 'barang'
+		],
+		[
+			'name' => 'Delete Barang',
+			'code' => 'cms.barang.delete',
+			'parent' => 'barang'
+		],
+	
 	// pengadaan
 	[
 		'name' => 'Pengadaan',

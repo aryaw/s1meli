@@ -25,8 +25,11 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Maaf email & password tidak sesuai</p>
-    
+    <p class="login-box-msg">
+      @if(session('message'))
+      <label class="error" for="password">{{ session('message') }}</label>
+      @endif
+    </p>    
     {!! Form::open(['route' => 'cms.dologin', 'id'=>'form-login']) !!}
       
       <div class="form-group has-feedback">
@@ -40,10 +43,6 @@
         <br>
         <input type="checkbox"  onclick="showPasswd()"> Show Password
       </div>
-      
-      @if(session('message'))
-      <label class="error" for="password">{{ session('message') }}</label>
-      @endif
 
       <div class="row">
         <div class="col-xs-8">          

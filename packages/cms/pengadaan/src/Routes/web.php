@@ -62,6 +62,19 @@ Route::group(['middleware' => ['web', 'app.cms'], 'namespace' => 'Cms\Pengadaan\
 
 	Route::get('kerusakan/show/{id}','KerusakanController@show')->name('cms.kerusakan.show')->where('id', '[0-9]+');
 	Route::post('kerusakan/updatebyrole/{id}','KerusakanController@updateByRole')->name('cms.kerusakan.updatebyrole')->where('id', '[0-9]+');
+
+
+	// barang
+	Route::get('barang/list','BarangController@index')->name('cms.barang.view');
+	Route::post('barang/list','BarangController@list')->name('cms.barang.list');
+	Route::get('barang/list/detail/{id}','BarangController@detail')->name('cms.barang.detail')->where('id', '[0-9]+');
+	Route::get('barang/list/delete/{id}','BarangController@delete')->name('cms.barang.delete')->where('id', '[0-9]+');
+	
+	Route::get('barang/create','BarangController@create')->name('cms.barang.create');
+	Route::post('barang/store','BarangController@store')->name('cms.barang.store');
+	
+	Route::get('barang/edit/{id}','BarangController@edit')->name('cms.barang.edit')->where('id', '[0-9]+');
+	Route::post('barang/update/{id}','BarangController@update')->name('cms.barang.update')->where('id', '[0-9]+');
 });
 
 
