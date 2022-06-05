@@ -11,9 +11,9 @@ return [
     ],
 	[
         'name' => 'Barang',
-        'fa' => 'fa-tachometer',        
-        'permission' => 'cms.barang',
-        'path' => $prefix.'/barang'
+        'fa' => 'fa-barcode',        
+        'path' => $prefix.'/barang',
+        'permission' => 'cms.barang.list',
     ],
 	[
 		'name' => 'Laporan',
