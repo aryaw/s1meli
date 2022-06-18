@@ -90,9 +90,21 @@
 								<label for="fnama_barang">Nama Barang</label>
 								<input type="hidden" class="form-control" id="fitem" name="item_data[]" value="{{ $item->id }}" >
 								<input type="hidden" class="form-control" id="fitem" name="penerimaan[{{ $item_key }}][item]" value="{{ $item->id }}" >
-								<input type="text" class="form-control" id="fnama_barang" name="penerimaan[{{ $item_key }}][nama_barang]" value="{{ $item->nama_barang }}" readonly>
+								@if($barangs)
+								@foreach($barangs as $barang)
+									@if($item->barang_id==$barang->id)
+									<input type="text" class="form-control" id="fnama_barang" name="penerimaan[{{ $item_key }}][id_barang]" value="{{ $barang->kode_barang }} &nbsp;&nbsp;---&nbsp;&nbsp; {{ $barang->nama }}" readonly>
+									@endif
+								@endforeach
+								@endif
 							</div>
 
+							<div class="form-group">
+								<label for="furaian_barang">Qty</label>
+								<input type="text" class="form-control" id="fqty" name="penerimaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" readonly>
+							</div>
+
+							<?php /*
 							<div class="form-group">
 								<label for="fspesifikasi_barang">Spesifikasi Barang</label>
 								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" name="penerimaan[{{ $item_key }}][spesifikasi_barang]" readonly>{{ $item->spesifikasi_barang }}</textarea>
@@ -101,17 +113,13 @@
 							<div class="form-group">
 								<label for="furaian_barang">Uraian Barang</label>
 								<input type="text" class="form-control" id="furaian_barang" name="penerimaan[{{ $item_key }}][uraian_barang]" value="{{ $item->uraian_barang }}" readonly>
-							</div>
-
-							<div class="form-group">
-								<label for="furaian_barang">Qty</label>
-								<input type="text" class="form-control" id="fqty" name="penerimaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" readonly>
-							</div>
+							</div>							
 
 							<div class="form-group">
 								<label for="furaian_barang">Satuan</label>
 								<input type="text" class="form-control" id="fsatuan" name="penerimaan[{{ $item_key }}][satuan]" value="{{ $item->satuan }}" readonly>
 							</div>
+							*/ ?>
 
 							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>

@@ -83,25 +83,35 @@
 						<div class="box-body item-pengajuan" id="item-pengajuan{{ $item_key }}">
 							<div class="form-group">
 								<label for="fnama_barang">Nama Barang</label>
-								<input type="hidden" class="form-control" id="fitem" name="item_data[]" value="{{ $item->id }}" required>
-								<input type="hidden" class="form-control" id="fitem" name="pengadaan[{{ $item_key }}][item]" value="{{ $item->id }}" required>
-								<input type="text" class="form-control" id="fnama_barang" name="pengadaan[{{ $item_key }}][nama_barang]" value="{{ $item->nama_barang }}" required>
+								<input type="hidden" class="form-control" id="fitem" name="item_data[]" value="{{ $item->id }}">
+								<input type="hidden" class="form-control" id="fitem" name="pengadaan[{{ $item_key }}][item]" value="{{ $item->id }}">
+
+								@if($barangs)
+								<select class="form-control" id="fstatus" name="pengadaan[{{ $item_key }}][id_barang]">
+									<option value="">-- Pilih Barang --</option>
+									@foreach($barangs as $barang)
+									<option value="{{ $barang->id }}" {{ ($item->barang_id==$barang->id) ? 'selected' : '' }}>{{ $barang->kode_barang }} &nbsp;&nbsp;---&nbsp;&nbsp; {{ $barang->nama }}</option>
+									@endforeach
+								</select>
+								@endif
 							</div>
 
+							<div class="form-group">
+								<label for="fqty_barang">Qty</label>
+								<input type="text" class="form-control" id="fqty" name="pengadaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" >
+							</div>
+
+							<?php /*
 							<div class="form-group">
 								<label for="fspesifikasi_barang">Spesifikasi Barang</label>
 								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" name="pengadaan[{{ $item_key }}][spesifikasi_barang]" >{{ $item->spesifikasi_barang }}</textarea>
 							</div>
 
 							<div class="form-group">
-								<label for="furaian_barang">Qty</label>
-								<input type="text" class="form-control" id="fqty" name="pengadaan[{{ $item_key }}][qty]" value="{{ $item->qty }}" >
-							</div>
-
-							<div class="form-group">
 								<label for="furaian_barang">Satuan</label>
 								<input type="text" class="form-control" id="fsatuan" name="pengadaan[{{ $item_key }}][satuan]" value="{{ $item->satuan }}" >
 							</div>
+							*/ ?>
 
 							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>
@@ -155,25 +165,34 @@
 		$('body').on('click', '.add-item', function(evt) {
 			_item_row = parseInt($('.add-item').attr('data-item'));
 			_new_item_row = _item_row + 1;
+			_html = '';
 
-			_html = '<div class="box-body item-pengajuan" id="item-pengajuan'+_new_item_row+'">'+
+			_html += '<div class="box-body item-pengajuan" id="item-pengajuan'+_new_item_row+'">'+
 				'<div class="form-group">'+
-					'<label for="fnama_barang">Nama Barang</label>'+
-					'<input type="text" class="form-control" id="fnama_barang" name="pengadaan['+_new_item_row+'][nama_barang]" value="" required>'+
+					'<label for="fnama_barang">Nama Barang</label>';					
+					// '<input type="text" class="form-control" id="fnama_barang" name="pengadaan['+_new_item_row+'][nama_barang]" value="" required>'+
+				_html += '<select class="form-control" id="fstatus" name="pengadaan['+_new_item_row+'][id_barang]" name="pengadaan['+_new_item_row+'][id_barang]" >'+
+					'<option value="">-- Pilih Barang --</option>';
+					@if($barangs)
+					@foreach($barangs as $barang)
+					_html += '<option value="{{ $barang->id }}">{{ $barang->kode_barang }} &nbsp;&nbsp;---&nbsp;&nbsp; {{ $barang->nama }}</option>';
+					@endforeach
+					@endif
+				_html +=  '</select>'+
 				'</div>'+
-				'<div class="form-group">'+
-					'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+
-					// '<input type="text" class="form-control" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" value="" >'+
-					'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" ></textarea>'+
-				'</div>'+
+				// '<div class="form-group">'+
+				// 	'<label for="fspesifikasi_barang">Spesifikasi Barang</label>'+
+				// 	// '<input type="text" class="form-control" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" value="" >'+
+				// 	'<textarea class="form-control" placeholder="Spesifikasi Barang" id="fspesifikasi_barang" name="pengadaan['+_new_item_row+'][spesifikasi_barang]" ></textarea>'+
+				// '</div>'+
 				'<div class="form-group">'+
 					'<label for="furaian_barang">Qty</label>'+
 					'<input type="text" class="form-control" id="fqty" name="pengadaan['+_new_item_row+'][qty]" value="" >'+
 				'</div>'+
-				'<div class="form-group">'+
-					'<label for="furaian_barang">Satuan</label>'+
-					'<input type="text" class="form-control" id="fsatuan" name="pengadaan['+_new_item_row+'][satuan]" value="" >'+
-				'</div>'+
+				// '<div class="form-group">'+
+				// 	'<label for="furaian_barang">Satuan</label>'+
+				// 	'<input type="text" class="form-control" id="fsatuan" name="pengadaan['+_new_item_row+'][satuan]" value="" >'+
+				// '</div>'+
 				'<div class="form-group">'+
 					'<label for="fketerangan">Keterangan</label>'+
 					'<textarea class="form-control" placeholder="Keterangan" id="fketerangan" name="pengadaan['+_new_item_row+'][keterangan]" ></textarea>'+

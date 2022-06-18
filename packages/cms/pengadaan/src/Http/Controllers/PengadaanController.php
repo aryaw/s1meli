@@ -12,6 +12,7 @@ use Cms\Pengadaan\Http\Models\PengadaanModel;
 use Cms\Pengadaan\Http\Models\PengadaanHistoryModel;
 use Cms\Pengadaan\Http\Models\ItemPengadaanModel;
 use Cms\Pengadaan\Transformers\PengadaanTransformer;
+use Cms\Pengadaan\Http\Models\BarangModel;
 use DB;
 use Cms\User\Http\Models\UserModel;
 use Sentinel;
@@ -42,8 +43,10 @@ class PengadaanController extends Controller
         $user = UserModel::with(['role'])->whereHas('role', function($query) {
             $query->where('role_id', '>', 1);
         })->get();
+
+        $barangs = BarangModel::where('status', '=', '1')->get();
         
-        return view('pengadaan::pengadaan.create', ['user' => $user]);
+        return view('pengadaan::pengadaan.create', ['user' => $user, 'barangs' => $barangs]);
 	}
 
     public function store(Request $request)
@@ -87,6 +90,7 @@ class PengadaanController extends Controller
                 foreach ($post['pengadaan'] as $key => $data_pengadaan) {
                     $item_pengadaan = new ItemPengadaanModel;
                     $item_pengadaan->pengadaan_id = $id_pengajuan;
+                    $item_pengadaan->barang_id = (isset($data_pengadaan['id_barang'])) ? ucwords($data_pengadaan['id_barang']) : '';
                     $item_pengadaan->nama_barang = (isset($data_pengadaan['nama_barang'])) ? ucwords($data_pengadaan['nama_barang']) : '';
                     $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
                     $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
@@ -115,7 +119,9 @@ class PengadaanController extends Controller
             $query->where('role_id', '>', 1);
         })->get();
 
-        return view('pengadaan::pengadaan.edit', ['pengadaan'=>$pengadaan, 'user'=>$user]);
+        $barangs = BarangModel::where('status', '=', '1')->get();
+
+        return view('pengadaan::pengadaan.edit', ['pengadaan'=>$pengadaan, 'user'=>$user, 'barangs' => $barangs]);
     }
 
     public function show($id, Request $request)
@@ -130,6 +136,7 @@ class PengadaanController extends Controller
                 if(!$pengadaan){
                     abort(404);
                 }
+                $barangs = BarangModel::where('status', '=', '1')->get();
                 
                 $btn = "admin";
                 if($user->inRole('kepsek')) {
@@ -139,7 +146,7 @@ class PengadaanController extends Controller
                 if($user->inRole('wakasek')) {
                     $btn = "wakasek";
                 }
-                return view('pengadaan::pengadaan.view', ['pengadaan'=>$pengadaan, 'btn'=>$btn]);
+                return view('pengadaan::pengadaan.view', ['pengadaan'=>$pengadaan, 'btn'=>$btn, 'barangs' => $barangs]);
             }
         }
         abort(404);
@@ -193,6 +200,7 @@ class PengadaanController extends Controller
                     if(isset($data_pengadaan['item'])) {
                         $item_pengadaan = ItemPengadaanModel::find($data_pengadaan['item']);
                         $item_pengadaan->pengadaan_id = $id_pengajuan;
+                        $item_pengadaan->barang_id = (isset($data_pengadaan['id_barang'])) ? ucwords($data_pengadaan['id_barang']) : '';
                         $item_pengadaan->nama_barang = (isset($data_pengadaan['nama_barang'])) ? ucwords($data_pengadaan['nama_barang']) : '';
                         $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
                         $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';
@@ -204,6 +212,7 @@ class PengadaanController extends Controller
                     } else {
                         $item_pengadaan = new ItemPengadaanModel;
                         $item_pengadaan->pengadaan_id = $id_pengajuan;
+                        $item_pengadaan->barang_id = (isset($data_pengadaan['id_barang'])) ? ucwords($data_pengadaan['id_barang']) : '';
                         $item_pengadaan->nama_barang = (isset($data_pengadaan['nama_barang'])) ? ucwords($data_pengadaan['nama_barang']) : '';
                         $item_pengadaan->spesifikasi_barang = (isset($data_pengadaan['spesifikasi_barang'])) ? $data_pengadaan['spesifikasi_barang'] : '';
                         $item_pengadaan->uraian_barang = (isset($data_pengadaan['uraian_barang'])) ? $data_pengadaan['uraian_barang'] : '';

@@ -68,23 +68,32 @@
 								<label for="fnama_barang">Nama Barang</label>
 								<input type="hidden" class="form-control" id="fitem" readonly>
 								<input type="hidden" class="form-control" id="fitem" value="{{ $item->id }}" readonly>
-								<input type="text" class="form-control" id="fnama_barang" value="{{ $item->nama_barang }}" readonly>
+
+								@if($barangs)
+								@foreach($barangs as $barang)
+									@if($item->barang_id==$barang->id)
+									<input type="text" class="form-control" id="fnama_barang" value="{{ $barang->kode_barang }} &nbsp;&nbsp;---&nbsp;&nbsp; {{ $barang->nama }}" readonly>
+									@endif
+								@endforeach
+								@endif
 							</div>
 
+							<div class="form-group">
+								<label for="fqty">Qty</label>
+								<input type="text" class="form-control" id="fqty" value="{{ $item->qty }}" readonly>
+							</div>
+							
+							<?php /*
 							<div class="form-group">
 								<label for="fspesifikasi_barang">Spesifikasi Barang</label>
 								<textarea class="form-control" placeholder="Spesifikasi Barang" id="fketerangan" readonly>{{ $item->spesifikasi_barang }}</textarea>
 							</div>
 
 							<div class="form-group">
-								<label for="furaian_barang">Qty</label>
-								<input type="text" class="form-control" id="fqty" value="{{ $item->qty }}" readonly>
-							</div>
-
-							<div class="form-group">
 								<label for="furaian_barang">Satuan</label>
 								<input type="text" class="form-control" id="fsatuan" value="{{ $item->satuan }}" readonly>
 							</div>
+							*/ ?>
 
 							<div class="form-group">
 								<label for="fketerangan">Keterangan</label>

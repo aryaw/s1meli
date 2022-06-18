@@ -93,6 +93,14 @@
 									<span class="help-block">{{ $errors->first('jabatan') }}</span>
 								@endif
 							</div>
+							
+							<div class="form-group {{ ($errors->first('unit')) ? 'has-error' : '' }}">
+								<label for="funit">Unit/label>
+								<input type="text" class="form-control" id="funit" name="unit" value="{{ old('unit') }}" required>
+								@if($errors->has('unit'))										
+									<span class="help-block">{{ $errors->first('unit') }}</span>
+								@endif
+							</div>
 
 							<div class="form-group {{ ($errors->first('status')) ? 'has-error' : '' }}">
 								<label for="fstatus">Status</label>

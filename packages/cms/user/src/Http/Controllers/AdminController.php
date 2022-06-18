@@ -159,6 +159,7 @@ class AdminController extends Controller
                     'full_name' => $post['name'],
                     'address' => $post['address'],
                     'jabatan' => $post['jabatan'],
+                    'unit' => $post['unit'],
                     'gender' => $post['gender'],
                     'phone' => $post['phone'],
                 ];
@@ -213,6 +214,7 @@ class AdminController extends Controller
                 $user->full_name = $post['name'];
                 $user->address = $post['address'];
                 $user->jabatan = $post['jabatan'];
+                $user->unit = $post['unit'];
                 $user->gender = $post['gender'];
                 $user->phone = $post['phone'];
                 $user->save();

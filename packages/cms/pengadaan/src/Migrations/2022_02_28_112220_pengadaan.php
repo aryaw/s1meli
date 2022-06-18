@@ -32,11 +32,12 @@ class Pengadaan extends Migration
 
         Schema::create('item_pengadaan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('pengadaan_id')->unsigned();
-            $table->text('nama_barang');
-            $table->text('spesifikasi_barang');
-            $table->text('uraian_barang');
-            $table->text('keterangan');
+            $table->bigInteger('barang_id')->unsigned()->nullable();
+            $table->bigInteger('pengadaan_id')->unsigned()->nullable();
+            $table->text('nama_barang')->nullable();
+            $table->text('spesifikasi_barang')->nullable();
+            $table->text('uraian_barang')->nullable();
+            $table->text('keterangan')->nullable();
             $table->integer('qty')->nullable()->default(0);
             $table->text('satuan')->nullable();
             $table->integer('status')->default(0);

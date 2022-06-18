@@ -21,6 +21,7 @@ class AddCustomFieldUsers extends Migration
             $table->date('dob')->nullable();            
             $table->string('photo')->nullable();
             $table->text('jabatan')->nullable(); 
+            $table->text('unit')->nullable(); 
         });
     }
 
@@ -40,6 +41,7 @@ class AddCustomFieldUsers extends Migration
                 'dob',
                 'photo',
                 'jabatan',
+                'unit',
             ]);
         });
     }
